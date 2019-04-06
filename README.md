@@ -1,3 +1,6 @@
+# Songwriting Inspirationator
+Generate randomized song outlines! Write songs by filling in the blanks!
+
 ### `npm start`
 
 Runs the app in the development mode.<br>
