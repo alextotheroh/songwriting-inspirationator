@@ -26,7 +26,9 @@ class Body extends Component {
 
     return (
       <div>
-        {this.state.attributes.map((attribute) => <SongAttribute instruments={this.state.instruments}/>)}
+        {this.state.attributes.map((attribute) => 
+          <SongAttribute attribute={attribute} instruments={this.state.instruments} key={attribute.name}/>
+        )}
       </div>
     );
   }

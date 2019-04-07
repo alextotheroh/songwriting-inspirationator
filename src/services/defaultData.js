@@ -20,7 +20,7 @@ export var instruments = [
 export var songAttributes = [
 
   {
-    name: "timeSignatures",
+    name: "Time Signatures",
     enabled: true,
     values: [
     "4/4",
@@ -29,31 +29,31 @@ export var songAttributes = [
   },
 
   {
-    name: "instrumentToRecordFirst",
+    name: "Instrument to Record First",
     enabled: true,
     selectsFromInstruments: true
   },
 
   {
-    name: "instrumentToRecordSecond",
+    name: "Instrument to Record Second",
     enabled: true,
     selectsFromInstruments: true
   },
 
   {
-    name: "instrumentToRecordThird",
+    name: "Instrument to Record Third",
     enabled: true,
     selectsFromInstruments: true
   },
 
   {
-    name: "instrumentToRecordFourth",
+    name: "Instrument to Record Fourth",
     enabled: false,
     selectsFromInstruments: true
   },
 
   {
-    name: "rhymingScheme",
+    name: "Rhyming Scheme",
     enabled: true,
     values: [
       "ABAB",
@@ -64,7 +64,7 @@ export var songAttributes = [
   },
 
   {
-    name: "songLength",
+    name: "Song Length",
     enabled: true,
     values: [
       "short",
@@ -74,7 +74,7 @@ export var songAttributes = [
   },
 
   {
-    name: "lyricsFeel",
+    name: "Lyrics Feel",
     enabled: true,
     values: [
       "uplifting",
@@ -93,7 +93,7 @@ export var songAttributes = [
   },
 
   {
-    name: "overallMusicFeel",
+    name: "Overall Music Feel",
     enabled: true,
     values: [
       "catchy",
@@ -102,7 +102,7 @@ export var songAttributes = [
   },
 
   {
-    name: "chorusFeel",
+    name: "Chorus Feel",
     enabled: true,
     values: [
       "loud/emotional, powerful",
@@ -111,7 +111,7 @@ export var songAttributes = [
   },
 
   {
-    name: "verseFeel",
+    name: "Verse Feel",
     enabled: true,
     values: [
       "chill",
@@ -124,7 +124,7 @@ export var songAttributes = [
 
   // verse, bridge, chorus, guitar solo, synth solo, drum solo, another guitar solo, etc.
   {
-    name: "numberOfSongSections",
+    name: "Number of Song Sections",
     enabled: true,
     values: [
       "normal",
@@ -134,48 +134,48 @@ export var songAttributes = [
   },
 
   {
-    name: "lyricalConcepts",
+    name: "Lyrical Concepts",
     enabled: false,
     values: []
   },
 
   {
-    name: "totalInstrumentCount",
+    name: "Total Instrument Count",
     enabled: true,
     min: 1,
     max: 8
   },
 
   {
-    name: "guitarCount",
+    name: "Guitar Count",
     enabled: true,
     min: 0,
     max: 3
   },
 
   {
-    name: "keysCount",
+    name: "Keys Count",
     enabled: true,
     min: 0,
     max: 3
   },
 
   {
-    name: "ambientCount",
+    name: "Ambient Count",
     enabled: true,
     min: 0,
     max: 1
   },
 
   {
-    name: "bassCount",
+    name: "Bass Count",
     enabled: true,
     min: 0,
     max: 1
   },
 
   {
-    name: "drumsCount",
+    name: "Drums Count",
     enabled: true,
     min: 0,
     max: 2
