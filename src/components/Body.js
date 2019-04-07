@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SongAttribute from './SongAttribute';
 import * as services from '../services/Services';
 
 class Body extends Component {
@@ -8,12 +9,12 @@ class Body extends Component {
 
     this.state = {
       instruments: [],
-      attributes: {}
+      attributes: []
     }
   }
 
   componentWillMount(props) {
-    // todo determine if custom state in local storage, initi from thee if so
+    // todo determine if custom state in local storage, init from there if so
     services.initFromDefaults();
     this.setState({
       instruments: services.getInstruments(),
@@ -23,12 +24,9 @@ class Body extends Component {
 
   render() {
 
-
-
     return (
       <div>
-        <div>{JSON.stringify(this.state.instruments)}</div><br /><br /><br /><br /><br />
-        <div>{JSON.stringify(this.state.attributes)}</div>
+        {this.state.attributes.map((attribute) => <SongAttribute instruments={this.state.instruments}/>)}
       </div>
     );
   }

@@ -17,32 +17,43 @@ export var instruments = [
   {name: "Hand Drums", type: "drums"}
 ];
 
-export var songAttributes = {
+export var songAttributes = [
 
-  timeSignatures: {
+  {
+    name: "timeSignatures",
     enabled: true,
     values: [
     "4/4",
     "Not 4/4"
-  ]},
-
-  instrumentToRecordFirst: {
-    enabled: true
+    ]
   },
 
-  instrumentToRecordSecond: {
-    enabled: true
+  {
+    name: "instrumentToRecordFirst",
+    enabled: true,
+    selectsFromInstruments: true
   },
 
-  instrumentToRecordThird: {
-    enabled: true
+  {
+    name: "instrumentToRecordSecond",
+    enabled: true,
+    selectsFromInstruments: true
   },
 
-  instrumentToRecordFourth: {
-    enabled: false
+  {
+    name: "instrumentToRecordThird",
+    enabled: true,
+    selectsFromInstruments: true
   },
 
-  rhymingScheme: {
+  {
+    name: "instrumentToRecordFourth",
+    enabled: false,
+    selectsFromInstruments: true
+  },
+
+  {
+    name: "rhymingScheme",
     enabled: true,
     values: [
       "ABAB",
@@ -52,7 +63,8 @@ export var songAttributes = {
     ]
   },
 
-  songLength: {
+  {
+    name: "songLength",
     enabled: true,
     values: [
       "short",
@@ -61,7 +73,8 @@ export var songAttributes = {
     ]
   },
 
-  lyricsFeel: {
+  {
+    name: "lyricsFeel",
     enabled: true,
     values: [
       "uplifting",
@@ -79,7 +92,8 @@ export var songAttributes = {
     ]
   },
 
-  overallMusicFeel: {
+  {
+    name: "overallMusicFeel",
     enabled: true,
     values: [
       "catchy",
@@ -87,7 +101,8 @@ export var songAttributes = {
     ]
   },
 
-  chorusFeel: {
+  {
+    name: "chorusFeel",
     enabled: true,
     values: [
       "loud/emotional, powerful",
@@ -95,7 +110,8 @@ export var songAttributes = {
     ]
   },
 
-  verseFeel: {
+  {
+    name: "verseFeel",
     enabled: true,
     values: [
       "chill",
@@ -107,7 +123,8 @@ export var songAttributes = {
   },
 
   // verse, bridge, chorus, guitar solo, synth solo, drum solo, another guitar solo, etc.
-  numberOfSongSections: {
+  {
+    name: "numberOfSongSections",
     enabled: true,
     values: [
       "normal",
@@ -116,45 +133,52 @@ export var songAttributes = {
     ]
   },
 
-  lyricalConcepts: {
+  {
+    name: "lyricalConcepts",
     enabled: false,
     values: []
   },
 
-  totalInstrumentCount: {
+  {
+    name: "totalInstrumentCount",
     enabled: true,
     min: 1,
     max: 8
   },
 
-  guitarCount: {
+  {
+    name: "guitarCount",
     enabled: true,
     min: 0,
     max: 3
   },
 
-  keysCount: {
+  {
+    name: "keysCount",
     enabled: true,
     min: 0,
     max: 3
   },
 
-  ambientCount: {
+  {
+    name: "ambientCount",
     enabled: true,
     min: 0,
     max: 1
   },
 
-  bassCount: {
+  {
+    name: "bassCount",
     enabled: true,
     min: 0,
     max: 1
   },
 
-  bassCount: {
+  {
+    name: "drumsCount",
     enabled: true,
     min: 0,
     max: 2
   }
 
-};
+];
