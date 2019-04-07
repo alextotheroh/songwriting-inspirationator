@@ -1,0 +1,11 @@
+@import './colors.scss';
+
+.Header-title {
+  display: table;
+  font-family: 'Spicy Rice', cursive;
+  font-size: 40px;
+  color: $electric-blue;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
