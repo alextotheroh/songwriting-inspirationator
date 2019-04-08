@@ -13,6 +13,7 @@ class Body extends Component {
     this.state = {
       instruments: [],
       attributes: [],
+      possibilities: 0,
       generatedTemplate: null
     }
   }
@@ -22,13 +23,14 @@ class Body extends Component {
     services.initFromDefaults();
     this.setState({
       instruments: services.getInstruments(),
-      attributes: services.getSongAttributes()
+      attributes: services.getSongAttributes(),
+      possibilities: services.getTotalNumberOfPossibilities()
     });
   }
 
   render() {
 
-    var chunkedAttributes = chunkArray(this.state.attributes, 3);
+    var chunkedAttributes = chunkArray(this.state.attributes, this.state.attributes.length/3);
 
     return (
       <div>
@@ -55,7 +57,13 @@ class Body extends Component {
           </Grid>
         </div>
 
-        <div className="Body-generateButtonContainer">
+        <div className="Body-buttonsContainer">
+          <div className="Body-possibilitiesButtonContainer">
+            <span className="Body-possibilitiesNumber">{this.state.possibilities.toLocaleString()}</span>
+            <Button variant="contained" color="primary" size="small" onClick={this.handleCalculatePossibilitiesClick}>
+              Recalculate total possibilities
+            </Button>
+          </div>
           <Button variant="contained" color="primary" size="large" onClick={this.handleGenerateClick}>
             Generate Template
           </Button>
@@ -72,6 +80,12 @@ class Body extends Component {
   handleGenerateClick = e => {
     this.setState({
       generatedTemplate: services.generateTemplate()
+    });
+  }
+
+  handleCalculatePossibilitiesClick = e => {
+    this.setState({
+      possibilities: services.getTotalNumberOfPossibilities()
     });
   }
 }

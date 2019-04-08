@@ -24,8 +24,27 @@ export function setAttributeEnabled(attrName, enabled) {
   }
 }
 
-export function getTotalNumberOfCombinations() {
+export function getTotalNumberOfPossibilities() {
 
+  var numberOfInstrumentsChosenSoFar = 0;
+  var possibilities = 1;
+
+  currentSongAttributes.forEach(attr => {
+    if (!attr.enabled) {
+      return;
+    }
+
+    if ("values" in attr) {
+      possibilities *= attr.values.length;
+    } else if ("selectsFromInstruments" in attr && attr.selectsFromInstruments) {
+      possibilities *= (currentInstruments.length - numberOfInstrumentsChosenSoFar);
+      numberOfInstrumentsChosenSoFar += 1;
+    } else if ("min" in attr && "max" in attr) {
+      possibilities *= (attr.max - attr.min);
+    }
+  });
+
+  return possibilities;
 }
 
 export function generateTemplate() {
