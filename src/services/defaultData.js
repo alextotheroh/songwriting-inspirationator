@@ -140,15 +140,9 @@ export var songAttributes = [
   },
 
   {
-    name: "Total Instrument Count",
-    enabled: true,
-    min: 1,
-    max: 8
-  },
-
-  {
     name: "Guitar Count",
     enabled: true,
+    countsInstrumentType: "guitar",
     min: 0,
     max: 3
   },
@@ -156,6 +150,7 @@ export var songAttributes = [
   {
     name: "Keys Count",
     enabled: true,
+    countsInstrumentType: "keys",
     min: 0,
     max: 3
   },
@@ -163,6 +158,7 @@ export var songAttributes = [
   {
     name: "Ambient Count",
     enabled: true,
+    countsInstrumentType: "ambient",
     min: 0,
     max: 1
   },
@@ -170,6 +166,7 @@ export var songAttributes = [
   {
     name: "Bass Count",
     enabled: true,
+    countsInstrumentType: "bass",
     min: 0,
     max: 1
   },
@@ -177,8 +174,15 @@ export var songAttributes = [
   {
     name: "Drums Count",
     enabled: true,
+    countsInstrumentType: "drums",
     min: 0,
     max: 2
+  },
+
+  {
+    name: "Minimum Instruments Count",
+    enabled: true,
+    value: 3
   }
 
 ];

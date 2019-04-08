@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SongAttribute from './SongAttribute';
+import Button from '@material-ui/core/Button';
 import * as services from '../services/Services';
 
 class Body extends Component {
@@ -9,7 +10,8 @@ class Body extends Component {
 
     this.state = {
       instruments: [],
-      attributes: []
+      attributes: [],
+      generatedTemplate: null
     }
   }
 
@@ -26,11 +28,38 @@ class Body extends Component {
 
     return (
       <div>
-        {this.state.attributes.map((attribute) => 
-          <SongAttribute attribute={attribute} instruments={this.state.instruments} key={attribute.name}/>
-        )}
+        <div className="Body-songAttributeContainer">
+          {this.state.attributes.map((attribute) => 
+            <SongAttribute attribute={attribute} instruments={this.state.instruments} key={attribute.name}/>
+          )}
+        </div>
+
+        <div className="Body-generateButtonContainer">
+          <Button variant="contained" color="primary" size="large" onClick={this.handleGenerateClick}>
+            Generate Template
+          </Button>
+        </div>
+
+        <div>
+          {this.state.generatedTemplate ? this.state.generatedTemplate.instruments.map(instrument => {
+            return <div>{JSON.stringify(instrument)}</div>
+          }) : ""}
+        </div><br/><br/>
+
+        <div>
+          {this.state.generatedTemplate ? this.state.generatedTemplate.attributes.map(attribute => {
+            return <div>{JSON.stringify(attribute)}</div>
+          }) : ""}
+        </div>
+
       </div>
     );
+  }
+
+  handleGenerateClick = e => {
+    this.setState({
+      generatedTemplate: services.generateTemplate()
+    });
   }
 }
 

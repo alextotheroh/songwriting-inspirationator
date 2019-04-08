@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './styles/index.scss';
 import './styles/App.scss';
 import './styles/Header.scss';
+import './styles/Body.scss';
 import './styles/Footer.scss';
 import './styles/SongAttribute.scss';
 import App from './components/App';

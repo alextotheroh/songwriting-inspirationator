@@ -6,6 +6,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import * as services from '../services/Services';
 
 class SongAttribute extends Component {
 
@@ -20,39 +21,58 @@ class SongAttribute extends Component {
   render() {
 
     var attribute = this.props.attribute;
-    var instruments = this.props.instruments;
+    //var instruments = this.props.instruments;
 
-    const enabledSwitch =
+    var enabledSwitch =
       <FormControlLabel
           control={
             <Switch
               checked={this.state.enabled}
-              onChange={this.handleEnabledSwitch}
+              onChange={this.handleEnabledSwitch(attribute.name)}
               onClick={e => e.stopPropagation()}
               value="enabled"
             />
           }
       />;
 
+    var values;
+    if ("selectsFromInstruments" in attribute && attribute.selectsFromInstruments) {
+      values = <div>(selects from instruments)</div>;
+    } else if ("values" in attribute) {
+      values = <div>
+        {attribute.values.map(value =>
+          <div key={attribute+"-"+value}>{"- " + value}</div>
+        )}
+      </div>
+    } else if ("min" in attribute && "max" in attribute) {
+      values = <div>
+        <div>{"min: " + attribute.min}</div>
+        <div>{"max: " + attribute.max}</div>
+      </div>
+    }
+      
+
     return (
-      <div>
+      <div className="SongAttribute-container">
         <ExpansionPanel>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <span className="SongAttribute-attrName">{attribute.name}</span>
             <span className="SongAttribute-switch">{enabledSwitch}</span>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-
+            {values}
           </ExpansionPanelDetails>
         </ExpansionPanel>  
       </div>
     );
   }
 
-  handleEnabledSwitch = event => {
+  handleEnabledSwitch = attrName => event => {
     this.setState({
       enabled: event.target.checked
     });
+
+    services.setAttributeEnabled(attrName, event.target.checked);
   }
 }
 
