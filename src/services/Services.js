@@ -101,15 +101,21 @@ export function generateTemplate() {
         var chosenInstrument = getRandomElementFromArray(instrumentsInSongTemplate);
         // don't let inst to record second duplicate first, and so on
         if (attr.name.includes("Instrument to Record") && attr.name !== "Instrument to Record First") {
+          // is possible that enabled attributes are such that there aren't enough instruments
+          var timesThroughWhileLoop = 0;
           while (instrumentToRecordXthValueNotValid(templateSongAttributes, chosenInstrument)) {
+            if (timesThroughWhileLoop > 200) break;
             chosenInstrument = getRandomElementFromArray(instrumentsInSongTemplate);
+            timesThroughWhileLoop += 1;
           }
         }
 
-        templateSongAttributes.push({
-          name: attr.name,
-          value: chosenInstrument.name
-        });
+        if (chosenInstrument) {
+          templateSongAttributes.push({
+            name: attr.name,
+            value: chosenInstrument.name
+          });
+        }
 
       }
     }
