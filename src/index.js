@@ -6,6 +6,7 @@ import './styles/Header.scss';
 import './styles/Body.scss';
 import './styles/Footer.scss';
 import './styles/SongAttribute.scss';
+import './styles/GeneratedTemplate.scss';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 

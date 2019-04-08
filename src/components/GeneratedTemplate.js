@@ -1,21 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 
 class GeneratedTemplate extends Component {
   render() {
     var t = this.props.template;
 
     return (
-      <div>
-        <div>
-          <p>Instruments</p>
-          {t.instruments.map(inst => <p>{inst.name}</p>)}
-        </div>
+      <div className="GeneratedTemplate-container">
+        <Grid container spacing={24}>
+          <Grid item xs={6}>
+            <div>
+              <div className="GeneratedTemplate-sectionTitle">Instruments</div>
+              {t.instruments.map(inst => <p className="GeneratedTemplate-listItem">
+                {inst.name}
+              </p>)}
+            </div>
+          </Grid>
 
-        <div>
-          <p>Attributes</p>
-          {t.attributes.map(attribute => <p>{attribute.name + ": " + attribute.value}</p>)}
-        </div>
+          <Grid item xs={6}>
+            <div className="GeneratedTemplate-attributesContainer">
+              <div className="GeneratedTemplate-sectionTitle">Attributes</div>
+              {t.attributes.map(attribute => <p className="GeneratedTemplate-listItem">
+                <strong className="sectionTitleSmall">{attribute.name}</strong> <span>{": " + attribute.value}</span>
+              </p>)}
+            </div>
+          </Grid>
+        </Grid>
       </div>
     );
   }

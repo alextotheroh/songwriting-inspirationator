@@ -1,13 +1,9 @@
 @import './colors';
 
 .Body-songAttributeContainer {
-  width: 80%;
-  min-width: 300px;
-  height: 600px;
+  width: 90%;
+  min-width: 600px;
   margin: 20px auto;
-  padding: 7px;
-  overflow-y: scroll;
-  border: 5px solid $electric-blue;
 }
 
 .Body-generateButtonContainer {

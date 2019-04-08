@@ -1,0 +1,31 @@
+@import './colors';
+
+.GeneratedTemplate-container {
+  width: 60%;
+  min-width: 440px;
+  margin: 30px auto;
+  color: $black;
+  background-color: $white;
+  padding: 30px;
+}
+
+.GeneratedTemplate-attributesContainer {
+  width: 100%;
+}
+
+.GeneratedTemplate-sectionTitle {
+  font-family: 'Spicy Rice';
+  font-size: 35px;
+  color: $jordy-blue;
+}
+
+.sectionTitleSmall {
+  font-family: 'Spicy Rice';
+  font-size: 17px;
+  color: $jordy-blue;
+}
+
+.GeneratedTemplate-listItem {
+  font-family: 'Reenie Beanie';
+  font-size: 20px;
+}
