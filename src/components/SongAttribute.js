@@ -35,7 +35,7 @@ class SongAttribute extends Component {
           }
       />;
 
-    var values;
+    var values = <div></div>;
     if ("selectsFromInstruments" in attribute && attribute.selectsFromInstruments) {
       values = <div>(selects from instruments)</div>;
     } else if ("values" in attribute) {
@@ -48,6 +48,10 @@ class SongAttribute extends Component {
       values = <div>
         <div>{"min: " + attribute.min}</div>
         <div>{"max: " + attribute.max}</div>
+      </div>
+    } else if (attribute.name === "Minimum Instruments Count") {
+      values = <div>
+        {"min: " + attribute.value}
       </div>
     }
       

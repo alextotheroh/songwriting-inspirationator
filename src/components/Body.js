@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SongAttribute from './SongAttribute';
+import GeneratedTemplate from './GeneratedTemplate';
 import Button from '@material-ui/core/Button';
 import * as services from '../services/Services';
 
@@ -41,15 +42,7 @@ class Body extends Component {
         </div>
 
         <div>
-          {this.state.generatedTemplate ? this.state.generatedTemplate.instruments.map(instrument => {
-            return <div>{JSON.stringify(instrument)}</div>
-          }) : ""}
-        </div><br/><br/>
-
-        <div>
-          {this.state.generatedTemplate ? this.state.generatedTemplate.attributes.map(attribute => {
-            return <div>{JSON.stringify(attribute)}</div>
-          }) : ""}
+          {this.state.generatedTemplate ? <GeneratedTemplate template={this.state.generatedTemplate} /> : ""}
         </div>
 
       </div>
