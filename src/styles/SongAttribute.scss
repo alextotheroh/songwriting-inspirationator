@@ -1,3 +1,5 @@
+@import './colors';
+
 .SongAttribute-container {
   margin-bottom: 8px;
 }
@@ -5,8 +7,16 @@
 .SongAttribute-attrName {
   display: inline-flex;
   align-items: center;
+  font-family: 'Spicy Rice';
+  font-size: 22px;
+  color: $black;
 }
 
 .SongAttribute-switch {
   margin-left: auto;
+}
+
+.SongAttribute-valuesContainer {
+  font-family: 'Reenie Beanie';
+  font-size: 25px;
 }

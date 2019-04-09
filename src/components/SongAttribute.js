@@ -6,6 +6,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Checkbox from '@material-ui/core/Checkbox';
 import * as services from '../services/Services';
 
 class SongAttribute extends Component {
@@ -13,9 +14,17 @@ class SongAttribute extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    var initialStateObj = {
       enabled: props.attribute.enabled
     };
+
+    if (props.attribute.values) {
+      props.attribute.values.forEach(v => {
+        initialStateObj[v+"Checked"] = true; 
+      })
+    }
+
+    this.state = initialStateObj;
   }
 
   render() {
@@ -41,7 +50,10 @@ class SongAttribute extends Component {
     } else if ("values" in attribute) {
       values = <div>
         {attribute.values.map(value =>
-          <div key={attribute+"-"+value}>{"- " + value}</div>
+          <div key={attribute+"-"+value}>
+            {"- " + value}
+            <Checkbox onChange={this.handleCheckboxChangeForValuesAttr(attribute.name, value)} checked={this.state[value+"Checked"]}/>
+          </div>
         )}
       </div>
     } else if ("min" in attribute && "max" in attribute) {
@@ -64,7 +76,9 @@ class SongAttribute extends Component {
             <span className="SongAttribute-switch">{enabledSwitch}</span>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            {values}
+            <div className="SongAttribute-valuesContainer">
+              {values}
+            </div>
           </ExpansionPanelDetails>
         </ExpansionPanel>  
       </div>
@@ -77,6 +91,14 @@ class SongAttribute extends Component {
     });
 
     services.setAttributeEnabled(attrName, event.target.checked);
+  }
+
+  handleCheckboxChangeForValuesAttr = (attrName, value) => event => {
+    services.enabledOrDisableValueForAttribute(attrName, value, event.target.checked);
+
+    var newSubstate = {};
+    newSubstate[value+"Checked"] = event.target.checked;
+    this.setState(newSubstate);
   }
 }
 

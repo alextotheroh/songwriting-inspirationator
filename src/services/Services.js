@@ -24,6 +24,19 @@ export function setAttributeEnabled(attrName, enabled) {
   }
 }
 
+export function enabledOrDisableValueForAttribute(attrName, value, valueIsEnabled) {
+  currentSongAttributes.forEach(attribute => {
+    if (attribute.name === attrName) {
+      if (valueIsEnabled && attribute.disabledValues.includes(value)) {
+        attribute.disabledValues.splice(attribute.disabledValues.indexOf(value), 1);
+      
+      } else if (!valueIsEnabled && !attribute.disabledValues.includes(value)) {
+        attribute.disabledValues.push(value);
+      }
+    }
+  });
+}
+
 export function getTotalNumberOfPossibilities() {
 
   var numberOfInstrumentsChosenSoFar = 0;

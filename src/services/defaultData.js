@@ -25,7 +25,8 @@ export var songAttributes = [
     values: [
     "4/4",
     "Not 4/4"
-    ]
+    ],
+    disabledValues: []
   },
 
   {
@@ -60,7 +61,8 @@ export var songAttributes = [
       "AABBCCDD",
       "ABBA",
       "Freeform"
-    ]
+    ],
+    disabledValues: []
   },
 
   {
@@ -70,7 +72,8 @@ export var songAttributes = [
       "short",
       "medium",
       "long"
-    ]
+    ],
+    disabledValues: []
   },
 
   {
@@ -89,7 +92,8 @@ export var songAttributes = [
       "amazement",
       "rage",
       "freeform / emphasis on word sounds not meaning"
-    ]
+    ],
+    disabledValues: []
   },
 
   {
@@ -98,7 +102,8 @@ export var songAttributes = [
     values: [
       "catchy",
       "jammy/jazzy"
-    ]
+    ],
+    disabledValues: []
   },
 
   {
@@ -107,7 +112,8 @@ export var songAttributes = [
     values: [
       "loud/emotional, powerful",
       "simple and pretty, tender"
-    ]
+    ],
+    disabledValues: []
   },
 
   {
@@ -119,7 +125,8 @@ export var songAttributes = [
       "droning",
       "jammy",
       "building lots of tension"
-    ]
+    ],
+    disabledValues: []
   },
 
   // verse, bridge, chorus, guitar solo, synth solo, drum solo, another guitar solo, etc.
@@ -130,13 +137,15 @@ export var songAttributes = [
       "normal",
       "less",
       "more"
-    ]
+    ],
+    disabledValues: []
   },
 
   {
     name: "Lyrical Concepts",
     enabled: false,
-    values: []
+    values: [],
+    disabledValues: []
   },
 
   {
