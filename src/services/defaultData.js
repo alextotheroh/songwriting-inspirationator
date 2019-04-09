@@ -30,25 +30,25 @@ export var songAttributes = [
   },
 
   {
-    name: "Instrument to Record First",
+    name: "Part to Write First",
     enabled: true,
     selectsFromInstruments: true
   },
 
   {
-    name: "Instrument to Record Second",
+    name: "Part to Write Second",
     enabled: true,
     selectsFromInstruments: true
   },
 
   {
-    name: "Instrument to Record Third",
+    name: "Part to Write Third",
     enabled: true,
     selectsFromInstruments: true
   },
 
   {
-    name: "Instrument to Record Fourth",
+    name: "Part to Write Fourth",
     enabled: false,
     selectsFromInstruments: true
   },
@@ -91,7 +91,7 @@ export var songAttributes = [
       "fear",
       "amazement",
       "rage",
-      "freeform / emphasis on word sounds not meaning"
+      "focus on words sound not meaning"
     ],
     disabledValues: []
   },

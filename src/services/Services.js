@@ -47,8 +47,13 @@ export function getTotalNumberOfPossibilities() {
       return;
     }
 
+    if (attr.disabledValues && attr.disabledValues.length === attr.values.length) {
+      return; // because all values are disabled
+    }
+
     if ("values" in attr) {
-      possibilities *= attr.values.length;
+      var numberOfEnabledValues = attr.values.length - attr.disabledValues.length;
+      possibilities *= numberOfEnabledValues;
     } else if ("selectsFromInstruments" in attr && attr.selectsFromInstruments) {
       possibilities *= (currentInstruments.length - numberOfInstrumentsChosenSoFar);
       numberOfInstrumentsChosenSoFar += 1;
@@ -105,15 +110,29 @@ export function generateTemplate() {
   currentSongAttributes.forEach(attr => {
     if (attr.enabled) {
       if ("values" in attr) {
+        if (attr.values.length === attr.disabledValues.length) {
+          return; // this attr is functionally disabled
+        }
+        var valuesWithDisabledRemoved = attr.values.slice();
+        attr.disabledValues.forEach(disabledValue => {
+          console.log("examining disabled value: " + disabledValue);
+          if (valuesWithDisabledRemoved.includes(disabledValue)) {
+            console.log("determined disabled value IS in valuesWithDisabledRemoved array");
+            valuesWithDisabledRemoved.splice(valuesWithDisabledRemoved.indexOf(disabledValue), 1);
+            console.log("valuesWithDisabledRemoved array after removing dat boi:");
+            console.log(valuesWithDisabledRemoved);
+          }
+        });
+
         templateSongAttributes.push({
           name: attr.name,
-          value: getRandomElementFromArray(attr.values)
+          value: getRandomElementFromArray(valuesWithDisabledRemoved)
         });
 
       } else if ("selectsFromInstruments" in attr && attr.selectsFromInstruments) {
         var chosenInstrument = getRandomElementFromArray(instrumentsInSongTemplate);
         // don't let inst to record second duplicate first, and so on
-        if (attr.name.includes("Instrument to Record") && attr.name !== "Instrument to Record First") {
+        if (attr.name.includes("Part to Write") && attr.name !== "Part to Write First") {
           // is possible that enabled attributes are such that there aren't enough instruments
           var timesThroughWhileLoop = 0;
           while (instrumentToRecordXthValueNotValid(templateSongAttributes, chosenInstrument)) {
@@ -168,7 +187,7 @@ function instrumentOfNameExitsInArray(arr, name) {
 }
 
 function instrumentToRecordXthValueNotValid(chosenAttributes, chosenInstrument) {
-  var instrToRecordXthAttrs = chosenAttributes.filter(attr => attr.name.includes("Instrument to Record"));
+  var instrToRecordXthAttrs = chosenAttributes.filter(attr => attr.name.includes("Part to Write"));
   if (instrToRecordXthAttrs.find(attr => {return attr.value === chosenInstrument.name})) {
     return true;
   }
