@@ -14,11 +14,20 @@
 }
 
 .Body-possibilitiesButtonContainer {
-  display: inline-block;
-  margin-right: 60px;
+  margin-bottom: 40px;
 }
 
 .Body-possibilitiesNumber {
   color: $white;
-  margin-right: 5px;
+  font-style: italic;
+  margin-right: 20px;
+}
+
+.Body-possibilitiesTag {
+  color: $white;
+}
+
+.Body-calcIconContainer {
+  font-size: 2px;
+  color: $japanese-indigo;
 }

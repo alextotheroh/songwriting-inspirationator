@@ -3,6 +3,8 @@ import SongAttribute from './SongAttribute';
 import GeneratedTemplate from './GeneratedTemplate';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import LaunchOutlinedIcon from '@material-ui/icons/LaunchOutlined';
+import CachedIcon from '@material-ui/icons/Cached';
 import * as services from '../services/Services';
 
 class Body extends Component {
@@ -59,13 +61,16 @@ class Body extends Component {
 
         <div className="Body-buttonsContainer">
           <div className="Body-possibilitiesButtonContainer">
+            <span className="Body-possibilitiesTag">Total possibilities: </span>
             <span className="Body-possibilitiesNumber">{this.state.possibilities.toLocaleString()}</span>
             <Button variant="contained" color="primary" size="small" onClick={this.handleCalculatePossibilitiesClick}>
-              Recalculate total possibilities
+              Recalculate&nbsp;
+              <CachedIcon />
             </Button>
           </div>
           <Button variant="contained" color="primary" size="large" onClick={this.handleGenerateClick}>
-            Generate Template
+            Generate Template&nbsp;&nbsp;&nbsp;
+            <LaunchOutlinedIcon />
           </Button>
         </div>
 
