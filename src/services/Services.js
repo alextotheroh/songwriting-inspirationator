@@ -74,7 +74,9 @@ export function getTotalNumberOfPossibilities() {
       possibilities *= (currentInstruments.length - numberOfInstrumentsChosenSoFar);
       numberOfInstrumentsChosenSoFar += 1;
     } else if ("min" in attr && "max" in attr) {
-      possibilities *= (attr.max - attr.min);
+      if (attr.max - attr.min > 0) {
+        possibilities *= (attr.max - attr.min);
+      }
     }
   });
 
@@ -93,10 +95,13 @@ export function generateTemplate() {
 
         for (var i = 0; i < numberToChoose; i++) {
           var randInstrumentOfType = getRandomElementFromArray(instrumentsOfType);
+          var iters = 0;
 
-          // dedupe set of chosen instruments
+          // dedupe set of chosen instruments, with iteration limit in case number to choose is more than number to choose from
           while (instrumentOfNameExitsInArray(instrumentsInSongTemplate, randInstrumentOfType.name)) {
+            if (iters > 250) break; 
             randInstrumentOfType = getRandomElementFromArray(instrumentsOfType);
+            iters += 1;
           }
         
           instrumentsInSongTemplate.push(randInstrumentOfType);
@@ -109,7 +114,7 @@ export function generateTemplate() {
   currentSongAttributes.forEach(attr => {
     if (attr.enabled) {
       if (attr.name === "Minimum Instruments Count") {
-        while (instrumentsInSongTemplate.length < attr.value) {
+        while (instrumentsInSongTemplate.length < attr.min) {
           var randomInstrument = getRandomElementFromArray(currentInstruments);
 
           // dedupe

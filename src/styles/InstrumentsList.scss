@@ -1,0 +1,22 @@
+@import './colors';
+
+.InstrumentsList-container {
+  width: 90%;
+  margin: 40px auto;
+}
+
+.InstrumentsList-expansionPanel {
+  width: 50%;
+  min-width: 400px;
+}
+
+.InstrumentsList-title {
+  font-family: 'Spicy Rice';
+  font-size: 22px;
+  color: $black;
+}
+
+.InstrumentsList-item {
+  font-family: 'Reenie Beanie';
+  font-size: 25px;
+}

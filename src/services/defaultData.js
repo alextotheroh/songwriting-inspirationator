@@ -191,7 +191,7 @@ export var songAttributes = [
   {
     name: "Minimum Instruments Count",
     enabled: true,
-    value: 3
+    min: 3
   }
 
 ];

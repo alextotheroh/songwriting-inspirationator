@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import InstrumentsList from './InstrumentsList';
 import SongAttribute from './SongAttribute';
 import GeneratedTemplate from './GeneratedTemplate';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import LaunchOutlinedIcon from '@material-ui/icons/LaunchOutlined';
 import CachedIcon from '@material-ui/icons/Cached';
@@ -13,7 +13,6 @@ class Body extends Component {
     super(props);
 
     this.state = {
-      instruments: [],
       attributes: [],
       possibilities: 0,
       generatedTemplate: null
@@ -24,7 +23,6 @@ class Body extends Component {
     // todo determine if custom state in local storage, init from there if so
     services.initFromDefaults();
     this.setState({
-      instruments: services.getInstruments(),
       attributes: services.getSongAttributes(),
       possibilities: services.getTotalNumberOfPossibilities()
     });
@@ -36,23 +34,25 @@ class Body extends Component {
 
     return (
       <div>
+        <InstrumentsList />
         <div className="Body-songAttributeContainer">
+          <div className="Body-SongAttributesSectionTitle">Song Attributes</div>
           <Grid container spacing={8}>
             <Grid item xs={4}>
               {chunkedAttributes[0].map((attribute) => 
-                <SongAttribute attribute={attribute} instruments={this.state.instruments} key={attribute.name}/>
+                <SongAttribute attribute={attribute} key={attribute.name}/>
               )}
             </Grid>
 
             <Grid item xs={4}>
               {chunkedAttributes[1].map((attribute) => 
-                <SongAttribute attribute={attribute} instruments={this.state.instruments} key={attribute.name}/>
+                <SongAttribute attribute={attribute} key={attribute.name}/>
               )}
             </Grid>
 
             <Grid item xs={4}>
               {chunkedAttributes[2].map((attribute) => 
-                <SongAttribute attribute={attribute} instruments={this.state.instruments} key={attribute.name}/>
+                <SongAttribute attribute={attribute} key={attribute.name}/>
               )}
             </Grid>
 
@@ -63,15 +63,15 @@ class Body extends Component {
           <div className="Body-possibilitiesButtonContainer">
             <span className="Body-possibilitiesTag">Total possibilities: </span>
             <span className="Body-possibilitiesNumber">{this.state.possibilities.toLocaleString()}</span>
-            <Button variant="contained" color="primary" size="small" onClick={this.handleCalculatePossibilitiesClick}>
+            <div onClick={this.handleCalculatePossibilitiesClick}>
               Recalculate&nbsp;
               <CachedIcon />
-            </Button>
+            </div>
           </div>
-          <Button variant="contained" color="primary" size="large" onClick={this.handleGenerateClick}>
+          <div onClick={this.handleGenerateClick}>
             Generate Template&nbsp;&nbsp;&nbsp;
             <LaunchOutlinedIcon />
-          </Button>
+          </div>
         </div>
 
         <div>

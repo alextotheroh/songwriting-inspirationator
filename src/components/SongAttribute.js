@@ -30,13 +30,16 @@ class SongAttribute extends Component {
       initialStateObj['max'] = props.attribute.max;
     }
 
+    if (props.attribute.min+1) {
+      initialStateObj['min'] = props.attribute.min;
+    }
+
     this.state = initialStateObj;
   }
 
   render() {
 
     var attribute = this.props.attribute;
-    //var instruments = this.props.instruments;
 
     var enabledSwitch =
       <FormControlLabel
@@ -69,10 +72,9 @@ class SongAttribute extends Component {
       </div>
     } else if (attribute.name === "Minimum Instruments Count") {
       values = <div>
-        {"min: " + attribute.value}
+        <span>min: </span><TextField type="number" value={this.state.min} onChange={this.handleMinChange(attribute.name)} />
       </div>
     }
-      
 
     return (
       <div className="SongAttribute-container">

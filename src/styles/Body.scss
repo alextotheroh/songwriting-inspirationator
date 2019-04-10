@@ -2,7 +2,7 @@
 
 .Body-songAttributeContainer {
   width: 90%;
-  min-width: 600px;
+  min-width: 900px;
   margin: 20px auto;
 }
 
@@ -29,5 +29,11 @@
 
 .Body-calcIconContainer {
   font-size: 2px;
-  color: $japanese-indigo;
+}
+
+.Body-SongAttributesSectionTitle {
+  font-family: 'Reenie Beanie';
+  font-size: 45px;
+  color: $electric-blue;
+  margin-bottom: 10px;
 }
