@@ -149,8 +149,7 @@ class SongAttribute extends Component {
 }
 
 SongAttribute.propTypes = {
-  attribute: PropTypes.object.isRequired,
-  instruments: PropTypes.array.isRequired
+  attribute: PropTypes.object.isRequired
 }
 
 export default SongAttribute;

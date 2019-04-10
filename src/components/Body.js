@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import InstrumentsList from './InstrumentsList';
 import SongAttribute from './SongAttribute';
 import GeneratedTemplate from './GeneratedTemplate';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import LaunchOutlinedIcon from '@material-ui/icons/LaunchOutlined';
 import CachedIcon from '@material-ui/icons/Cached';
@@ -63,15 +64,15 @@ class Body extends Component {
           <div className="Body-possibilitiesButtonContainer">
             <span className="Body-possibilitiesTag">Total possibilities: </span>
             <span className="Body-possibilitiesNumber">{this.state.possibilities.toLocaleString()}</span>
-            <div onClick={this.handleCalculatePossibilitiesClick}>
-              Recalculate&nbsp;
+            <Button variant="contained" color="primary" size="small" onClick={this.handleCalculatePossibilitiesClick}>
+              <span className="Body-japaneseIndigo">Recalculate&nbsp;</span>
               <CachedIcon />
-            </div>
+            </Button>
           </div>
-          <div onClick={this.handleGenerateClick}>
-            Generate Template&nbsp;&nbsp;&nbsp;
+          <Button variant="contained" color="primary" size="large" onClick={this.handleGenerateClick}>
+            <span className="Body-japaneseIndigo">Generate Template</span>&nbsp;&nbsp;&nbsp;
             <LaunchOutlinedIcon />
-          </div>
+          </Button>
         </div>
 
         <div>

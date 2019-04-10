@@ -3,7 +3,9 @@ import * as services from '../services/Services';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Button from '@material-ui/core/Button';
 
 class InstrumentsList extends Component {
 
@@ -19,9 +21,16 @@ class InstrumentsList extends Component {
 
     var instruments = <div>
       {this.state.instruments.map(instrument => {
-        return <div className="InstrumentsList-item">- {instrument.name}</div>;
+        return <div className="InstrumentsList-item" key={instrument.name}>
+          - {instrument.name}
+        </div>;
       })}
-    </div>
+    </div>;
+
+    var addInstrumentButton = <Button color="secondary" 
+      size="large" onClick={this.handleAddInstrumentClick} className="InstrumentList-addInstrumentButton">
+      Add instrument...
+    </Button>;
 
     return (
       <div className="InstrumentsList-container">
@@ -32,9 +41,16 @@ class InstrumentsList extends Component {
           <ExpansionPanelDetails>
             {instruments}
           </ExpansionPanelDetails>
-        </ExpansionPanel>  
+          <ExpansionPanelActions>
+            {addInstrumentButton}
+          </ExpansionPanelActions>
+        </ExpansionPanel>
       </div>
     );
+  }
+
+  handleAddInstrumentClick = event => {
+
   }
 }
 
