@@ -37,6 +37,22 @@ export function enabledOrDisableValueForAttribute(attrName, value, valueIsEnable
   });
 }
 
+export function setMinForAttribute(attrName, min) {
+  currentSongAttributes.forEach(attribute => {
+    if (attribute.name === attrName) {
+      attribute.min = min;
+    }
+  });
+}
+
+export function setMaxForAttribute(attrName, max) {
+  currentSongAttributes.forEach(attribute => {
+    if (attribute.name === attrName) {
+      attribute.max = max;
+    }
+  });
+}
+
 export function getTotalNumberOfPossibilities() {
 
   var numberOfInstrumentsChosenSoFar = 0;

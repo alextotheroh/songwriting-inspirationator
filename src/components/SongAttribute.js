@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
 import * as services from '../services/Services';
 
 class SongAttribute extends Component {
@@ -22,6 +23,11 @@ class SongAttribute extends Component {
       props.attribute.values.forEach(v => {
         initialStateObj[v+"Checked"] = true; 
       })
+    }
+
+    if (props.attribute.min+1 && props.attribute.max) { // min+1 because 0 is falsy
+      initialStateObj['min'] = props.attribute.min;
+      initialStateObj['max'] = props.attribute.max;
     }
 
     this.state = initialStateObj;
@@ -58,8 +64,8 @@ class SongAttribute extends Component {
       </div>
     } else if ("min" in attribute && "max" in attribute) {
       values = <div>
-        <div>{"min: " + attribute.min}</div>
-        <div>{"max: " + attribute.max}</div>
+        <span>min: </span><TextField type="number" value={this.state.min} onChange={this.handleMinChange(attribute.name)} /><br />
+        <span>max: </span><TextField type="number" value={this.state.max} onChange={this.handleMaxChange(attribute.name)} />
       </div>
     } else if (attribute.name === "Minimum Instruments Count") {
       values = <div>
@@ -99,6 +105,44 @@ class SongAttribute extends Component {
     var newSubstate = {};
     newSubstate[value+"Checked"] = event.target.checked;
     this.setState(newSubstate);
+  }
+
+  handleMinChange = attr => event => {
+    var positiveValue = event.target.value >= 0 ? event.target.value : 0;
+    var alsoUpdateMax = false;
+    if (parseInt(positiveValue) >= parseInt(this.state.max)) {
+      alsoUpdateMax = true;
+    }
+
+    var newState = {};
+    newState['min'] = positiveValue;
+    if (alsoUpdateMax) {
+      newState['max'] = positiveValue;
+    }
+    this.setState(newState);
+    services.setMinForAttribute(attr, positiveValue);
+    if (alsoUpdateMax) {
+      services.setMaxForAttribute(attr, positiveValue);
+    }
+  }
+
+  handleMaxChange = attr => event => {
+    var positiveValue = event.target.value >= 0 ? event.target.value : 0;
+    var alsoUpdateMin = false;
+    if (parseInt(positiveValue) <= parseInt(this.state.min)) {
+      alsoUpdateMin = true;
+    }
+
+    var newState = {};
+    newState['max'] = positiveValue;
+    if (alsoUpdateMin) {
+      newState['min'] = positiveValue;
+    }
+    this.setState(newState);
+    services.setMaxForAttribute(attr, positiveValue);
+    if (alsoUpdateMin) {
+      services.setMinForAttribute(attr, positiveValue);
+    }
   }
 }
 
