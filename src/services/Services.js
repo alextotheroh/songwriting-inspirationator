@@ -129,10 +129,13 @@ export function generateTemplate() {
   currentSongAttributes.forEach(attr => {
     if ("countsInstrumentType" in attr) {
       if (attr.enabled) {
+        console.log("type: " + attr.countsInstrumentType);
         var instrumentsOfType = getInstrumentsOfType(attr.countsInstrumentType);
-        var numberToChoose = randFromRange(attr.min, attr.max);
+        var numberToChoose = randFromRange(parseInt(attr.min), parseInt(attr.max));
+        console.log("numberToChoose: " + numberToChoose);
 
         for (var i = 0; i < numberToChoose; i++) {
+          console.log("through again");
           var randInstrumentOfType = getRandomElementFromArray(instrumentsOfType);
           var iters = 0;
 
@@ -175,12 +178,8 @@ export function generateTemplate() {
         }
         var valuesWithDisabledRemoved = attr.values.slice();
         attr.disabledValues.forEach(disabledValue => {
-          console.log("examining disabled value: " + disabledValue);
           if (valuesWithDisabledRemoved.includes(disabledValue)) {
-            console.log("determined disabled value IS in valuesWithDisabledRemoved array");
             valuesWithDisabledRemoved.splice(valuesWithDisabledRemoved.indexOf(disabledValue), 1);
-            console.log("valuesWithDisabledRemoved array after removing dat boi:");
-            console.log(valuesWithDisabledRemoved);
           }
         });
 
