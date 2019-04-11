@@ -1,11 +1,26 @@
 import * as defaults from './defaultData';
 
+const CUSTOM_STATE_KEY = "SONGWRITING_INSPIRATIONATOR_CUSTOM_STATE";
 var currentInstruments;
 var currentSongAttributes;
 
-export function initFromDefaults() {
+export function init() {
+  if (CUSTOM_STATE_KEY in localStorage) {
+    initFromLocalStorage();
+  } else {
+    initFromDefaults();
+  }
+}
+
+function initFromDefaults() {
   currentInstruments = defaults.instruments;
   currentSongAttributes = defaults.songAttributes;
+}
+
+function initFromLocalStorage() {
+  var customState = JSON.parse( localStorage.getItem(CUSTOM_STATE_KEY) );
+  currentInstruments = customState.instruments;
+  currentSongAttributes = customState.songAttributes;
 }
 
 export function getInstruments() {
@@ -22,6 +37,7 @@ export function setAttributeEnabled(attrName, enabled) {
       currentSongAttributes[i].enabled = enabled;
     }
   }
+  flushCustomizationsToLocalStorage();
 }
 
 export function enabledOrDisableValueForAttribute(attrName, value, valueIsEnabled) {
@@ -35,6 +51,7 @@ export function enabledOrDisableValueForAttribute(attrName, value, valueIsEnable
       }
     }
   });
+  flushCustomizationsToLocalStorage();
 }
 
 export function setMinForAttribute(attrName, min) {
@@ -43,6 +60,7 @@ export function setMinForAttribute(attrName, min) {
       attribute.min = min;
     }
   });
+  flushCustomizationsToLocalStorage();
 }
 
 export function setMaxForAttribute(attrName, max) {
@@ -51,6 +69,27 @@ export function setMaxForAttribute(attrName, max) {
       attribute.max = max;
     }
   });
+  flushCustomizationsToLocalStorage();
+}
+
+export function addNewInstrument(name, type) {
+  currentInstruments.push({
+    name: name,
+    type: type
+  })
+  flushCustomizationsToLocalStorage();
+}
+
+export function deleteInstrumentByName(name) {
+  console.log("called it");
+  for (var i = 0; i < currentInstruments.length; i++) {
+    if (currentInstruments[i].name === name) {
+      console.log("found it");
+      currentInstruments.splice(i, 1);
+      break;
+    }
+  }
+  flushCustomizationsToLocalStorage();
 }
 
 export function getTotalNumberOfPossibilities() {
@@ -213,4 +252,12 @@ function instrumentToRecordXthValueNotValid(chosenAttributes, chosenInstrument) 
     return true;
   }
   return false;
+}
+
+function flushCustomizationsToLocalStorage() {
+  var customState = {
+    instruments: currentInstruments,
+    songAttributes: currentSongAttributes
+  };
+  localStorage.setItem(CUSTOM_STATE_KEY, JSON.stringify(customState));
 }

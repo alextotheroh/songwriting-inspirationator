@@ -143,7 +143,8 @@ class InstrumentsList extends Component {
   }
 
   handleDeleteClick = () => {
-    console.log("deleting: " + this.state.instrumentToDelete);
+    console.log(this.state.instrumentToDelete);
+    services.deleteInstrumentByName(this.state.instrumentToDelete);
     this.setState({
       anchorEl: null,
       instrumentToDelete: null
@@ -170,7 +171,8 @@ class InstrumentsList extends Component {
   }
 
   handleAddInstrumentSubmit = () => {
-
+    services.addNewInstrument(this.state.instrumentToAddName, this.state.instrumentToAddType);
+    this.setState(services.getInstruments());
   }
 }
 

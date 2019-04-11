@@ -21,8 +21,7 @@ class Body extends Component {
   }
 
   componentWillMount(props) {
-    // todo determine if custom state in local storage, init from there if so
-    services.initFromDefaults();
+    services.init();
     this.setState({
       attributes: services.getSongAttributes(),
       possibilities: services.getTotalNumberOfPossibilities()
