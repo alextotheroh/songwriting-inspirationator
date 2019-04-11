@@ -6,6 +6,8 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 class InstrumentsList extends Component {
 
@@ -13,7 +15,9 @@ class InstrumentsList extends Component {
     super(props);
 
     this.state = {
-      instruments: services.getInstruments()
+      instruments: services.getInstruments(),
+      anchorEl: null,
+      instrumentToDelete: null
     }
   }
 
@@ -21,7 +25,7 @@ class InstrumentsList extends Component {
 
     var instruments = <div>
       {this.state.instruments.map(instrument => {
-        return <div className="InstrumentsList-item" key={instrument.name}>
+        return <div className="InstrumentsList-item" key={instrument.name} onContextMenu={this.handleInstrumentRightClick(instrument.name)}>
           - {instrument.name}
         </div>;
       })}
@@ -45,12 +49,43 @@ class InstrumentsList extends Component {
             {addInstrumentButton}
           </ExpansionPanelActions>
         </ExpansionPanel>
+
+        <Menu
+          id="instContextMenu"
+          anchorEl={this.state.anchorEl}
+          open={Boolean(this.state.anchorEl)}
+          onClose={this.handleInstrumentRightClickClose}>
+          <MenuItem onClick={this.handleDeleteClick}>
+            Delete
+          </MenuItem>
+        </Menu>
       </div>
     );
   }
 
   handleAddInstrumentClick = event => {
+    // todo, pop modal?  enter instrument name and type, can submit or cancel
+  }
 
+  handleInstrumentRightClick = instrumentName => event => {
+    event.preventDefault();
+    this.setState({
+      anchorEl: event.currentTarget,
+      instrumentToDelete: instrumentName
+    });
+    
+  }
+
+  handleInstrumentRightClickClose = () => {
+    this.setState({ anchorEl: null });
+  }
+
+  handleDeleteClick = () => {
+    console.log("deleting: " + this.state.instrumentToDelete);
+    this.setState({
+      anchorEl: null,
+      instrumentToDelete: null
+    });
   }
 }
 

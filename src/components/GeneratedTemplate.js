@@ -12,7 +12,7 @@ class GeneratedTemplate extends Component {
           <Grid item xs={6}>
             <div>
               <div className="GeneratedTemplate-sectionTitle">Instruments</div>
-              {t.instruments.map(inst => <p className="GeneratedTemplate-listItem">
+              {t.instruments.map(inst => <p className="GeneratedTemplate-listItem" key={inst.name}>
                 {inst.name}
               </p>)}
             </div>
@@ -21,7 +21,7 @@ class GeneratedTemplate extends Component {
           <Grid item xs={6}>
             <div className="GeneratedTemplate-attributesContainer">
               <div className="GeneratedTemplate-sectionTitle">Attributes</div>
-              {t.attributes.map(attribute => <p className="GeneratedTemplate-listItem">
+              {t.attributes.map(attribute => <p className="GeneratedTemplate-listItem" key={attribute.name}>
                 <strong className="sectionTitleSmall">{attribute.name}</strong> <span>{": " + attribute.value}</span>
               </p>)}
             </div>
