@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import InstrumentsList from './InstrumentsList';
 import SongAttribute from './SongAttribute';
 import GeneratedTemplate from './GeneratedTemplate';
+import AddAttributeDialog from './AddAttributeDialog';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import LaunchOutlinedIcon from '@material-ui/icons/LaunchOutlined';
 import CachedIcon from '@material-ui/icons/Cached';
 import * as services from '../services/Services';
@@ -16,7 +19,9 @@ class Body extends Component {
     this.state = {
       attributes: [],
       possibilities: 0,
-      generatedTemplate: null
+      generatedTemplate: null,
+      anchorEl: null,
+      showAddAttributeDialog: false
     }
   }
 
@@ -36,7 +41,9 @@ class Body extends Component {
       <div>
         <InstrumentsList />
         <div className="Body-songAttributeContainer">
-          <div className="Body-SongAttributesSectionTitle">Song Attributes</div>
+          <div className="Body-SongAttributesSectionTitle" onContextMenu={this.handleSongAttributesRightClick}>
+            Song Attributes
+          </div>
           <Grid container spacing={8}>
             <Grid item xs={4}>
               {chunkedAttributes[0].map((attribute) => 
@@ -78,6 +85,17 @@ class Body extends Component {
           {this.state.generatedTemplate ? <GeneratedTemplate template={this.state.generatedTemplate} /> : ""}
         </div>
 
+        <Menu
+          id="attributesContextMenu"
+          anchorEl={this.state.anchorEl}
+          open={Boolean(this.state.anchorEl)}
+          onClose={this.handleAttributesRightClickClose}>
+          <MenuItem onClick={this.handleAddAttributeClick}>
+            Add new attribute...
+          </MenuItem>
+        </Menu>
+        <AddAttributeDialog open={this.state.showAddAttributeDialog} onClose={this.handleAddAttributeDialogClose}/>
+
       </div>
     );
   }
@@ -92,6 +110,29 @@ class Body extends Component {
     this.setState({
       possibilities: services.getTotalNumberOfPossibilities()
     });
+  }
+
+  handleSongAttributesRightClick = e => {
+    e.preventDefault();
+    this.setState({
+      anchorEl: e.currentTarget
+    });
+  }
+
+  handleAttributesRightClickClose = e => {
+    this.setState({
+      anchorEl: null
+    });
+  }
+
+  handleAddAttributeClick = e => {
+    this.setState({
+      showAddAttributeDialog: true
+    });
+  }
+
+  handleAddAttributeDialogClose = () => {
+    this.setState({ showAddAttributeDialog: false });
   }
 }
 
