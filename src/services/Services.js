@@ -81,10 +81,8 @@ export function addNewInstrument(name, type) {
 }
 
 export function deleteInstrumentByName(name) {
-  console.log("called it");
   for (var i = 0; i < currentInstruments.length; i++) {
     if (currentInstruments[i].name === name) {
-      console.log("found it");
       currentInstruments.splice(i, 1);
       break;
     }
@@ -98,6 +96,20 @@ export function addValueToAttributeByName(newValue, attrName) {
       attribute.values.push(newValue);
       flushCustomizationsToLocalStorage();
       return;
+    }
+  });
+}
+
+export function deleteValueFromAttribute(attrName, valueToDelete) {
+  currentSongAttributes.forEach(attribute => {
+    if (attribute.name === attrName && "values" in attribute) {
+      for (var i = 0; i < attribute.values.length; i++) {
+        if (attribute.values[i] === valueToDelete) {
+          attribute.values.splice(i, 1);
+          flushCustomizationsToLocalStorage();
+          return;
+        }
+      }
     }
   });
 }
@@ -139,13 +151,10 @@ export function generateTemplate() {
   currentSongAttributes.forEach(attr => {
     if ("countsInstrumentType" in attr) {
       if (attr.enabled) {
-        console.log("type: " + attr.countsInstrumentType);
         var instrumentsOfType = getInstrumentsOfType(attr.countsInstrumentType);
         var numberToChoose = randFromRange(parseInt(attr.min), parseInt(attr.max));
-        console.log("numberToChoose: " + numberToChoose);
 
         for (var i = 0; i < numberToChoose; i++) {
-          console.log("through again");
           var randInstrumentOfType = getRandomElementFromArray(instrumentsOfType);
           var iters = 0;
 

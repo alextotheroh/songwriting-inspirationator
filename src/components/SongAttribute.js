@@ -15,6 +15,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import * as services from '../services/Services';
 
 class SongAttribute extends Component {
@@ -43,6 +45,9 @@ class SongAttribute extends Component {
 
     initialStateObj['showAddValueDialog'] = false;
     initialStateObj['valueToAdd'] = '';
+    initialStateObj['anchorEl'] = null;
+    initialStateObj['attributeToDeleteValueFrom'] = '';
+    initialStateObj['valueToDelete'] = '';
 
     this.state = initialStateObj;
   }
@@ -69,7 +74,7 @@ class SongAttribute extends Component {
     } else if ("values" in attribute) {
       values = <div>
         {attribute.values.map(value =>
-          <div key={attribute+"-"+value}>
+          <div key={attribute+"-"+value} onContextMenu={this.handleValueRightClick(value)}>
             {"- " + value}
             <Checkbox onChange={this.handleCheckboxChangeForValuesAttr(attribute.name, value)} checked={this.state[value+"Checked"]}/>
           </div>
@@ -137,7 +142,17 @@ class SongAttribute extends Component {
           </ExpansionPanelActions> : ''}
 
         </ExpansionPanel>
+
         {addValueDialog}
+        <Menu
+          id="valueContextMenu"
+          anchorEl={this.state.anchorEl}
+          open={Boolean(this.state.anchorEl)}
+          onClose={this.handleValueRightClickClose}>
+          <MenuItem onClick={this.handleDeleteClick}>
+            Delete
+          </MenuItem>
+        </Menu>
       </div>
     );
   }
@@ -214,6 +229,28 @@ class SongAttribute extends Component {
     state[this.state.valueToAdd+"Checked"] = true;
     state["showAddValueDialog"] = false;
     this.setState(state);
+  }
+
+  handleValueRightClick = value => event => {
+    event.preventDefault();
+    this.setState({
+      anchorEl: event.currentTarget,
+      attributeToDeleteValueFrom: this.props.attribute.name,
+      valueToDelete: value
+    });
+  }
+
+  handleValueRightClickClose = event => {
+    this.setState({ anchorEl: null });
+  }
+
+  handleDeleteClick = event => {
+    services.deleteValueFromAttribute(this.state.attributeToDeleteValueFrom, this.state.valueToDelete);
+    this.setState({
+      anchorEl: null,
+      attributeToDeleteValueFrom: '',
+      valueToDelete: ''
+    });
   }
 }
 

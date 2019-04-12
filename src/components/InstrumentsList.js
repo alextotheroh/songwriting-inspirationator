@@ -135,7 +135,6 @@ class InstrumentsList extends Component {
       anchorEl: event.currentTarget,
       instrumentToDelete: instrumentName
     });
-    
   }
 
   handleInstrumentRightClickClose = () => {
@@ -143,7 +142,6 @@ class InstrumentsList extends Component {
   }
 
   handleDeleteClick = () => {
-    console.log(this.state.instrumentToDelete);
     services.deleteInstrumentByName(this.state.instrumentToDelete);
     this.setState({
       anchorEl: null,
