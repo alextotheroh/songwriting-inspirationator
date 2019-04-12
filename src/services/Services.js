@@ -92,6 +92,16 @@ export function deleteInstrumentByName(name) {
   flushCustomizationsToLocalStorage();
 }
 
+export function addValueToAttributeByName(newValue, attrName) {
+  currentSongAttributes.forEach(attribute => {
+    if (attribute.name === attrName && "values" in attribute) {
+      attribute.values.push(newValue);
+      flushCustomizationsToLocalStorage();
+      return;
+    }
+  });
+}
+
 export function getTotalNumberOfPossibilities() {
 
   var numberOfInstrumentsChosenSoFar = 0;

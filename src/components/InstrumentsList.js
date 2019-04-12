@@ -172,7 +172,10 @@ class InstrumentsList extends Component {
 
   handleAddInstrumentSubmit = () => {
     services.addNewInstrument(this.state.instrumentToAddName, this.state.instrumentToAddType);
-    this.setState(services.getInstruments());
+    this.setState({
+      instruments: services.getInstruments(),
+      addInstrumentDialogOpen: false
+    });
   }
 }
 

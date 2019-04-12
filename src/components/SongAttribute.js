@@ -8,6 +8,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
+import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import * as services from '../services/Services';
 
 class SongAttribute extends Component {
@@ -33,6 +40,9 @@ class SongAttribute extends Component {
     if (props.attribute.min+1) {
       initialStateObj['min'] = props.attribute.min;
     }
+
+    initialStateObj['showAddValueDialog'] = false;
+    initialStateObj['valueToAdd'] = '';
 
     this.state = initialStateObj;
   }
@@ -76,6 +86,36 @@ class SongAttribute extends Component {
       </div>
     }
 
+    var addValueDialog = <Dialog
+      open={this.state.showAddValueDialog}
+      onClose={this.handleAddValueDialogClose}>
+      <DialogTitle>Add Value</DialogTitle>
+      <DialogContent>
+        <div style={{width: "500px"}} />
+        <DialogContentText>
+          Enter new value
+        </DialogContentText>
+        <TextField
+          autoFocus
+          onChange={this.handleValueToAddNameChange}
+          value={this.state.valueToAdd}
+          margin="dense"
+          id="value"
+          label="Value"
+          type="text"
+          fullWidth
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={this.handleAddValueDialogClose} color="primary">
+          Cancel
+        </Button>
+        <Button onClick={this.handleAddValueSubmit} color="primary">
+          Submit
+        </Button>
+      </DialogActions>
+    </Dialog>
+
     return (
       <div className="SongAttribute-container">
         <ExpansionPanel>
@@ -88,7 +128,16 @@ class SongAttribute extends Component {
               {values}
             </div>
           </ExpansionPanelDetails>
-        </ExpansionPanel>  
+
+          {"values" in attribute ? 
+          <ExpansionPanelActions>
+            <Button color="secondary" size="large" onClick={this.handleAddValueClick}>
+              Add Value
+            </Button>
+          </ExpansionPanelActions> : ''}
+
+        </ExpansionPanel>
+        {addValueDialog}
       </div>
     );
   }
@@ -145,6 +194,26 @@ class SongAttribute extends Component {
     if (alsoUpdateMin) {
       services.setMinForAttribute(attr, positiveValue);
     }
+  }
+
+  handleAddValueClick = event => {
+    this.setState({ showAddValueDialog: true });
+  }
+
+  handleAddValueDialogClose = event => {
+    this.setState({ showAddValueDialog: false });
+  }
+
+  handleValueToAddNameChange = event => {
+    this.setState({ valueToAdd: event.target.value });
+  }
+
+  handleAddValueSubmit = event => {
+    services.addValueToAttributeByName(this.state.valueToAdd, this.props.attribute.name);
+    var state = {};
+    state[this.state.valueToAdd+"Checked"] = true;
+    state["showAddValueDialog"] = false;
+    this.setState(state);
   }
 }
 
