@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
+import * as services from '../services/Services';
 
 class AddAttributeDialog extends Component {
   constructor(props) {
@@ -48,7 +47,6 @@ class AddAttributeDialog extends Component {
             <MenuItem value="list-of-values">List of values</MenuItem>
             <MenuItem value="selects-from-instruments">Selects from instruments</MenuItem>
           </Select>
-          {/* TODO if list of values is selected, then allow to enter some values */}
       </DialogContent>
       <DialogActions>
         <Button onClick={this.handleClose} color="primary">
@@ -63,17 +61,34 @@ class AddAttributeDialog extends Component {
   }
 
   handleClose = e => {
+    this.setState({
+      attributeName: '',
+      attributeType: ''
+    });
     this.props.onClose();
   }
 
   handleSubmit = e => {
-    // todo
+    if (this.state.attributeType === "selects-from-instruments") {
+      services.addNewSelectsFromInstrumentsAttribute(this.state.attributeName);
+    } else if (this.state.attributeType === "list-of-values") {
+      services.addNewListOfValuesAttribute(this.state.attributeName);
+    } else {
+      console.error("unsupported attributeType found in AddAttributeDialog.js");
+    }
+    this.handleClose();
   }
 
   handleAttributeTypeSelectorChange = e => {
     this.setState({
       ...this.state, 
       attributeType: e.target.value
+    });
+  }
+
+  handleAttributeNameChange = e => {
+    this.setState({
+      attributeName: e.target.value
     });
   }
 }

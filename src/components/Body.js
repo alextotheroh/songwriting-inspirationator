@@ -47,19 +47,19 @@ class Body extends Component {
           <Grid container spacing={8}>
             <Grid item xs={4}>
               {chunkedAttributes[0].map((attribute) => 
-                <SongAttribute attribute={attribute} key={attribute.name}/>
+                <SongAttribute attribute={attribute} key={attribute.name} attributeDeletedCallback={this.handleAttributeDeleted} />
               )}
             </Grid>
 
             <Grid item xs={4}>
               {chunkedAttributes[1].map((attribute) => 
-                <SongAttribute attribute={attribute} key={attribute.name}/>
+                <SongAttribute attribute={attribute} key={attribute.name} attributeDeletedCallback={this.handleAttributeDeleted} />
               )}
             </Grid>
 
             <Grid item xs={4}>
               {chunkedAttributes[2].map((attribute) => 
-                <SongAttribute attribute={attribute} key={attribute.name}/>
+                <SongAttribute attribute={attribute} key={attribute.name} attributeDeletedCallback={this.handleAttributeDeleted} />
               )}
             </Grid>
 
@@ -127,12 +127,19 @@ class Body extends Component {
 
   handleAddAttributeClick = e => {
     this.setState({
-      showAddAttributeDialog: true
+      showAddAttributeDialog: true,
+      anchorEl: null
     });
   }
 
   handleAddAttributeDialogClose = () => {
     this.setState({ showAddAttributeDialog: false });
+  }
+
+  handleAttributeDeleted = () => {
+    this.setState({
+      attributes: services.getSongAttributes(),
+    });
   }
 }
 

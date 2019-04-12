@@ -45,9 +45,11 @@ class SongAttribute extends Component {
 
     initialStateObj['showAddValueDialog'] = false;
     initialStateObj['valueToAdd'] = '';
-    initialStateObj['anchorEl'] = null;
+    initialStateObj['valueAnchorEl'] = null;
+    initialStateObj['attributeAnchorEl'] = null;
     initialStateObj['attributeToDeleteValueFrom'] = '';
     initialStateObj['valueToDelete'] = '';
+    initialStateObj['attributeToDelete'] = '';
 
     this.state = initialStateObj;
   }
@@ -122,7 +124,7 @@ class SongAttribute extends Component {
     </Dialog>
 
     return (
-      <div className="SongAttribute-container">
+      <div className="SongAttribute-container" onContextMenu={this.handleAttributeRightClick}>
         <ExpansionPanel>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <span className="SongAttribute-attrName">{attribute.name}</span>
@@ -146,10 +148,20 @@ class SongAttribute extends Component {
         {addValueDialog}
         <Menu
           id="valueContextMenu"
-          anchorEl={this.state.anchorEl}
-          open={Boolean(this.state.anchorEl)}
+          anchorEl={this.state.valueAnchorEl}
+          open={Boolean(this.state.valueAnchorEl)}
           onClose={this.handleValueRightClickClose}>
-          <MenuItem onClick={this.handleDeleteClick}>
+          <MenuItem onClick={this.handleValueDeleteClick}>
+            Delete
+          </MenuItem>
+        </Menu>
+
+        <Menu
+          id="attributeContextMenu"
+          anchorEl={this.state.attributeAnchorEl}
+          open={Boolean(this.state.attributeAnchorEl)}
+          onClose={this.handleAttributeRightClickClose}>
+          <MenuItem onClick={this.handleAttributeDeleteClick}>
             Delete
           </MenuItem>
         </Menu>
@@ -216,7 +228,10 @@ class SongAttribute extends Component {
   }
 
   handleAddValueDialogClose = event => {
-    this.setState({ showAddValueDialog: false });
+    this.setState({ 
+      showAddValueDialog: false,
+      valueToAdd: ''
+    });
   }
 
   handleValueToAddNameChange = event => {
@@ -228,34 +243,57 @@ class SongAttribute extends Component {
     var state = {};
     state[this.state.valueToAdd+"Checked"] = true;
     state["showAddValueDialog"] = false;
+    state["valueToAdd"] = "";
     this.setState(state);
   }
 
   handleValueRightClick = value => event => {
     event.preventDefault();
     this.setState({
-      anchorEl: event.currentTarget,
+      valueAnchorEl: event.currentTarget,
       attributeToDeleteValueFrom: this.props.attribute.name,
       valueToDelete: value
     });
   }
 
-  handleValueRightClickClose = event => {
-    this.setState({ anchorEl: null });
+  handleAttributeRightClick = event => {
+    event.preventDefault();
+    this.setState({
+      attributeAnchorEl: event.currentTarget,
+      attributeToDelete: this.props.attribute.name,
+    });
   }
 
-  handleDeleteClick = event => {
+  handleValueRightClickClose = event => {
+    this.setState({ valueAnchorEl: null });
+  }
+
+  handleAttributeRightClickClose = event => {
+    this.setState({ attributeAnchorEl: null });
+  }
+
+  handleValueDeleteClick = event => {
     services.deleteValueFromAttribute(this.state.attributeToDeleteValueFrom, this.state.valueToDelete);
     this.setState({
-      anchorEl: null,
+      valueAnchorEl: null,
       attributeToDeleteValueFrom: '',
       valueToDelete: ''
     });
   }
+
+  handleAttributeDeleteClick = event => {
+    services.deleteAttributeByName(this.state.attributeToDelete);
+    this.setState({
+      attributeAnchorEl: null,
+      attributeToDelete: ''
+    });
+    this.props.attributeDeletedCallback();
+  }
 }
 
 SongAttribute.propTypes = {
-  attribute: PropTypes.object.isRequired
+  attribute: PropTypes.object.isRequired,
+  attributeDeletedCallback: PropTypes.func.isRequired
 }
 
 export default SongAttribute;

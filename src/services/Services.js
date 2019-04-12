@@ -114,6 +114,39 @@ export function deleteValueFromAttribute(attrName, valueToDelete) {
   });
 }
 
+export function addNewSelectsFromInstrumentsAttribute(attrName) {
+  currentSongAttributes.push(
+    {
+      name: attrName,
+      enabled: true,
+      selectsFromInstruments: true
+    }
+  );
+  flushCustomizationsToLocalStorage();
+}
+
+export function addNewListOfValuesAttribute(attrName) {
+  currentSongAttributes.push(
+    {
+      name: attrName,
+      enabled: true,
+      values: [],
+      disabledValues: []
+    }
+  );
+  flushCustomizationsToLocalStorage();
+}
+
+export function deleteAttributeByName(attrName) {
+  for (var i = 0; i < currentSongAttributes.length; i++) {
+    if (currentSongAttributes[i].name === attrName) {
+      currentSongAttributes.splice(i, 1);
+      break;
+    }
+  }
+  flushCustomizationsToLocalStorage();
+}
+
 export function getTotalNumberOfPossibilities() {
 
   var numberOfInstrumentsChosenSoFar = 0;
