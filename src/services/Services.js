@@ -282,6 +282,15 @@ function getInstrumentsOfType(type) {
   return instrumentsOfType;
 }
 
+export function getBase64EncodedState() {
+  var state = {
+    instruments: currentInstruments,
+    attributes: currentSongAttributes
+  }
+
+  return btoa( JSON.stringify(state) );
+}
+
 function getRandomElementFromArray(arr) {
   return arr[randFromRange(0, arr.length-1)];
 }

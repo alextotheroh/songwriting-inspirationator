@@ -3,18 +3,18 @@
 .Body-songAttributeContainer {
   width: 90%;
   min-width: 900px;
-  margin: 20px auto;
+  margin: 0 auto;
 }
 
 .Body-buttonsContainer {
-  width: 81.35%;
+  width: 90%;
   min-width: 300px;
   margin: 0 auto;
   text-align: right;
 }
 
 .Body-possibilitiesButtonContainer {
-  margin-bottom: 40px;
+  margin-bottom: 14px;
 }
 
 .Body-possibilitiesNumber {
@@ -40,4 +40,8 @@
 
 .Body-japaneseIndigo {
   color: $japanese-indigo;
+}
+
+.Body-white {
+  color: $white;
 }
