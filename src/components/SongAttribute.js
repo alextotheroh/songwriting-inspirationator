@@ -33,8 +33,8 @@ class SongAttribute extends Component {
         initialStateObj[v+"Checked"] = true; 
       })
     }
-
-    if (props.attribute.min+1 && props.attribute.max) { // min+1 because 0 is falsy
+    
+    if (props.attribute.min+1 && props.attribute.max+1) { // min+1 because 0 is falsy
       initialStateObj['min'] = props.attribute.min;
       initialStateObj['max'] = props.attribute.max;
     }
@@ -55,7 +55,7 @@ class SongAttribute extends Component {
   }
 
   render() {
-
+    
     var attribute = this.props.attribute;
 
     var enabledSwitch =
@@ -82,7 +82,7 @@ class SongAttribute extends Component {
           </div>
         )}
       </div>
-    } else if ("min" in attribute && "max" in attribute) {
+    } else if ("min" in attribute && "max" in attribute && attribute.name !== "Minimum Instruments Count") {
       values = <div>
         <span>min: </span><TextField type="number" value={this.state.min} onChange={this.handleMinChange(attribute.name)} /><br />
         <span>max: </span><TextField type="number" value={this.state.max} onChange={this.handleMaxChange(attribute.name)} />
@@ -294,13 +294,12 @@ class SongAttribute extends Component {
       attributeAnchorEl: null,
       attributeToDelete: ''
     });
-    this.props.attributeDeletedCallback();
+    this.props.onStateUpdated();
   }
 }
 
 SongAttribute.propTypes = {
   attribute: PropTypes.object.isRequired,
-  attributeDeletedCallback: PropTypes.func.isRequired,
   onStateUpdated: PropTypes.func.isRequired
 }
 

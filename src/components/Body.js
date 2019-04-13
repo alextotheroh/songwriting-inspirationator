@@ -49,7 +49,7 @@ class Body extends Component {
 
     return (
       <div>
-        <InstrumentsList instruments={this.state.instruments} />
+        <InstrumentsList instruments={this.state.instruments} onStateUpdated={this.stateUpdated}/>
         <div className="Body-songAttributeContainer">
           <div className="Body-SongAttributesSectionTitle" onContextMenu={this.handleSongAttributesRightClick}>
             Song Attributes
@@ -58,21 +58,21 @@ class Body extends Component {
             <Grid item xs={4}>
               {chunkedAttributes[0].map((attribute) => 
                 <SongAttribute attribute={attribute} key={attribute.name} 
-                  attributeDeletedCallback={this.handleAttributeDeleted} onStateUpdated={this.stateUpdated}/>
+                  onStateUpdated={this.stateUpdated}/>
               )}
             </Grid>
 
             <Grid item xs={4}>
               {chunkedAttributes[1].map((attribute) => 
-                <SongAttribute attribute={attribute} key={attribute.name} 
-                  attributeDeletedCallback={this.handleAttributeDeleted} onStateUpdated={this.stateUpdated}/>
+                <SongAttribute attribute={attribute} key={attribute.name}
+                  onStateUpdated={this.stateUpdated}/>
               )}
             </Grid>
 
             <Grid item xs={4}>
               {chunkedAttributes[2].map((attribute) => 
-                <SongAttribute attribute={attribute} key={attribute.name} 
-                  attributeDeletedCallback={this.handleAttributeDeleted} onStateUpdated={this.stateUpdated}/>
+                <SongAttribute attribute={attribute} key={attribute.name}
+                  onStateUpdated={this.stateUpdated}/>
               )}
             </Grid>
 
@@ -159,10 +159,6 @@ class Body extends Component {
     this.setState({ showAddAttributeDialog: false });
   }
 
-  handleAttributeDeleted = () => {
-    this.stateUpdated();
-  }
-
   handleExportClick = e => {
     this.setState({
       showExportConfigDialog: true
@@ -187,7 +183,7 @@ class Body extends Component {
     });
   }
 
-  handleConfigImported = () => {
+  stateUpdated = () => {
     this.setState({
       attributes: services.getSongAttributes(),
       instruments: services.getInstruments(),
@@ -195,12 +191,10 @@ class Body extends Component {
     });
   }
 
-  stateUpdated = () => {
-    this.setState({
-      attributes: services.getSongAttributes(),
-      instruments: services.getInstruments(),
-      exportHref: "data:application/octet-stream;charset=utf-8;base64," + services.getBase64EncodedState()
-    });
+  // needed because controlling mins/maxes inside of expansion panels 
+  // from props that change over time is stupid complex.  Refreshing on import is ezpz.
+  handleConfigImported = () => {
+    window.location.reload();
   }
 }
 

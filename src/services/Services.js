@@ -54,6 +54,15 @@ export function enabledOrDisableValueForAttribute(attrName, value, valueIsEnable
   flushCustomizationsToLocalStorage();
 }
 
+export function setInstrumentEnabledByName(instName, enabled) {
+  currentInstruments.forEach(instrument => {
+    if (instrument.name === instName) {
+      instrument.enabled = enabled
+    }
+  });
+  flushCustomizationsToLocalStorage();
+}
+
 export function setMinForAttribute(attrName, min) {
   currentSongAttributes.forEach(attribute => {
     if (attribute.name === attrName) {
@@ -75,7 +84,8 @@ export function setMaxForAttribute(attrName, max) {
 export function addNewInstrument(name, type) {
   currentInstruments.push({
     name: name,
-    type: type
+    type: type,
+    enabled: true
   })
   flushCustomizationsToLocalStorage();
 }
@@ -167,7 +177,7 @@ export function getTotalNumberOfPossibilities() {
       var numberOfEnabledValues = attr.values.length - attr.disabledValues.length;
       possibilities *= numberOfEnabledValues;
     } else if ("selectsFromInstruments" in attr && attr.selectsFromInstruments) {
-      possibilities *= (currentInstruments.length - numberOfInstrumentsChosenSoFar);
+      possibilities *= (enabledInstrumentsCount() - numberOfInstrumentsChosenSoFar);
       numberOfInstrumentsChosenSoFar += 1;
     } else if ("min" in attr && "max" in attr) {
       if (attr.max - attr.min > 0) {
@@ -186,7 +196,8 @@ export function generateTemplate() {
   currentSongAttributes.forEach(attr => {
     if ("countsInstrumentType" in attr) {
       if (attr.enabled) {
-        var instrumentsOfType = getInstrumentsOfType(attr.countsInstrumentType);
+        var instrumentsOfType = getEnabledInstrumentsOfType(attr.countsInstrumentType);
+        if (instrumentsOfType.length <= 0) return;
         var numberToChoose = randFromRange(parseInt(attr.min), parseInt(attr.max));
 
         for (var i = 0; i < numberToChoose; i++) {
@@ -207,22 +218,24 @@ export function generateTemplate() {
     }
   });
 
-  currentSongAttributes.forEach(attr => {
-    if (attr.enabled) {
-      if (attr.name === "Minimum Instruments Count") {
-        while (instrumentsInSongTemplate.length < attr.min) {
-          var randomInstrument = getRandomElementFromArray(currentInstruments);
-
-          // dedupe
-          while (instrumentOfNameExitsInArray(instrumentsInSongTemplate, randomInstrument.name)) {
-            randomInstrument = getRandomElementFromArray(currentInstruments);
+  if (enabledInstruments().length > 0) {
+    currentSongAttributes.forEach(attr => {
+      if (attr.enabled) {
+        if (attr.name === "Minimum Instruments Count") {
+          while (instrumentsInSongTemplate.length < attr.min) {
+            var randomInstrument = getRandomElementFromArray(enabledInstruments());
+  
+            // dedupe
+            while (instrumentOfNameExitsInArray(instrumentsInSongTemplate, randomInstrument.name)) {
+              randomInstrument = getRandomElementFromArray(enabledInstruments());
+            }
+  
+            instrumentsInSongTemplate.push(randomInstrument);
           }
-
-          instrumentsInSongTemplate.push(randomInstrument);
         }
       }
-    }
-  });
+    });
+  }
 
   currentSongAttributes.forEach(attr => {
     if (attr.enabled) {
@@ -273,10 +286,10 @@ export function generateTemplate() {
   
 }
 
-function getInstrumentsOfType(type) {
+function getEnabledInstrumentsOfType(type) {
   var instrumentsOfType = [];
   currentInstruments.forEach(instrument => {
-    if (instrument.type === type) {
+    if (instrument.type === type && instrument.enabled) {
       instrumentsOfType.push(instrument);
     }
   });
@@ -344,4 +357,27 @@ function flushCustomizationsToLocalStorage() {
     songAttributes: currentSongAttributes
   };
   localStorage.setItem(CUSTOM_STATE_KEY, JSON.stringify(customState));
+}
+
+function enabledInstruments() {
+  var enabledInstruments = [];
+
+  currentInstruments.forEach(instrument => {
+    if (instrument.enabled) {
+      enabledInstruments.push(instrument);
+    }
+  });
+
+  return enabledInstruments;
+}
+
+function enabledInstrumentsCount() {
+  var count = 0;
+  currentInstruments.forEach(instrument => {
+    if (instrument.enabled) {
+      count += 1;
+    }
+  });
+
+  return count;
 }

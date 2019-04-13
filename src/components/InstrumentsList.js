@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as services from '../services/Services';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -18,19 +19,25 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
+import Checkbox from '@material-ui/core/Checkbox';
 
 class InstrumentsList extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
+    var initialState = {
       anchorEl: null,
       instrumentToDelete: null,
       addInstrumentDialogOpen: false,
       instrumentToAddType: "",
       instrumentToAddName: ""
     }
+    this.props.instruments.forEach(instrument => {
+      initialState[instrument.name+"Checked"] = instrument.enabled
+    })
+
+    this.state=(initialState);
   }
 
   render() {
@@ -39,6 +46,7 @@ class InstrumentsList extends Component {
       {this.props.instruments.map(instrument => {
         return <div className="InstrumentsList-item" key={instrument.name} onContextMenu={this.handleInstrumentRightClick(instrument.name)}>
           - {instrument.name}
+          <Checkbox onChange={this.handleCheckboxChangeForInstrument(instrument.name)} checked={this.state[instrument.name+"Checked"]}/>
         </div>;
       })}
     </div>;
@@ -140,6 +148,15 @@ class InstrumentsList extends Component {
     this.setState({ anchorEl: null });
   }
 
+  handleCheckboxChangeForInstrument = instName => e => {
+    services.setInstrumentEnabledByName(instName, e.target.checked);
+    var newSubstate = {};
+    newSubstate[instName+"Checked"] = e.target.checked;
+
+    this.setState(newSubstate);
+    this.props.onStateUpdated();
+  }
+
   handleDeleteClick = () => {
     services.deleteInstrumentByName(this.state.instrumentToDelete);
     this.setState({
@@ -171,13 +188,21 @@ class InstrumentsList extends Component {
 
   handleAddInstrumentSubmit = () => {
     services.addNewInstrument(this.state.instrumentToAddName, this.state.instrumentToAddType);
-    this.setState({
+    var newSubstate = {
       instruments: services.getInstruments(),
       addInstrumentDialogOpen: false,
       instrumentToAddName: '',
       instrumentToAddType: ''
-    });
+    };
+    newSubstate[this.state.instrumentToAddName+"Checked"] = true;
+    this.setState(newSubstate);
+    this.props.onStateUpdated();
   }
+}
+
+InstrumentsList.propTypes = {
+  onStateUpdated: PropTypes.func.isRequired,
+  instruments: PropTypes.array.isRequired
 }
 
 export default InstrumentsList;

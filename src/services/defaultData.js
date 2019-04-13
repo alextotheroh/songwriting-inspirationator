@@ -1,20 +1,21 @@
 export var instruments = [
-  {name: "Acoustic Guitar", type: "guitar"},
-  {name: "Electric Guitar (Clean)", type: "guitar"},
-  {name: "Electric Guitar (Overdrive/Distortion)", type: "guitar"},
-  {name: "Electric Guitar (Fuzz)", type: "guitar"},
-  {name: "Electric Guitar (Wah)", type: "guitar"},
-  {name: "Electric Guitar (Tremolo)", type: "guitar"},
-  {name: "Electric Bass", type: "bass"},
-  {name: "Organ", type: "keys"},
-  {name: "Gooey Synth", type: "keys"},
-  {name: "Aggressive Synth", type: "keys"},
-  {name: "Piano", type: "keys"},
-  {name: "Creepy/Eerie/Unsettling Sounds", type: "ambient"},
-  {name: "Pads", type: "ambient"},
-  {name: "Ride-Heavy Drums", type: "drums"},
-  {name: "Tight-Hat Drums", type: "drums"},
-  {name: "Hand Drums", type: "drums"}
+  {name: "Acoustic Guitar", type: "guitar", enabled: true},
+  {name: "Electric Guitar (Clean)", type: "guitar", enabled: true},
+  {name: "Electric Guitar (Overdrive/Distortion)", type: "guitar", enabled: true},
+  {name: "Electric Guitar (Fuzz)", type: "guitar", enabled: true},
+  {name: "Electric Guitar (Wah)", type: "guitar", enabled: true},
+  {name: "Electric Guitar (Tremolo)", type: "guitar", enabled: true},
+  {name: "Electric Bass", type: "bass", enabled: true},
+  {name: "Organ", type: "keys", enabled: true},
+  {name: "Gooey Synth", type: "keys", enabled: true},
+  {name: "Aggressive Synth", type: "keys", enabled: true},
+  {name: "Piano", type: "keys", enabled: true},
+  {name: "Creepy/Eerie/Unsettling Sounds", type: "ambient", enabled: true},
+  {name: "Pads", type: "ambient", enabled: true},
+  {name: "Ride-Heavy Drums", type: "drums", enabled: true},
+  {name: "Tight-Hat Drums", type: "drums", enabled: true},
+  {name: "Hand Drums", type: "drums", enabled: true},
+  {name: "Electronic Drum Sounds", type: "drums", enabled: true}
 ];
 
 export var songAttributes = [
