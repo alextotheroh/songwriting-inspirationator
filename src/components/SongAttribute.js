@@ -152,7 +152,7 @@ class SongAttribute extends Component {
           open={Boolean(this.state.valueAnchorEl)}
           onClose={this.handleValueRightClickClose}>
           <MenuItem onClick={this.handleValueDeleteClick}>
-            Delete
+            Delete value
           </MenuItem>
         </Menu>
 
@@ -162,7 +162,7 @@ class SongAttribute extends Component {
           open={Boolean(this.state.attributeAnchorEl)}
           onClose={this.handleAttributeRightClickClose}>
           <MenuItem onClick={this.handleAttributeDeleteClick}>
-            Delete
+            Delete entire attribute
           </MenuItem>
         </Menu>
       </div>
@@ -175,6 +175,7 @@ class SongAttribute extends Component {
     });
 
     services.setAttributeEnabled(attrName, event.target.checked);
+    this.props.onStateUpdated();
   }
 
   handleCheckboxChangeForValuesAttr = (attrName, value) => event => {
@@ -183,6 +184,7 @@ class SongAttribute extends Component {
     var newSubstate = {};
     newSubstate[value+"Checked"] = event.target.checked;
     this.setState(newSubstate);
+    this.props.onStateUpdated();
   }
 
   handleMinChange = attr => event => {
@@ -202,6 +204,7 @@ class SongAttribute extends Component {
     if (alsoUpdateMax) {
       services.setMaxForAttribute(attr, positiveValue);
     }
+    this.props.onStateUpdated();
   }
 
   handleMaxChange = attr => event => {
@@ -221,6 +224,7 @@ class SongAttribute extends Component {
     if (alsoUpdateMin) {
       services.setMinForAttribute(attr, positiveValue);
     }
+    this.props.onStateUpdated();
   }
 
   handleAddValueClick = event => {
@@ -245,10 +249,12 @@ class SongAttribute extends Component {
     state["showAddValueDialog"] = false;
     state["valueToAdd"] = "";
     this.setState(state);
+    this.props.onStateUpdated();
   }
 
   handleValueRightClick = value => event => {
     event.preventDefault();
+    event.stopPropagation();
     this.setState({
       valueAnchorEl: event.currentTarget,
       attributeToDeleteValueFrom: this.props.attribute.name,
@@ -259,7 +265,7 @@ class SongAttribute extends Component {
   handleAttributeRightClick = event => {
     event.preventDefault();
     this.setState({
-      attributeAnchorEl: event.currentTarget,
+      attributeAnchorEl: event.target,
       attributeToDelete: this.props.attribute.name,
     });
   }
@@ -279,6 +285,7 @@ class SongAttribute extends Component {
       attributeToDeleteValueFrom: '',
       valueToDelete: ''
     });
+    this.props.onStateUpdated();
   }
 
   handleAttributeDeleteClick = event => {
@@ -293,7 +300,8 @@ class SongAttribute extends Component {
 
 SongAttribute.propTypes = {
   attribute: PropTypes.object.isRequired,
-  attributeDeletedCallback: PropTypes.func.isRequired
+  attributeDeletedCallback: PropTypes.func.isRequired,
+  onStateUpdated: PropTypes.func.isRequired
 }
 
 export default SongAttribute;

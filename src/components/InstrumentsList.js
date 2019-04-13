@@ -25,7 +25,6 @@ class InstrumentsList extends Component {
     super(props);
 
     this.state = {
-      instruments: services.getInstruments(),
       anchorEl: null,
       instrumentToDelete: null,
       addInstrumentDialogOpen: false,
@@ -37,7 +36,7 @@ class InstrumentsList extends Component {
   render() {
 
     var instruments = <div>
-      {this.state.instruments.map(instrument => {
+      {this.props.instruments.map(instrument => {
         return <div className="InstrumentsList-item" key={instrument.name} onContextMenu={this.handleInstrumentRightClick(instrument.name)}>
           - {instrument.name}
         </div>;
@@ -151,7 +150,9 @@ class InstrumentsList extends Component {
 
   handleAddInstrumentDialogClose = () => {
     this.setState({
-      addInstrumentDialogOpen: false
+      addInstrumentDialogOpen: false,
+      instrumentToAddName: '',
+      instrumentToAddType: ''
     });
   }
 
@@ -172,7 +173,9 @@ class InstrumentsList extends Component {
     services.addNewInstrument(this.state.instrumentToAddName, this.state.instrumentToAddType);
     this.setState({
       instruments: services.getInstruments(),
-      addInstrumentDialogOpen: false
+      addInstrumentDialogOpen: false,
+      instrumentToAddName: '',
+      instrumentToAddType: ''
     });
   }
 }

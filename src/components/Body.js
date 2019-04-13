@@ -4,6 +4,7 @@ import SongAttribute from './SongAttribute';
 import GeneratedTemplate from './GeneratedTemplate';
 import AddAttributeDialog from './AddAttributeDialog';
 import ExportConfigDialog from './ExportConfigDialog';
+import ImportConfigDialog from './ImportConfigDialog';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Menu from '@material-ui/core/Menu';
@@ -21,11 +22,14 @@ class Body extends Component {
 
     this.state = {
       attributes: [],
+      instruments: [],
       possibilities: 0,
       generatedTemplate: null,
       anchorEl: null,
       showAddAttributeDialog: false,
-      showExportConfigDialog: false
+      showExportConfigDialog: false,
+      showImportConfigDialog: false,
+      exportHref: ''
     }
   }
 
@@ -33,7 +37,9 @@ class Body extends Component {
     services.init();
     this.setState({
       attributes: services.getSongAttributes(),
-      possibilities: services.getTotalNumberOfPossibilities()
+      instruments: services.getInstruments(),
+      possibilities: services.getTotalNumberOfPossibilities(),
+      exportHref: "data:application/octet-stream;charset=utf-8;base64," + services.getBase64EncodedState()
     });
   }
 
@@ -43,7 +49,7 @@ class Body extends Component {
 
     return (
       <div>
-        <InstrumentsList />
+        <InstrumentsList instruments={this.state.instruments} />
         <div className="Body-songAttributeContainer">
           <div className="Body-SongAttributesSectionTitle" onContextMenu={this.handleSongAttributesRightClick}>
             Song Attributes
@@ -51,19 +57,22 @@ class Body extends Component {
           <Grid container spacing={8}>
             <Grid item xs={4}>
               {chunkedAttributes[0].map((attribute) => 
-                <SongAttribute attribute={attribute} key={attribute.name} attributeDeletedCallback={this.handleAttributeDeleted} />
+                <SongAttribute attribute={attribute} key={attribute.name} 
+                  attributeDeletedCallback={this.handleAttributeDeleted} onStateUpdated={this.stateUpdated}/>
               )}
             </Grid>
 
             <Grid item xs={4}>
               {chunkedAttributes[1].map((attribute) => 
-                <SongAttribute attribute={attribute} key={attribute.name} attributeDeletedCallback={this.handleAttributeDeleted} />
+                <SongAttribute attribute={attribute} key={attribute.name} 
+                  attributeDeletedCallback={this.handleAttributeDeleted} onStateUpdated={this.stateUpdated}/>
               )}
             </Grid>
 
             <Grid item xs={4}>
               {chunkedAttributes[2].map((attribute) => 
-                <SongAttribute attribute={attribute} key={attribute.name} attributeDeletedCallback={this.handleAttributeDeleted} />
+                <SongAttribute attribute={attribute} key={attribute.name} 
+                  attributeDeletedCallback={this.handleAttributeDeleted} onStateUpdated={this.stateUpdated}/>
               )}
             </Grid>
 
@@ -107,8 +116,9 @@ class Body extends Component {
             Add new attribute...
           </MenuItem>
         </Menu>
-        <AddAttributeDialog open={this.state.showAddAttributeDialog} onClose={this.handleAddAttributeDialogClose}/>
-        <ExportConfigDialog open={this.state.showExportConfigDialog} onClose={this.handleExportDialogClose} />        
+        <AddAttributeDialog open={this.state.showAddAttributeDialog} onClose={this.handleAddAttributeDialogClose} onStateUpdated={this.stateUpdated}/>
+        <ExportConfigDialog open={this.state.showExportConfigDialog} onClose={this.handleExportDialogClose} exportHref={this.state.exportHref} />
+        <ImportConfigDialog open={this.state.showImportConfigDialog} onClose={this.handleImportDialogClose} importedConfigCallback={this.handleConfigImported}/>       
       </div>
     );
   }
@@ -150,9 +160,7 @@ class Body extends Component {
   }
 
   handleAttributeDeleted = () => {
-    this.setState({
-      attributes: services.getSongAttributes(),
-    });
+    this.stateUpdated();
   }
 
   handleExportClick = e => {
@@ -168,7 +176,31 @@ class Body extends Component {
   }
 
   handleImportClick = e => {
-    console.log("import clicked");
+    this.setState({
+      showImportConfigDialog: true
+    });
+  }
+
+  handleImportDialogClose = () => {
+    this.setState({
+      showImportConfigDialog: false
+    });
+  }
+
+  handleConfigImported = () => {
+    this.setState({
+      attributes: services.getSongAttributes(),
+      instruments: services.getInstruments(),
+      exportHref: "data:application/octet-stream;charset=utf-8;base64," + services.getBase64EncodedState()
+    });
+  }
+
+  stateUpdated = () => {
+    this.setState({
+      attributes: services.getSongAttributes(),
+      instruments: services.getInstruments(),
+      exportHref: "data:application/octet-stream;charset=utf-8;base64," + services.getBase64EncodedState()
+    });
   }
 }
 

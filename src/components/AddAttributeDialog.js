@@ -76,6 +76,7 @@ class AddAttributeDialog extends Component {
     } else {
       console.error("unsupported attributeType found in AddAttributeDialog.js");
     }
+    this.props.onStateUpdated();
     this.handleClose();
   }
 
@@ -95,7 +96,8 @@ class AddAttributeDialog extends Component {
 
 AddAttributeDialog.propTypes = {
   open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  onStateUpdated: PropTypes.func.isRequired
 };
 
 export default AddAttributeDialog;

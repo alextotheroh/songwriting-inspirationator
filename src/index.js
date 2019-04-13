@@ -8,6 +8,7 @@ import './styles/Footer.scss';
 import './styles/SongAttribute.scss';
 import './styles/GeneratedTemplate.scss';
 import './styles/InstrumentsList.scss';
+import './styles/ImportConfigDialog.scss';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 

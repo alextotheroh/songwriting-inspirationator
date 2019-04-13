@@ -134,6 +134,8 @@ export function addNewListOfValuesAttribute(attrName) {
       disabledValues: []
     }
   );
+  console.log("after adding list of values attribute, currentSongAttributes variable is: ");
+  console.log(currentSongAttributes);
   flushCustomizationsToLocalStorage();
 }
 
@@ -289,6 +291,28 @@ export function getBase64EncodedState() {
   }
 
   return btoa( JSON.stringify(state) );
+}
+
+export function setStateFromFileContents(importedStateString) {
+  if (typeof importedStateString !== "string") {
+    return "incorrect type of file content";
+  }
+
+  var obj = JSON.parse(importedStateString);
+  console.log(obj);
+
+  if (!("instruments" in obj)) {
+    return "configuration doesn't contain instruments";
+  }
+
+  if (!("attributes" in obj)) {
+    return "configuration doesn't contain attributes";
+  }
+
+  currentInstruments = obj.instruments;
+  currentSongAttributes = obj.attributes;
+  flushCustomizationsToLocalStorage();
+  return "ok";
 }
 
 function getRandomElementFromArray(arr) {
