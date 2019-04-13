@@ -10,10 +10,15 @@
   background-size: 100%;
   padding: 50px;
   border-radius: 5px;
-  -webkit-box-shadow: 0px 0px 6px 5px rgba(212,215,220,1);
-  -moz-box-shadow: 0px 0px 6px 5px rgba(212,215,220,1);
   box-shadow: 0px 0px 6px 5px rgba(212,215,220,1);
 }
+
+@media print {
+  .GeneratedTemplate-container {
+    margin-top: 20mm;
+    background-image: none;
+    box-shadow: 0px 0px 0px 0px #000000;
+}}
 
 .GeneratedTemplate-attributesContainer {
   width: 100%;
