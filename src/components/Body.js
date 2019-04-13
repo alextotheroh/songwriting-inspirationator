@@ -12,7 +12,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import LaunchOutlinedIcon from '@material-ui/icons/LaunchOutlined';
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import UnarchiveOutlinedIcon from '@material-ui/icons/UnarchiveOutlined';
-import CachedIcon from '@material-ui/icons/Cached';
 import * as services from '../services/Services';
 
 class Body extends Component {
@@ -88,19 +87,15 @@ class Body extends Component {
           <Button variant="contained" color="secondary" size="small" onClick={this.handleImportClick}>
             <span className="Body-white">Import Configuration</span>&nbsp;&nbsp;
             <UnarchiveOutlinedIcon style={{color: "f0f0f0"}} />
-          </Button><br/><br/>
-          <div className="Body-possibilitiesButtonContainer">
-            <span className="Body-possibilitiesTag">Total possibilities: </span>
-            <span className="Body-possibilitiesNumber">{this.state.possibilities.toLocaleString()}</span>
-            <Button variant="contained" color="secondary" size="small" onClick={this.handleCalculatePossibilitiesClick}>
-              <span className="Body-white">Recalculate&nbsp;</span>
-              <CachedIcon style={{color: "f0f0f0"}} />
-            </Button>
-          </div><br/>
+          </Button><br/><br/><br/>
           <Button variant="contained" color="primary" size="large" onClick={this.handleGenerateClick}>
             <span>Generate Template</span>&nbsp;&nbsp;&nbsp;
             <LaunchOutlinedIcon />
           </Button>
+          <div className="Body-possibilitiesContainer">
+            <span className="Body-possibilitiesTag">Total possibilities: </span>
+            <span className="Body-possibilitiesNumber">{this.state.possibilities.toLocaleString()}</span>
+          </div>
         </div>
 
         <div>
@@ -187,7 +182,8 @@ class Body extends Component {
     this.setState({
       attributes: services.getSongAttributes(),
       instruments: services.getInstruments(),
-      exportHref: "data:application/octet-stream;charset=utf-8;base64," + services.getBase64EncodedState()
+      exportHref: "data:application/octet-stream;charset=utf-8;base64," + services.getBase64EncodedState(),
+      possibilities: services.getTotalNumberOfPossibilities()
     });
   }
 
