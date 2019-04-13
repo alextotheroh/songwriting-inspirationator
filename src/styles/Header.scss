@@ -1,11 +1,19 @@
 @import './colors.scss';
 
+.Header-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+
 .Header-title {
-  display: table;
   font-family: 'Spicy Rice', cursive;
-  font-size: 40px;
+  font-size: 60px;
   color: $electric-blue;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
+}
+
+.Header-helpIconContainer {
+  position: absolute;
+  right: 1%;
 }
