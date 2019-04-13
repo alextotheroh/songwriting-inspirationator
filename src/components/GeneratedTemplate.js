@@ -8,7 +8,7 @@ class GeneratedTemplate extends Component {
 
     return (
       <div className="GeneratedTemplate-container">
-        <Grid container spacing={24}>
+        <Grid container spacing={2}>
           <Grid item xs={6}>
             <div>
               <div className="GeneratedTemplate-sectionTitle">Instruments</div>
