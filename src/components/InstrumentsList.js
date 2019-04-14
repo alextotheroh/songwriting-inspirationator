@@ -163,6 +163,7 @@ class InstrumentsList extends Component {
       anchorEl: null,
       instrumentToDelete: null
     });
+    this.props.onStateUpdated();
   }
 
   handleAddInstrumentDialogClose = () => {
