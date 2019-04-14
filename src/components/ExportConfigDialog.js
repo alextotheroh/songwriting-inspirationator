@@ -17,7 +17,7 @@ class ExportConfigDialog extends Component {
         your settings will be lost!  <br/><br/>Exporting your settings allows you to reimport them later using the generated file.  
         <br/><br/>It also allows you to share your settings with others.<br/><br/><br/>
 
-        <a download="config.sicfg" href={this.props.exportHref}>Click here to export current configuration</a>
+        <a download="si-config.txt" href={this.props.exportHref}>Click here to export current configuration</a>
       </DialogContent>
     </Dialog>
     );

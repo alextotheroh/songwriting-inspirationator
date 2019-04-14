@@ -29,7 +29,7 @@ class ImportConfigDialog extends Component {
       <DialogContent>
         Import configuration from a file. <br/><br/>WARNING: this erases all the current settings!
 
-        <Dropzone onDrop={acceptedFiles => this.setUploadedFile(acceptedFiles)} accept=".sicfg">
+        <Dropzone onDrop={acceptedFiles => this.setUploadedFile(acceptedFiles)} accept=".txt">
           {({getRootProps, getInputProps}) => (
             <section>
               <div {...getRootProps()} className="ImportConfigDialog-dropzone">
