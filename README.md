@@ -1,6 +1,9 @@
 # Songwriting Inspirationator
 Generate randomized song outlines! Write songs by filling in the blanks!
 
+### live app
+https://www.songwriting-inspirationator.com/
+
 ### `npm start`
 
 Runs the app in the development mode.<br>
