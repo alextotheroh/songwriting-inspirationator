@@ -9,6 +9,8 @@ import './styles/SongAttribute.scss';
 import './styles/GeneratedTemplate.scss';
 import './styles/InstrumentsList.scss';
 import './styles/ImportConfigDialog.scss';
+import './styles/Nav.scss';
+import './styles/base_shit.scss';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 

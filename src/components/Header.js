@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import Nav from './Nav.js';
 import IconButton from '@material-ui/core/IconButton';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { Link } from "react-router-dom";
 
 class Header extends Component {
   constructor(props) {
@@ -15,20 +17,9 @@ class Header extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <div className="Header-container">
-          <div className="Header-title">
-            Songwriting Inspirationator
-          </div>
-          <div className="Header-helpIconContainer">
-            <IconButton onClick={this.handleHelpClick}>
-              <HelpOutlineIcon color='primary'/>
-            </IconButton>
-          </div>
-        </div>
 
-        <Dialog
+    var dialogOpenedByHelpButton = (
+      <Dialog
           open={this.state.dialogOpen}
           onClose={this.handleDialogClose}>
           <div style={{width: 1000}} />
@@ -52,6 +43,30 @@ class Header extends Component {
             
           </DialogContent>
         </Dialog>
+    );
+
+    return (
+      <div>
+        <div className="Header-container-container"> { /* yeah I know, it's a personal project OK? */ }
+          <div className="Header-container">
+            <div className="Header-title theme-color-1">
+              <Link to="/" underline='none'>
+                Songwriting Inspirationator
+              </Link>
+            </div>
+            <div className="Header-helpIconContainer">
+              <IconButton onClick={this.handleHelpClick}>
+                <HelpOutlineIcon color='primary'/>
+              </IconButton>
+            </div>
+          </div>
+
+          <Nav />
+
+        </div>
+
+        {dialogOpenedByHelpButton}
+        
       </div>
     );
   }

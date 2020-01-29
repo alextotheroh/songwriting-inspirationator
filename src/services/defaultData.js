@@ -196,3 +196,12 @@ export var songAttributes = [
   }
 
 ];
+
+export var waysToStartASong = [
+  "Pick an interesting scale or mode, and build chords from it, building a progression. Don't be afraid to try inversions. Try apreggiating chords. After have chordal stuff, get a cool melody going on top of it. Don't be afraid to try this on guitar and piano.",
+  "Develop a cool synth sound and create a riff/melody based on where it takes you.",
+  "Develop an interesting drum beat, then write a melody that works with it",
+  "Take an interesting lyric and find a melody that works perfectly with it and build from there",
+  "Start with a simple, catchy chord progression and melody and make it more interesting later (synth drones, weird sounds, etc.)",
+  "Develop a cool guitar sound (lots of effects) and create a riff/melody based on where it takes you"
+]

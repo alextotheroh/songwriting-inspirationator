@@ -14,7 +14,7 @@ import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import UnarchiveOutlinedIcon from '@material-ui/icons/UnarchiveOutlined';
 import * as services from '../services/Services';
 
-class Body extends Component {
+class SongwritingInspirationator extends Component {
 
   constructor(props) {
     super(props);
@@ -208,4 +208,4 @@ function chunkArray(myArray, chunk_size) {
   return tempArray;
 }
 
-export default Body;
+export default SongwritingInspirationator;

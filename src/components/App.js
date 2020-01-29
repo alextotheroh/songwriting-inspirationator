@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import Header from './Header';
-import Body from './Body';
+import SongwritingInspirationator from './SongwritingInspirationator';
 import Footer from './Footer';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import {
+  HashRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import StartASongRoot from '../components/StartASongRoot';
+import FindAnInstrumentRoot from '../components/FindAnInstrumentRoot';
+import GenerateABasslineRoot from '../components/GenerateABasslineRoot';
 
 const theme = createMuiTheme({
   palette: {
@@ -27,11 +35,30 @@ const theme = createMuiTheme({
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
-        <Header />
-        <Body />
-        <Footer />
-      </MuiThemeProvider>
+      <Router>
+
+        <MuiThemeProvider theme={theme}>
+          <Header />
+
+          <Switch>
+            <Route path="/start-a-song">
+              <StartASongRoot />
+            </Route>
+            <Route path="/find-an-instrument">
+              <FindAnInstrumentRoot />
+            </Route>
+            <Route path="/generate-a-bassline">
+              <GenerateABasslineRoot />
+            </Route>
+            <Route path="/">
+              <SongwritingInspirationator />
+            </Route>
+          </Switch>
+
+          <Footer />
+        </MuiThemeProvider>
+
+      </Router>
     );
   }
 }
