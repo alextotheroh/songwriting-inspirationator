@@ -25,6 +25,10 @@ class StartASongRoot extends Component {
     })
   }
 
+  handleAddOneClick = () => {
+    
+  }
+
   render() {
     return (
         <div>
