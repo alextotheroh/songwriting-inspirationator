@@ -12,9 +12,9 @@ class Nav extends Component {
 
       <div className="Nav-container">
           <Grid container justify="center">
-            <Grid item xs={1.5}><Button fullWidth size="large" className="theme-font-2 font-size-20"><Link to="/start-a-song"><strong>start a song</strong></Link></Button></Grid>
-            <Grid item xs={1.5}><Button fullWidthh size="large" className="theme-font-2 font-size-20"><Link to="/find-an-instrument"><strong>find an instrument</strong></Link></Button></Grid>
-            <Grid item xs={1.5}><Button fullWidthh size="large" className="theme-font-2 font-size-20"><Link to="/generate-a-bassline"><strong>generate a bassline</strong></Link></Button></Grid>
+            <Grid item xs={1.5}><Button fullWidth size="large" className="theme-button-1"><Link to="/start-a-song">start a song</Link></Button></Grid>
+            <Grid item xs={1.5}><Button fullWidthh size="large" className="theme-button-1"><Link to="/find-an-instrument">find an instrument</Link></Button></Grid>
+            <Grid item xs={1.5}><Button fullWidthh size="large" className="theme-button-1"><Link to="/generate-a-bassline">generate a bassline</Link></Button></Grid>
           </Grid>
       </div>
 

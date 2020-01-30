@@ -402,14 +402,14 @@ function enabledInstrumentsCount() {
   return count;
 }
 
-function addWayToStartASong(wayToStartASong) {
+export function addWayToStartASong(wayToStartASong) {
   waysToStartASong.push(wayToStartASong);
 }
 
-function removeWayToStartASong(wayToStartASong) {
+export function removeWayToStartASong(wayToStartASong) {
   waysToStartASong = waysToStartASong.filter(x => x !== wayToStartASong);
 }
 
-function pickRandomWayToStartASong() {
+export function pickRandomWayToStartASong() {
   return waysToStartASong[Math.floor(Math.random()*waysToStartASong.length)];
 }

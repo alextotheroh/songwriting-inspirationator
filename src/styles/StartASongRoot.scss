@@ -1,3 +1,5 @@
+@import './colors';
+
 .StartASongRoot-itemContainer {
   max-width: 300px;
   position: relative;
@@ -12,4 +14,17 @@
 
 .StartASongRoot-paper {
   padding: 20px;
+}
+
+.StartASongRoot-buttonsContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 900px;
+  margin: 30px auto 100px auto;
+}
+
+.selected-way-to-write-a-song {
+  -webkit-box-shadow: 0px 0px 49px 8px $electric-blue-glow !important;
+  -moz-box-shadow: 0px 0px 49px 8px $electric-blue-glow !important;
+  box-shadow: 0px 0px 49px 8px $electric-blue-glow !important;
 }
