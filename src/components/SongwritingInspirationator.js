@@ -33,7 +33,6 @@ class SongwritingInspirationator extends Component {
   }
 
   componentWillMount(props) {
-    services.init();
     this.setState({
       attributes: services.getSongAttributes(),
       instruments: services.getInstruments(),

@@ -8,6 +8,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import * as services from '../services/Services';
 import StartASongRoot from '../components/StartASongRoot';
 import FindAnInstrumentRoot from '../components/FindAnInstrumentRoot';
 import GenerateABasslineRoot from '../components/GenerateABasslineRoot';
@@ -33,6 +34,11 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
+
+  componentWillMount(props) {
+    services.init();
+  }
+
   render() {
     return (
       <Router>

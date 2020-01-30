@@ -3,24 +3,33 @@ import * as defaults from './defaultData';
 const CUSTOM_STATE_KEY = "SONGWRITING_INSPIRATIONATOR_CUSTOM_STATE";
 var currentInstruments;
 var currentSongAttributes;
+var waysToStartASong;
 
 export function init() {
-  if (CUSTOM_STATE_KEY in localStorage) {
-    initFromLocalStorage();
-  } else {
-    initFromDefaults();
+  if (notInitialized()) {
+    if (CUSTOM_STATE_KEY in localStorage) {
+      initFromLocalStorage();
+    } else {
+      initFromDefaults();
+    }
   }
+}
+
+function notInitialized() {
+  return (!currentInstruments) || (!currentSongAttributes) || (!waysToStartASong);
 }
 
 function initFromDefaults() {
   currentInstruments = defaults.instruments;
   currentSongAttributes = defaults.songAttributes;
+  waysToStartASong = defaults.waysToStartASong;
 }
 
 function initFromLocalStorage() {
   var customState = JSON.parse( localStorage.getItem(CUSTOM_STATE_KEY) );
   currentInstruments = customState.instruments;
   currentSongAttributes = customState.songAttributes;
+  waysToStartASong = customState.waysToStartASong;
 }
 
 export function getInstruments() {
@@ -29,6 +38,10 @@ export function getInstruments() {
 
 export function getSongAttributes() {
   return currentSongAttributes;
+}
+
+export function getWaysToStartASong() {
+  return waysToStartASong;
 }
 
 export function setAttributeEnabled(attrName, enabled) {
@@ -300,7 +313,8 @@ function getEnabledInstrumentsOfType(type) {
 export function getBase64EncodedState() {
   var state = {
     instruments: currentInstruments,
-    attributes: currentSongAttributes
+    attributes: currentSongAttributes,
+    waysToStartASong: waysToStartASong
   }
 
   return btoa( JSON.stringify(state) );
@@ -322,8 +336,13 @@ export function setStateFromFileContents(importedStateString) {
     return "configuration doesn't contain attributes";
   }
 
+  if (!("waysToStartASong" in obj)) {
+    return "configuration doesn't contain waysToStartASong";
+  }
+
   currentInstruments = obj.instruments;
   currentSongAttributes = obj.attributes;
+  waysToStartASong = obj.waysToStartASong;
   flushCustomizationsToLocalStorage();
   return "ok";
 }
@@ -354,7 +373,8 @@ function instrumentToRecordXthValueNotValid(chosenAttributes, chosenInstrument) 
 function flushCustomizationsToLocalStorage() {
   var customState = {
     instruments: currentInstruments,
-    songAttributes: currentSongAttributes
+    songAttributes: currentSongAttributes,
+    waysToStartASong: waysToStartASong
   };
   localStorage.setItem(CUSTOM_STATE_KEY, JSON.stringify(customState));
 }
@@ -380,4 +400,16 @@ function enabledInstrumentsCount() {
   });
 
   return count;
+}
+
+function addWayToStartASong(wayToStartASong) {
+  waysToStartASong.push(wayToStartASong);
+}
+
+function removeWayToStartASong(wayToStartASong) {
+  waysToStartASong = waysToStartASong.filter(x => x !== wayToStartASong);
+}
+
+function pickRandomWayToStartASong() {
+  return waysToStartASong[Math.floor(Math.random()*waysToStartASong.length)];
 }
