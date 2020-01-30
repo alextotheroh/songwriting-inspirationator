@@ -40,7 +40,7 @@ class StartASongRoot extends Component {
 
           <div className="StartASongRoot-buttonsContainer">
             <Button size="large" className="theme-button-1" onClick={this.handlePickRandomClick}>Randomly Pick One</Button>
-            <Button size="large" className="theme-button-1">Add one</Button>
+            <Button size="large" className="theme-button-1" onClick={this.handleAddOneClick}>Add one</Button>
           </div>
         </div>
 
