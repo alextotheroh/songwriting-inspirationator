@@ -3,9 +3,24 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import * as services from '../services/Services';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 class StartASongRoot extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dialogOpen: false,
+      newOneText: ''
+    }
+  }
 
   handlePickRandomClick = () => {
     const chosenString = services.pickRandomWayToStartASong();
@@ -16,7 +31,7 @@ class StartASongRoot extends Component {
     var textContainers = document.querySelectorAll(".way-container");
 
     textContainers.forEach(e => {
-      e.classList.remove("selected-way-to-write-a-song");
+      e.classList.remove("selected-way-to-write-a-song"); // remove previous if exists
 
       console.log(e.textContent)
       if (e.textContent === chosenString) {
@@ -26,16 +41,83 @@ class StartASongRoot extends Component {
   }
 
   handleAddOneClick = () => {
-    
+    this.setState( {dialogOpen: true} );
+  }
+
+  handleDeleteItemClick = () => {
+    console.log(this.state.anchorEl.innerHTML);
+    services.removeWayToStartASong(this.state.anchorEl.innerHTML);
+    window.location.reload();
+  }
+
+  handleDialogClose = e => {
+    this.setState( {dialogOpen: false} );
+  }
+
+  handleAddOneInputChange = (e) => {
+    this.setState({
+      newOneText: e.target.value
+    })
+  }
+
+  handleSubmitNewOneClick = () => {
+    services.addWayToStartASong(this.state.newOneText);
+    window.location.reload();
+  }
+
+  handleItemRightClick = e => {
+    e.preventDefault();
+    this.setState({
+      anchorEl: e.currentTarget
+    });
+  }
+
+  handleItemRightClickClose = e => {
+    this.setState({
+      anchorEl: null
+    });
   }
 
   render() {
+
+    var addOneDialog = (
+      <Dialog
+          open={this.state.dialogOpen}
+          onClose={this.handleDialogClose}>
+          <div style={{width: 1000}} />
+          <DialogTitle>Add a Way to Start a Song</DialogTitle>
+          <DialogContent>
+            <TextField
+              fullWidth
+              multiline
+              variant="outlined"
+              rows="10"
+              onChange={this.handleAddOneInputChange}
+            />
+            <div style={{width: '110px', marginLeft: 'auto', marginRight: 0, marginTop: '30px'}}>
+              <Button size="large" className="theme-button-2" onClick={this.handleSubmitNewOneClick}>Submit</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+    );
+
+    var rightClickItemMenu = (
+      <Menu
+        anchorEl={this.state.anchorEl}
+        open={Boolean(this.state.anchorEl)}
+        onClose={this.handleItemRightClickClose}>
+        <MenuItem onClick={this.handleDeleteItemClick}>
+          Delete
+        </MenuItem>
+      </Menu>
+    );
+
     return (
         <div>
           <Grid container spacing={24} className="StartASongRoot-gridContainer">
             {services.getWaysToStartASong().map(wayToStartASongString => {
               return <Grid item>
-                <div className="StartASongRoot-itemContainer">
+                <div className="StartASongRoot-itemContainer" onContextMenu={this.handleItemRightClick}>
                   <Paper className="StartASongRoot-paper way-container"><Typography variant="body1">{wayToStartASongString}</Typography></Paper>
                 </div>
               </Grid>
@@ -46,6 +128,9 @@ class StartASongRoot extends Component {
             <Button size="large" className="theme-button-1" onClick={this.handlePickRandomClick}>Randomly Pick One</Button>
             <Button size="large" className="theme-button-1" onClick={this.handleAddOneClick}>Add one</Button>
           </div>
+
+          {addOneDialog}
+          {rightClickItemMenu}
         </div>
 
     );

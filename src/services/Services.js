@@ -404,10 +404,12 @@ function enabledInstrumentsCount() {
 
 export function addWayToStartASong(wayToStartASong) {
   waysToStartASong.push(wayToStartASong);
+  flushCustomizationsToLocalStorage();
 }
 
-export function removeWayToStartASong(wayToStartASong) {
-  waysToStartASong = waysToStartASong.filter(x => x !== wayToStartASong);
+export function removeWayToStartASong(elementContainingTextHtmlString) {
+  waysToStartASong = waysToStartASong.filter(x => !elementContainingTextHtmlString.includes(x));
+  flushCustomizationsToLocalStorage();
 }
 
 export function pickRandomWayToStartASong() {

@@ -29,8 +29,19 @@
   font-weight: bold !important;
 }
 
+.theme-button-2 {
+  color: $japanese-violet !important;
+  font-family: 'Reenie Beanie' !important;
+  font-size: 20px !important;
+  font-weight: bold !important;
+}
+
 .theme-button-1:hover {
   color: $japanese-violet !important;
+}
+
+.theme-button-2:hover {
+  color: $electric-blue !important;
 }
 
 a:link, a:visited, a:focus, a:hover, a:active {
