@@ -46,9 +46,9 @@ class Header extends Component {
     );
 
     return (
-      <div>
-        <div className="Header-container-container"> { /* yeah I know, it's a personal project OK? */ }
-          <div className="Header-container">
+      <div className="Header-container">
+        <div>
+          <div className="Header-title-line-container">
             <div className="Header-title theme-color-1">
               <Link to="/" underline='none'>
                 Songwriting Inspirationator

@@ -22,6 +22,10 @@
   color: $japanese-violet !important;
 }
 
+.theme-color-black {
+  color: $black !important;
+}
+
 .theme-button-1 {
   color: $electric-blue !important;
   font-family: 'Reenie Beanie' !important;
@@ -44,6 +48,11 @@
   color: $electric-blue !important;
 }
 
+.theme-body-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
 a:link, a:visited, a:focus, a:hover, a:active {
   text-decoration:none;
   color: $electric-blue;
@@ -60,4 +69,8 @@ a:active {
 
 .font-size-20 {
   font-size: 20px !important;
+}
+
+hr {
+  border-color: $electric-blue;
 }

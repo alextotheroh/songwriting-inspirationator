@@ -11,6 +11,8 @@ import './styles/InstrumentsList.scss';
 import './styles/ImportConfigDialog.scss';
 import './styles/Nav.scss';
 import './styles/StartASongRoot.scss';
+import './styles/FindAnInstrumentRoot.scss';
+import './styles/GenerateABasslineRoot.scss';
 import './styles/base_shit.scss';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';

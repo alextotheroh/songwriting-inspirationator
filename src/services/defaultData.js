@@ -205,3 +205,17 @@ export var waysToStartASong = [
   "Start with a simple, catchy chord progression and melody and make it more interesting later (synth drones, weird sounds, etc.)",
   "Develop a cool guitar sound (lots of effects) and create a riff/melody based on where it takes you"
 ]
+
+export var instrumentsByFrequency = [
+  {'category': 'High Frequency Percussion', 'instruments': ['claps', 'shaker', 'tambourine']},
+  {'category': 'Bass', 'instruments': ['low piano', 'synth', 'bass guitar', 'organ', 'pitch-shifted guitar', 'seq/arp on deepmind']},
+  {'category': 'Guitar', 'instruments': ['flanged/watery guitar', 'dirty verbed guitar', 'guitar plus octave above', 'clean yet interesting guitar', 'acoustic guitar']},
+  {'category': 'Flexible Frequency', 'instruments': ['synth', 'piano', 'organ', 'sound effects', 'seq/arp on deepmind']}
+]
+
+// these are just from the A minor scale in that 5th fret position.
+// can transpose based on that. 
+export var basslineConfig = {
+  numberOfNotesToGenerate: 4,
+  notes: ["E5", "E7", "E8", "A5", "A7", "A8", "D5", "D7", "D9", "G5", "G7"]
+}

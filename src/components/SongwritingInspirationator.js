@@ -3,15 +3,11 @@ import InstrumentsList from './InstrumentsList';
 import SongAttribute from './SongAttribute';
 import GeneratedTemplate from './GeneratedTemplate';
 import AddAttributeDialog from './AddAttributeDialog';
-import ExportConfigDialog from './ExportConfigDialog';
-import ImportConfigDialog from './ImportConfigDialog';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import LaunchOutlinedIcon from '@material-ui/icons/LaunchOutlined';
-import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
-import UnarchiveOutlinedIcon from '@material-ui/icons/UnarchiveOutlined';
 import * as services from '../services/Services';
 
 class SongwritingInspirationator extends Component {
@@ -25,10 +21,7 @@ class SongwritingInspirationator extends Component {
       possibilities: 0,
       generatedTemplate: null,
       anchorEl: null,
-      showAddAttributeDialog: false,
-      showExportConfigDialog: false,
-      showImportConfigDialog: false,
-      exportHref: ''
+      showAddAttributeDialog: false
     }
   }
 
@@ -36,8 +29,7 @@ class SongwritingInspirationator extends Component {
     this.setState({
       attributes: services.getSongAttributes(),
       instruments: services.getInstruments(),
-      possibilities: services.getTotalNumberOfPossibilities(),
-      exportHref: "data:application/octet-stream;charset=utf-8;base64," + services.getBase64EncodedState()
+      possibilities: services.getTotalNumberOfPossibilities()
     });
   }
 
@@ -46,7 +38,7 @@ class SongwritingInspirationator extends Component {
     var chunkedAttributes = chunkArray(this.state.attributes, this.state.attributes.length/3);
 
     return (
-      <div>
+      <div className="theme-body-container">
         <InstrumentsList instruments={this.state.instruments} onStateUpdated={this.stateUpdated}/>
         <div className="Body-songAttributeContainer">
           <div className="Body-SongAttributesSectionTitle" onContextMenu={this.handleSongAttributesRightClick}>
@@ -78,15 +70,7 @@ class SongwritingInspirationator extends Component {
         </div>
 
         <div className="Body-buttonsContainer">
-          <br/>
-          <Button variant="contained" color="secondary" size="small" onClick={this.handleExportClick}>
-            <span className="Body-white">Export Configuration</span>&nbsp;&nbsp;
-            <ArchiveOutlinedIcon style={{color: "f0f0f0"}} />
-          </Button>&nbsp;&nbsp;&nbsp;
-          <Button variant="contained" color="secondary" size="small" onClick={this.handleImportClick}>
-            <span className="Body-white">Import Configuration</span>&nbsp;&nbsp;
-            <UnarchiveOutlinedIcon style={{color: "f0f0f0"}} />
-          </Button><br/><br/><br/>
+          <br/><br/>
           <Button variant="contained" color="primary" size="large" onClick={this.handleGenerateClick}>
             <span>Generate Template</span>&nbsp;&nbsp;&nbsp;
             <LaunchOutlinedIcon />
@@ -110,9 +94,7 @@ class SongwritingInspirationator extends Component {
             Add new attribute...
           </MenuItem>
         </Menu>
-        <AddAttributeDialog open={this.state.showAddAttributeDialog} onClose={this.handleAddAttributeDialogClose} onStateUpdated={this.stateUpdated}/>
-        <ExportConfigDialog open={this.state.showExportConfigDialog} onClose={this.handleExportDialogClose} exportHref={this.state.exportHref} />
-        <ImportConfigDialog open={this.state.showImportConfigDialog} onClose={this.handleImportDialogClose} importedConfigCallback={this.handleConfigImported}/>       
+        <AddAttributeDialog open={this.state.showAddAttributeDialog} onClose={this.handleAddAttributeDialogClose} onStateUpdated={this.stateUpdated}/>     
       </div>
     );
   }
@@ -153,30 +135,6 @@ class SongwritingInspirationator extends Component {
     this.setState({ showAddAttributeDialog: false });
   }
 
-  handleExportClick = e => {
-    this.setState({
-      showExportConfigDialog: true
-    });
-  }
-
-  handleExportDialogClose = () => {
-    this.setState({
-      showExportConfigDialog: false
-    });
-  }
-
-  handleImportClick = e => {
-    this.setState({
-      showImportConfigDialog: true
-    });
-  }
-
-  handleImportDialogClose = () => {
-    this.setState({
-      showImportConfigDialog: false
-    });
-  }
-
   stateUpdated = () => {
     this.setState({
       attributes: services.getSongAttributes(),
@@ -184,12 +142,6 @@ class SongwritingInspirationator extends Component {
       exportHref: "data:application/octet-stream;charset=utf-8;base64," + services.getBase64EncodedState(),
       possibilities: services.getTotalNumberOfPossibilities()
     });
-  }
-
-  // needed because controlling mins/maxes inside of expansion panels 
-  // from props that change over time is stupid complex.  Refreshing on import is ezpz.
-  handleConfigImported = () => {
-    window.location.reload();
   }
 }
 

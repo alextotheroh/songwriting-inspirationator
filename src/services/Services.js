@@ -4,6 +4,8 @@ const CUSTOM_STATE_KEY = "SONGWRITING_INSPIRATIONATOR_CUSTOM_STATE";
 var currentInstruments;
 var currentSongAttributes;
 var waysToStartASong;
+var instrumentsByFrequency;
+var basslineConfig;
 
 export function init() {
   if (notInitialized()) {
@@ -16,20 +18,27 @@ export function init() {
 }
 
 function notInitialized() {
-  return (!currentInstruments) || (!currentSongAttributes) || (!waysToStartASong);
+  return (!currentInstruments) || (!currentSongAttributes) || (!waysToStartASong) || (!instrumentsByFrequency) || (!basslineConfig);
 }
 
 function initFromDefaults() {
   currentInstruments = defaults.instruments;
   currentSongAttributes = defaults.songAttributes;
   waysToStartASong = defaults.waysToStartASong;
+  instrumentsByFrequency = defaults.instrumentsByFrequency;
+  basslineConfig = defaults.basslineConfig;
 }
 
 function initFromLocalStorage() {
+  // will load partially from localstorage, partially from defaults in case of an update
+  // DOES NOT currently support modifying the existing data model, only 
+  // adding new top-level variables (such as defaults.instruments).
   var customState = JSON.parse( localStorage.getItem(CUSTOM_STATE_KEY) );
-  currentInstruments = customState.instruments;
-  currentSongAttributes = customState.songAttributes;
-  waysToStartASong = customState.waysToStartASong;
+  currentInstruments = customState.instruments ? customState.instruments : defaults.instruments;
+  currentSongAttributes = customState.songAttributes ? customState.songAttributes : defaults.songAttributes;
+  waysToStartASong = customState.waysToStartASong ? customState.waysToStartASong : defaults.waysToStartASong;
+  instrumentsByFrequency = customState.instrumentsByFrequency ? customState.instrumentsByFrequency : defaults.instrumentsByFrequency
+  basslineConfig = customState.basslineConfig ? customState.basslineConfig : defaults.basslineConfig
 }
 
 export function getInstruments() {
@@ -42,6 +51,10 @@ export function getSongAttributes() {
 
 export function getWaysToStartASong() {
   return waysToStartASong;
+}
+
+export function getInstrumentsByFrequency() {
+  return instrumentsByFrequency;
 }
 
 export function setAttributeEnabled(attrName, enabled) {
@@ -314,7 +327,9 @@ export function getBase64EncodedState() {
   var state = {
     instruments: currentInstruments,
     attributes: currentSongAttributes,
-    waysToStartASong: waysToStartASong
+    waysToStartASong: waysToStartASong,
+    instrumentsByFrequency: instrumentsByFrequency,
+    basslineConfig: basslineConfig
   }
 
   return btoa( JSON.stringify(state) );
@@ -329,20 +344,30 @@ export function setStateFromFileContents(importedStateString) {
   console.log(obj);
 
   if (!("instruments" in obj)) {
-    return "configuration doesn't contain instruments";
+    console.log("configuration doesn't contain instruments");
   }
 
   if (!("attributes" in obj)) {
-    return "configuration doesn't contain attributes";
+    console.log("configuration doesn't contain attributes");
   }
 
   if (!("waysToStartASong" in obj)) {
-    return "configuration doesn't contain waysToStartASong";
+    console.log("configuration doesn't contain waysToStartASong");
+  }
+
+  if (!("instrumentsByFrequency" in obj)) {
+    console.log("configuration doesn't contain instrumentsByFrequency");
+  }
+
+  if (!("basslineConfig" in obj)) {
+    console.log("configuration doesn't contain basslineConfig");
   }
 
   currentInstruments = obj.instruments;
   currentSongAttributes = obj.attributes;
   waysToStartASong = obj.waysToStartASong;
+  instrumentsByFrequency = obj.instrumentsByFrequency;
+  basslineConfig = obj.basslineConfig;
   flushCustomizationsToLocalStorage();
   return "ok";
 }
@@ -374,7 +399,9 @@ function flushCustomizationsToLocalStorage() {
   var customState = {
     instruments: currentInstruments,
     songAttributes: currentSongAttributes,
-    waysToStartASong: waysToStartASong
+    waysToStartASong: waysToStartASong,
+    instrumentsByFrequency: instrumentsByFrequency,
+    basslineConfig: basslineConfig
   };
   localStorage.setItem(CUSTOM_STATE_KEY, JSON.stringify(customState));
 }
@@ -414,4 +441,116 @@ export function removeWayToStartASong(elementContainingTextHtmlString) {
 
 export function pickRandomWayToStartASong() {
   return waysToStartASong[Math.floor(Math.random()*waysToStartASong.length)];
+}
+
+export function addInstrumentsByFrequencyCategory(category) {
+  instrumentsByFrequency.push({
+    'category': category, 'instruments': []
+  });
+  flushCustomizationsToLocalStorage();
+}
+
+export function addInstrumentByFrequency(instrument, htmlContainingCategory) {
+  for (var obj of instrumentsByFrequency) {
+    if (htmlContainingCategory.includes(obj.category)) {
+      obj.instruments.push(instrument);
+    }
+  }
+  flushCustomizationsToLocalStorage();
+}
+
+export function deleteInstrumentByFrequencyCategory(htmlContainingCategory) {
+  instrumentsByFrequency = instrumentsByFrequency.filter(obj => !htmlContainingCategory.includes(obj.category));
+  flushCustomizationsToLocalStorage();
+}
+
+export function deleteInstrumentByFrequency(htmlContainingInstrument, htmlContainingCategory) {
+  for (var obj of instrumentsByFrequency) {
+    if (htmlContainingCategory.includes(obj.category)) {
+      obj.instruments = obj.instruments.filter(inst => !htmlContainingInstrument.includes(inst));
+    }
+  }
+  flushCustomizationsToLocalStorage();
+}
+
+export function getRandomBasslineAsArray() {
+  // returns an array.  Each element will be a string, which represents 
+  // one guitar string's tablature in order: EADGBe
+  // EX:
+  // ['----------------4', '----------------', '---------6-------9', '---------3-------', '-------------------', '-2-----------------']
+  // The actual notes are spaced correctly based on the order they were randomly generated, and ready to be packed into divs and styled accordingly.
+  var chosenNotes = [];
+  
+  while (chosenNotes.length < basslineConfig.numberOfNotesToGenerate) {
+    var chosenNote = getRandomElementFromArray(basslineConfig.notes);
+    if (chosenNotes.length > 0) {
+      while (chosenNote === chosenNotes[chosenNotes.length - 1]) {
+        chosenNote = getRandomElementFromArray(basslineConfig.notes); // don't allow same 3 notes in a row
+      }
+    }
+    chosenNotes.push(chosenNote);
+  }
+
+  // once have enough, transform chosen ones into guitar tab array of strings and return it
+  //console.log(chosenNotes);
+
+  var tablatureAsArray = [ // 40 dashes per string
+    "----------------------------------------",
+    "----------------------------------------",
+    "----------------------------------------",
+    "----------------------------------------"
+  ];
+
+  var leadingBlankDashes = 10;
+  var maxDashesBetweenNotes = 10;
+  var dashesBetweenNotes = 40/getNotesPerBassline;
+  if (dashesBetweenNotes > maxDashesBetweenNotes) {
+    dashesBetweenNotes = maxDashesBetweenNotes;
+  }
+
+  for (var noteIndex = 0; noteIndex < chosenNotes.length; noteIndex++) {
+    var indexOfString;
+
+    console.log(basslineConfig.notes[noteIndex][0]);
+    
+    switch(chosenNotes[noteIndex][0]) { // first character of note, which represents the bass string e a d or g
+      case "E":
+        indexOfString = 3;
+        break;
+      case "A":
+        indexOfString = 2;
+        break;
+      case "D":
+        indexOfString = 1;
+        break;
+      case "G":
+        indexOfString = 0;
+        break;
+      default:
+        alert("Found an unexpected value in notes available for bassline generation. This is very bad- almost " +
+        "as bad as the GOP selling out American democracy to the highest bidder over the last few decades, culminating in " +
+        "the worst possible nightmare scenario of an authoritarian regime led by a disgusting ignorant orange baby con-man narcissist criminal " +
+        "cheered on by droves of uneducated mouth-breathing dipshits who have voted against their own interests " +
+        "in every election they've been elligible for in service of fear that the demonic Democrats are devoted to murdering babies and communism.");
+    }
+
+    var indexToPlaceFretNumber = leadingBlankDashes + (noteIndex * dashesBetweenNotes);
+
+    // set fret number in correct position in bass string
+    tablatureAsArray[indexOfString] = 
+      tablatureAsArray[indexOfString].substring(0, indexToPlaceFretNumber) + 
+      chosenNotes[noteIndex].substring(1) + 
+      tablatureAsArray[indexOfString].substring(indexToPlaceFretNumber);
+  }
+
+  return tablatureAsArray;
+}
+
+export function getNotesPerBassline() {
+  return basslineConfig.numberOfNotesToGenerate;
+}
+
+export function changeNotesPerBassline(newNumber) {
+  basslineConfig.numberOfNotesToGenerate = newNumber;
+  flushCustomizationsToLocalStorage();
 }
