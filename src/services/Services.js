@@ -491,19 +491,20 @@ export function getRandomBasslineAsArray() {
     chosenNotes.push(chosenNote);
   }
 
-  // once have enough, transform chosen ones into guitar tab array of strings and return it
-  //console.log(chosenNotes);
+  // once have enough, transform chosen notes into guitar tab (array of strings, no pun intended) and return it
 
-  var tablatureAsArray = [ // 40 dashes per string
-    "----------------------------------------",
-    "----------------------------------------",
-    "----------------------------------------",
-    "----------------------------------------"
+  var tablatureAsArray = [ // 30 dashes per string
+    "------------------------------",
+    "------------------------------",
+    "------------------------------",
+    "------------------------------"
   ];
 
-  var leadingBlankDashes = 10;
+  var leadingBlankDashes = 5;
   var maxDashesBetweenNotes = 10;
-  var dashesBetweenNotes = 40/getNotesPerBassline;
+  // magic number 40, below: 30 dashes per string + 5 leading padding dashes + 
+  // ~5 trailing padding dashes depending (yeah I know, it's a personal project OK???)
+  var dashesBetweenNotes = ((40/getNotesPerBassline()) - 2);
   if (dashesBetweenNotes > maxDashesBetweenNotes) {
     dashesBetweenNotes = maxDashesBetweenNotes;
   }
@@ -541,6 +542,26 @@ export function getRandomBasslineAsArray() {
       tablatureAsArray[indexOfString].substring(0, indexToPlaceFretNumber) + 
       chosenNotes[noteIndex].substring(1) + 
       tablatureAsArray[indexOfString].substring(indexToPlaceFretNumber);
+  }
+
+  return evenUpEndDashes(tablatureAsArray);
+}
+
+function evenUpEndDashes(tablatureAsArray) {
+  var maxLength = 0;
+
+  for (var s of tablatureAsArray) {
+    if (s.length > maxLength) {
+      maxLength = s.length;
+    }
+  }
+
+  for (var i = 0; i < tablatureAsArray.length; i++) {
+    if (tablatureAsArray[i].length < maxLength) {
+      while (tablatureAsArray[i].length < maxLength) {
+        tablatureAsArray[i] += "-";
+      }
+    }
   }
 
   return tablatureAsArray;

@@ -81,10 +81,13 @@ class GenerateABassline extends Component {
     return (
         <div className="theme-body-container">
 
-          <Paper className="GenerateABasslineRoot-tablatureContainer">
-            {this.state.bassline.map(string => {
-              return <div>{string}</div>
-            })}
+          <Paper className="GenerateABasslineRoot-tablatureContainer theme-font-mono">
+            <br />
+            <strong>A minor</strong> <br/><br/>
+            <strong>G| {this.state.bassline[0]}</strong><br/>
+            <strong>D| {this.state.bassline[1]}</strong><br/>
+            <strong>A| {this.state.bassline[2]}</strong><br/>
+            <strong>E| {this.state.bassline[3]}</strong><br/>
           </Paper>
 
           <div className="StartASongRoot-buttonsContainer">
