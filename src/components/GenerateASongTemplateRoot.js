@@ -10,7 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import LaunchOutlinedIcon from '@material-ui/icons/LaunchOutlined';
 import * as services from '../services/Services';
 
-class SongwritingInspirationator extends Component {
+class GenerateASongTemplateRoot extends Component {
 
   constructor(props) {
     super(props);
@@ -159,4 +159,4 @@ function chunkArray(myArray, chunk_size) {
   return tempArray;
 }
 
-export default SongwritingInspirationator;
+export default GenerateASongTemplateRoot;

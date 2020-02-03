@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
-import SongwritingInspirationator from './SongwritingInspirationator';
+import GenerateASongTemplateRoot from './GenerateASongTemplateRoot';
 import Footer from './Footer';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
@@ -56,8 +56,11 @@ class App extends Component {
             <Route path="/generate-a-bassline">
               <GenerateABasslineRoot />
             </Route>
+            <Route path="/generate-a-song-template">
+              <GenerateASongTemplateRoot />
+            </Route>
             <Route path="/">
-              <SongwritingInspirationator />
+              <GenerateASongTemplateRoot />
             </Route>
           </Switch>
 

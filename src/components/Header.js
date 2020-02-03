@@ -45,15 +45,12 @@ class Header extends Component {
         </Dialog>
     );
 
-    // TODO change title in here
     return (
       <div className="Header-container">
         <div>
           <div className="Header-title-line-container">
             <div className="Header-title theme-color-1">
-              <Link to="/" underline='none'>
-                Songwriting Inspirationator
-              </Link>
+              Songwriting-Inspirationator
             </div>
             <div className="Header-helpIconContainer">
               <IconButton onClick={this.handleHelpClick}>
