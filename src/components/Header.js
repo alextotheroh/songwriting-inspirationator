@@ -45,6 +45,7 @@ class Header extends Component {
         </Dialog>
     );
 
+    // TODO change title in here
     return (
       <div className="Header-container">
         <div>

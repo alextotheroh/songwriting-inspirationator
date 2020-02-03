@@ -64,7 +64,7 @@ class GenerateABassline extends Component {
           open={this.state.changeNumberOfNotesDialogOpen}
           onClose={this.handleChangeNumberOfNotesDialogClose}>
           <div style={{width: 1000}} />
-          <DialogTitle>Set Notes per Bassline</DialogTitle>
+          <DialogTitle>Set Notes per Bassline (currently {this.state.notesPerBassline})</DialogTitle>
           <DialogContent>
             <TextField
               fullWidth
@@ -79,7 +79,7 @@ class GenerateABassline extends Component {
     );
 
     return (
-        <div className="theme-body-container">
+        <div className="theme-content-container">
 
           <Paper className="GenerateABasslineRoot-tablatureContainer theme-font-mono">
             <br />

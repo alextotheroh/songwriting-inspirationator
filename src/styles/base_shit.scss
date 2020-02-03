@@ -48,9 +48,11 @@
   color: $electric-blue !important;
 }
 
-.theme-body-container {
+.theme-content-container {
   max-width: 1000px;
   margin: 0 auto;
+  margin-top: 60px;
+  margin-bottom: 120px;
 }
 
 a:link, a:visited, a:focus, a:hover, a:active {

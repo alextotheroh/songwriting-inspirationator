@@ -165,7 +165,7 @@ class FindAnInstrumentRoot extends Component {
     );
 
     return (
-        <div className="theme-body-container">
+        <div className="theme-content-container">
           <Grid container spacing={24}>
             {services.getInstrumentsByFrequency().map(obj => {
               return (

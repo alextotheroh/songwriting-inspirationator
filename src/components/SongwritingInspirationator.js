@@ -38,7 +38,7 @@ class SongwritingInspirationator extends Component {
     var chunkedAttributes = chunkArray(this.state.attributes, this.state.attributes.length/3);
 
     return (
-      <div className="theme-body-container">
+      <div className="theme-content-container">
         <InstrumentsList instruments={this.state.instruments} onStateUpdated={this.stateUpdated}/>
         <div className="Body-songAttributeContainer">
           <div className="Body-SongAttributesSectionTitle" onContextMenu={this.handleSongAttributesRightClick}>

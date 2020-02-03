@@ -58,8 +58,9 @@ class Footer extends Component {
 
   render() {
     return (
-      <div className="Footer-container">
-        <div>
+      <div className="Footer-container theme-color-1">
+
+        <span className="Footer-buttons-container">
           <Button variant="contained" color="secondary" size="small" onClick={this.handleExportClick}>
             <span className="Body-white">Export Configuration</span>&nbsp;&nbsp;
             <ArchiveOutlinedIcon style={{color: "f0f0f0"}} />
@@ -68,7 +69,7 @@ class Footer extends Component {
             <span className="Body-white">Import Configuration</span>&nbsp;&nbsp;
             <UnarchiveOutlinedIcon style={{color: "f0f0f0"}} />
           </Button>
-        </div>
+        </span>
 
         <ExportConfigDialog open={this.state.showExportConfigDialog} onClose={this.handleExportDialogClose} exportHref={this.state.exportHref} />
         <ImportConfigDialog open={this.state.showImportConfigDialog} onClose={this.handleImportDialogClose} importedConfigCallback={this.handleConfigImported}/>  

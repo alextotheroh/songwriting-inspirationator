@@ -113,7 +113,7 @@ class StartASongRoot extends Component {
     );
 
     return (
-        <div className="theme-body-container">
+        <div className="theme-content-container">
           <Grid container spacing={24}>
             {services.getWaysToStartASong().map(wayToStartASongString => {
               return <Grid item>
