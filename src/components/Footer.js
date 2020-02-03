@@ -63,7 +63,7 @@ class Footer extends Component {
         <span className="Footer-buttons-container">
 
           <Button color="secondary" size="small" title="I offer these tools for free, but the more money I make from it, the more time and resources I can devote to developing new tools and features. Every little bit helps!">
-            <a href="https://paypal.me/alextotheroh?locale.x=en_US" target="_blank">$ Donate</a>
+            <a href="https://paypal.me/alextotheroh?locale.x=en_US" target="_blank" rel="noopener noreferrer">$ Donate</a>
           </Button>&nbsp;&nbsp;&nbsp;
 
           <Button variant="contained" color="secondary" size="small" onClick={this.handleExportClick}>

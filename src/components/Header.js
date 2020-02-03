@@ -6,7 +6,19 @@ class Header extends Component {
     super(props);
 
     this.state = {
-      dialogOpen: false
+      dialogOpen: false,
+      currentUrl: window.location.href
+    }
+
+    // hacky way to set the selected tab without redux and without rearchitecting stuff (I know, it's a personal project, OK?)
+    setInterval(this.checkIfUrlNeedsUpdated, 150);
+  }
+
+  checkIfUrlNeedsUpdated = () => {
+    if (this.state.currentUrl !== window.location.href) {
+      this.setState({
+        currentUrl: window.location.href
+      });
     }
   }
 
@@ -21,7 +33,7 @@ class Header extends Component {
             </div>
           </div>
 
-          <Nav />
+          <Nav currentUrl={this.state.currentUrl}/>
 
         </div>
         
