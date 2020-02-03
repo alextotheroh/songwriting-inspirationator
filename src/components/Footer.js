@@ -61,14 +61,21 @@ class Footer extends Component {
       <div className="Footer-container theme-color-1">
 
         <span className="Footer-buttons-container">
+
+          <Button color="secondary" size="small" title="I offer these tools for free, but the more money I make from it, the more time and resources I can devote to developing new tools and features. Every little bit helps!">
+            <a href="https://paypal.me/alextotheroh?locale.x=en_US" target="_blank">$ Donate</a>
+          </Button>&nbsp;&nbsp;&nbsp;
+
           <Button variant="contained" color="secondary" size="small" onClick={this.handleExportClick}>
             <span className="Body-white">Export Configuration</span>&nbsp;&nbsp;
             <ArchiveOutlinedIcon style={{color: "f0f0f0"}} />
           </Button>&nbsp;&nbsp;&nbsp;
+
           <Button variant="contained" color="secondary" size="small" onClick={this.handleImportClick}>
             <span className="Body-white">Import Configuration</span>&nbsp;&nbsp;
             <UnarchiveOutlinedIcon style={{color: "f0f0f0"}} />
           </Button>
+
         </span>
 
         <ExportConfigDialog open={this.state.showExportConfigDialog} onClose={this.handleExportDialogClose} exportHref={this.state.exportHref} />
