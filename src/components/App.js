@@ -4,8 +4,9 @@ import GenerateASongTemplateRoot from './GenerateASongTemplateRoot';
 import Footer from './Footer';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
-  HashRouter as Router,
+  HashRouter,
   Switch,
+  Redirect,
   Route
 } from "react-router-dom";
 import * as services from '../services/Services';
@@ -42,7 +43,7 @@ class App extends Component {
   render() {
     console.log('app render called')
     return (
-      <Router>
+      <HashRouter>
 
         <MuiThemeProvider theme={theme}>
           <Header />
@@ -61,14 +62,14 @@ class App extends Component {
               <GenerateASongTemplateRoot />
             </Route>
             <Route path="/">
-              <GenerateASongTemplateRoot />
+              <Redirect to="/generate-a-song-template" />
             </Route>
           </Switch>
 
           <Footer />
         </MuiThemeProvider>
 
-      </Router>
+      </HashRouter>
     );
   }
 }

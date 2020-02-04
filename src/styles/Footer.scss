@@ -3,7 +3,6 @@
 .Footer-container {
   font-family: 'Roboto';
   font-size: 14px;
-  text-align: right;
   padding: 12px 0;
   position: fixed;
   background-color: $black;
@@ -12,11 +11,12 @@
   bottom: 0;
   height: 34px;
   width: 100%;
+  min-width: 1000px;
   -webkit-box-shadow: 0px -5px 28px -6px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px -5px 28px -6px rgba(0,0,0,0.75);
   box-shadow: 0px -5px 28px -6px rgba(0,0,0,0.75);
 }
 
 .Footer-buttons-container {
-  margin-right: 30px;
+  padding-right: 30px;
 }

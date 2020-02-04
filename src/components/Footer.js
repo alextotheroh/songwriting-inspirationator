@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import UnarchiveOutlinedIcon from '@material-ui/icons/UnarchiveOutlined';
 import ExportConfigDialog from './ExportConfigDialog';
 import ImportConfigDialog from './ImportConfigDialog';
+import HelpManualDialog from './HelpManualDialog';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import * as services from '../services/Services';
 
 class Footer extends Component {
@@ -16,6 +19,8 @@ class Footer extends Component {
       showAddAttributeDialog: false,
       showExportConfigDialog: false,
       showImportConfigDialog: false,
+      showHelpManualDialog: false,
+      currentUrl: window.location.href,
       exportHref: ''
     }
   }
@@ -44,6 +49,19 @@ class Footer extends Component {
     });
   }
 
+  handleHelpClick = e => {
+    this.setState({
+      currentUrl: window.location.href,
+      showHelpManualDialog: true
+    });
+  }
+
+  handleHelpManualDialogClose = () => {
+    this.setState({
+      showHelpManualDialog: false
+    });
+  }
+
   handleImportDialogClose = () => {
     this.setState({
       showImportConfigDialog: false
@@ -60,26 +78,35 @@ class Footer extends Component {
     return (
       <div className="Footer-container theme-color-1">
 
-        <span className="Footer-buttons-container">
+          <Grid container className="Footer-buttons-container">
 
-          <Button color="secondary" size="small" title="I offer these tools for free, but the more money I make from it, the more time and resources I can devote to developing new tools and features. Every little bit helps!">
-            <a href="https://paypal.me/alextotheroh?locale.x=en_US" target="_blank" rel="noopener noreferrer">$ Donate</a>
-          </Button>&nbsp;&nbsp;&nbsp;
+            <Grid item xs={2}>
+              <Button className="theme-color-white" onClick={this.handleHelpClick}>
+                <HelpOutlineIcon />&nbsp;Help
+              </Button>
+            </Grid>
 
-          <Button variant="contained" color="secondary" size="small" onClick={this.handleExportClick}>
-            <span className="Body-white">Export Configuration</span>&nbsp;&nbsp;
-            <ArchiveOutlinedIcon style={{color: "f0f0f0"}} />
-          </Button>&nbsp;&nbsp;&nbsp;
+            <Grid item xs={10} style={{textAlign: "right"}}>
+              <Button color="secondary" size="small" title="I offer these tools for free, but the more money I make from it, the more time and resources I can devote to developing new tools and features. Every little bit helps!">
+                <a href="https://paypal.me/alextotheroh?locale.x=en_US" target="_blank" rel="noopener noreferrer">$ Donate</a>
+              </Button>&nbsp;&nbsp;&nbsp;
 
-          <Button variant="contained" color="secondary" size="small" onClick={this.handleImportClick}>
-            <span className="Body-white">Import Configuration</span>&nbsp;&nbsp;
-            <UnarchiveOutlinedIcon style={{color: "f0f0f0"}} />
-          </Button>
+              <Button variant="contained" color="secondary" size="small" onClick={this.handleExportClick}>
+                <span className="Body-white">Export Configuration</span>&nbsp;&nbsp;
+                <ArchiveOutlinedIcon style={{color: "f0f0f0"}} />
+              </Button>&nbsp;&nbsp;&nbsp;
 
-        </span>
+              <Button variant="contained" color="secondary" size="small" onClick={this.handleImportClick}>
+                <span className="Body-white">Import Configuration</span>&nbsp;&nbsp;
+                <UnarchiveOutlinedIcon style={{color: "f0f0f0"}} />
+            </Button>
+            </Grid>
+
+          </Grid>
 
         <ExportConfigDialog open={this.state.showExportConfigDialog} onClose={this.handleExportDialogClose} exportHref={this.state.exportHref} />
-        <ImportConfigDialog open={this.state.showImportConfigDialog} onClose={this.handleImportDialogClose} importedConfigCallback={this.handleConfigImported}/>  
+        <ImportConfigDialog open={this.state.showImportConfigDialog} onClose={this.handleImportDialogClose} importedConfigCallback={this.handleConfigImported}/>
+        <HelpManualDialog open={this.state.showHelpManualDialog} onClose={this.handleHelpManualDialogClose} currentUrl={this.state.currentUrl}/>
       </div>
     );
   }
