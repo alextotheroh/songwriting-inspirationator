@@ -10,7 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
-import * as services from '../services/Services';
+import * as services from '../backend/Services';
 
 class AddAttributeDialog extends Component {
   constructor(props) {

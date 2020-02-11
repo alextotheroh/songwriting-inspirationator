@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import * as services from '../services/Services';
+import * as services from '../backend/Services';
 
 class GenerateASongTemplateRoot extends Component {
 

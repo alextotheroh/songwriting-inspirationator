@@ -17,7 +17,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import * as services from '../services/Services';
+import * as services from '../backend/Services';
 
 class SongAttribute extends Component {
 

@@ -7,7 +7,7 @@ import ExportConfigDialog from './ExportConfigDialog';
 import ImportConfigDialog from './ImportConfigDialog';
 import HelpManualDialog from './HelpManualDialog';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import * as services from '../services/Services';
+import * as services from '../backend/Services';
 
 class Footer extends Component {
 

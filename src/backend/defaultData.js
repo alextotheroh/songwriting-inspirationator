@@ -219,3 +219,36 @@ export var basslineConfig = {
   numberOfNotesToGenerate: 4,
   notes: ["E5", "E7", "E8", "A5", "A7", "A8", "D5", "D7", "D9", "G5", "G7"]
 }
+
+export var modePatterns = {
+  'Ionian': {
+    'intervals': [2, 2, 1, 2, 2, 2, 1], // 2 is whole step, 1 is half step
+    'feel': ['happy', 'normal', 'cliche'],
+    'alternateNames': ['major']
+  },
+  'Dorian': {
+    'intervals': [2, 1, 2, 2, 2, 1, 2],
+    'feel': ['excited', 'giddy', 'anxious']
+  },
+  'Phrygian': {
+    'intervals': [1, 2, 2, 2, 1, 2, 2],
+    'feel': ['alert', 'pessimistic', 'slightly dark']
+  },
+  'Lydian': {
+    'intervals': [2, 2, 2, 1, 2, 2, 1],
+    'feel': ['triumphant', 'eager', 'playful']
+  },
+  'Mixolydian': {
+    'intervals': [2, 2, 1, 2, 2, 1, 2],
+    'feel': ['lydian++']
+  },
+  'Aeolian': {
+    'intervals': [2, 2, 1, 2, 2, 1, 2],
+    'feel': ['sad', 'humble', 'emotional'],
+    'alternateNames': ['natural minor']
+  },
+  'Locrian': {
+    'intervals': [2, 1, 2, 2, 1, 2, 2],
+    'feel': ['extremely unsettled']
+  }
+};
