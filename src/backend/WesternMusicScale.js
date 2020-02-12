@@ -1,7 +1,7 @@
 class WesternMusicScale {
 
   constructor() {
-    this.notes = 'c, c#, d, d#, e, f, f#, g, g#, a, a#, b';
+    this.notes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
   }
 
   // can get chords or scales
@@ -19,9 +19,29 @@ class WesternMusicScale {
       }
     }
 
-    if (currentIndex == -1) {
+    if (indexOfRoot == -1) {
       throw `Couldn't find root note ${root}!`;
     }
+
+    var collection = [root];
+    var currentIndex = indexOfRoot;
+    for (let interval of intervals) {
+      if (currentIndex+interval >= this.notes.length) {
+        // then wrap around
+        currentIndex = currentIndex - this.notes.length;
+      }
+
+      currentIndex = currentIndex + interval;
+      collection.push(this.notes[currentIndex]);
+    }
+
+    return collection;
+
+    /*
+    [0, 1, 2, 3, 4, 5, 6, 7]  
+
+    6 + 2 = 0
+    */
   }
 
   notesAreEnharmonic(n1, n2) {
