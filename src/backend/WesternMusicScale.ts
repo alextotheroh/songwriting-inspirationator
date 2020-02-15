@@ -1,5 +1,7 @@
 class WesternMusicScale {
 
+  private notes: string[];
+
   constructor() {
     this.notes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
   }
@@ -9,7 +11,7 @@ class WesternMusicScale {
   // 2 is whole step, 1 is half step
   // ex: [2, 2, 1, 2, 2, 2, 1] is major scale
   // applies the intervals onto the root note
-  getNoteCollection(root, intervals) {
+  getNoteCollection(root: string, intervals: number[]) {
     var indexOfRoot = -1;
 
     // set index to index of root note in above this.notes array
@@ -36,15 +38,9 @@ class WesternMusicScale {
     }
 
     return collection;
-
-    /*
-    [0, 1, 2, 3, 4, 5, 6, 7]  
-
-    6 + 2 = 0
-    */
   }
 
-  notesAreEnharmonic(n1, n2) {
+  notesAreEnharmonic(n1: string, n2: string) {
     const notesToEnharmonics = {
       'c': new Set(['b#']), 
       'c#': new Set(['df']), 
@@ -63,6 +59,39 @@ class WesternMusicScale {
     return (n1 === n2) || 
       ( (n1 in notesToEnharmonics && notesToEnharmonics[n1].has(n2)) ) ||
       ( (n2 in notesToEnharmonics && notesToEnharmonics[n2].has(n1)) );
+  }
+
+  // given a note and a number of half-steps, returns the note that many half steps away
+  // accepts negative numbers
+  getInterval(note: string, interval: number): string {
+    var indexOfStartingNote = null;
+
+    for (var i = 0; i < this.notes.length; i++) {
+      console.log(note);
+      console.log(this.notes[i])
+      if (this.notes[i] === note || this.notesAreEnharmonic(note, this.notes[i])) {
+        console.log('set it');
+        indexOfStartingNote = i;
+      }
+    }
+
+    console.log('after for loop, indexOfStartingNote is ' + indexOfStartingNote);
+
+    if (isNaN(indexOfStartingNote)) {
+      throw "Couldn't find note";
+    }
+
+    var indexOfInterval = indexOfStartingNote + interval;
+
+    if (indexOfInterval < 0) {
+      indexOfInterval += this.notes.length;
+      return this.notes[indexOfInterval];
+    } else if (indexOfInterval >= this.notes.length) {
+      indexOfInterval -= this.notes.length;
+      return this.notes[indexOfInterval];
+    } else {
+      return this.notes[indexOfInterval];
+    }
   }
 }
 
