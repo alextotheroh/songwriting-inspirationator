@@ -14,15 +14,31 @@ class Chord {
     this.degrees = degrees; // str array: the degrees of the notes in the scale to voice (ex: [1, 3, 5], [1, f3, 5], [1, s3, 5])
     this.notes = []; // the notes the chord is currently voicing
 
-    for (let degree of degrees) {
-      if (degree[0].match(/[a-z]/) ) { // if first character is a letter, then we're seeking a modified scale degree
+    for (let oneIndexedDegree of degrees) {
+      //degrees are passed in 1 indexed, but our arrays are 0 indexed, so subtract 1
+      var degree;
+      if (oneIndexedDegree.length == 1) {
+        degree = (parseInt(oneIndexedDegree) - 1) + '';
+      } else if (oneIndexedDegree.length == 2) {
+        degree = oneIndexedDegree[0] + (parseInt(oneIndexedDegree[1]) - 1);
+      } else {
+        throw "Unexpected degree string";
+      }  
+
+      if ( degree[0].indexOf('f') == 0 || degree[0].indexOf('s') == 0 ) { // if first character is a letter, then we're seeking a modified scale degree
+      console.log('11111111111111');
         if (degree[0] === 'f') {
-          this.notes.push( this.westernMusicScale.getInterval(scale[degree[1]], 1) );
-        } else if (degree[0] === 's') {
+          console.log('22222222222222222');
           this.notes.push( this.westernMusicScale.getInterval(scale[degree[1]], -1) );
+        } else if (degree[0] === 's') {
+          console.log('33333333333333333333');
+          this.notes.push( this.westernMusicScale.getInterval(scale[degree[1]], 1) );
         }
-      } else if (degree.length == 1 && parseInt(degree)) {
+      } else if (degree.length == 1 && typeof(parseInt(degree) === 'number')) {
+        console.log('44444444444444444444');
         this.notes.push(scale[parseInt(degree)]);
+      } else {
+        throw "Unexpected argument passed in degrees array";
       }
     }
   }
