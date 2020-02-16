@@ -1,5 +1,6 @@
 import { modePatterns } from './defaultData';
 import WesternMusicScale from './WesternMusicScale';
+import Chord from './Chord';
 
 class Scale {
 
@@ -17,6 +18,9 @@ class Scale {
     this.feel = modePatterns[modeName].feel;
     this.alternateNames = modePatterns[modeName].alternateNames ? modePatterns[modeName].alternateNames : [];
     this.notes = westernMusicScale.getNoteCollection(root, modePatterns[modeName].intervals);
+    if (this.notes.length == 8) {
+      this.notes.pop();
+    }
   }
 
   /*
@@ -29,12 +33,18 @@ class Scale {
     // play the audio for this mode
   }
 
-  getDiatonicChords() {
+  getDiatonicChords(): Chord[] {
     // return the diatonic chords (each a Chord object) for this mode
     // Chord constructor takes a name.  How do we determine the name of the chord from here?
-    for (let note of this.notes) {
-      
-    }
+    return [
+      new Chord(this.notes[0] + 'something', this.notes, ['1', '3', '5']),
+      new Chord(this.notes[1] + 'something', this.notes, ['2', '4', '6']),
+      new Chord(this.notes[2] + 'something', this.notes, ['3', '5', '7']),
+      new Chord(this.notes[3] + 'something', this.notes, ['4', '6', '8']),
+      new Chord(this.notes[4] + 'something', this.notes, ['5', '7', '9']),
+      new Chord(this.notes[5] + 'something', this.notes, ['6', '8', '10']),
+      new Chord(this.notes[6] + 'something', this.notes, ['7', '9', '11'])
+    ];
   }
 
   getNotes() {
