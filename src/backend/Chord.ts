@@ -8,6 +8,11 @@ class Chord {
   private westernMusicScale: WesternMusicScale;
 
   constructor(name: string, scale: string[], degrees: string[]) {
+    if (scale.length != 7) {
+      throw `Chord constructor currently accepts only scales of length 7 
+        (and assumes the scale wraps around).  You passed a scale of length ${scale.length}`;
+    }
+
     this.westernMusicScale = new WesternMusicScale();
     this.name = name;
     this.scale = scale; // the notes the chord draws from
@@ -17,30 +22,38 @@ class Chord {
     for (let oneIndexedDegree of degrees) {
       //degrees are passed in 1 indexed, but our arrays are 0 indexed, so subtract 1
       var degree;
-      if (oneIndexedDegree.length == 1) {
+      if (oneIndexedDegree[0] === 'f' || oneIndexedDegree[0] === 's') {
+        degree = oneIndexedDegree[0] + (parseInt(oneIndexedDegree.substring(1)) - 1);
+      } else if (!isNaN(parseInt(oneIndexedDegree))) {
         degree = (parseInt(oneIndexedDegree) - 1) + '';
-      } else if (oneIndexedDegree.length == 2) {
-        degree = oneIndexedDegree[0] + (parseInt(oneIndexedDegree[1]) - 1);
       } else {
         throw "Unexpected degree string";
-      }  
+      }
 
       if ( degree[0].indexOf('f') == 0 || degree[0].indexOf('s') == 0 ) { // if first character is a letter, then we're seeking a modified scale degree
-      console.log('11111111111111');
         if (degree[0] === 'f') {
-          console.log('22222222222222222');
-          this.notes.push( this.westernMusicScale.getInterval(scale[degree[1]], -1) );
+          this.notes.push( this.westernMusicScale.getInterval(this.getNoteAtIndex(parseInt(degree.substring(1))), -1) );
         } else if (degree[0] === 's') {
-          console.log('33333333333333333333');
-          this.notes.push( this.westernMusicScale.getInterval(scale[degree[1]], 1) );
+          this.notes.push( this.westernMusicScale.getInterval(this.getNoteAtIndex(parseInt(degree.substring(1))), 1) );
         }
-      } else if (degree.length == 1 && typeof(parseInt(degree) === 'number')) {
-        console.log('44444444444444444444');
-        this.notes.push(scale[parseInt(degree)]);
+      } else if (typeof(parseInt(degree) === 'number')) {
+        this.notes.push(this.getNoteAtIndex(parseInt(degree)));
       } else {
-        throw "Unexpected argument passed in degrees array";
+        throw `Unexpected argument passed in degrees array: ${degree}`;
       }
     }
+  }
+
+  // wraps around the this.scale array like music notes do
+  getNoteAtIndex(index: number): string { 
+    if (index >= this.scale.length) {
+      var normalizedIndex = index;
+      while (normalizedIndex >= this.scale.length) {
+        normalizedIndex -= this.scale.length;
+      }
+      return this.scale[normalizedIndex];
+    }
+    return this.scale[index];
   }
 
   getNotes(): string[] {

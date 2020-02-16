@@ -28,13 +28,17 @@ class WesternMusicScale {
     var collection = [root];
     var currentIndex = indexOfRoot;
     for (let interval of intervals) {
-      if (currentIndex+interval >= this.notes.length) {
-        // then wrap around
-        currentIndex = currentIndex - this.notes.length;
+      var normalizedIndex = currentIndex + interval;
+
+      if (normalizedIndex >= this.notes.length) {
+        while (normalizedIndex >= this.notes.length) {
+          normalizedIndex -= this.notes.length; // wrap around
+        }
+
       }
 
-      currentIndex = currentIndex + interval;
-      collection.push(this.notes[currentIndex]);
+      collection.push(this.notes[normalizedIndex]);
+      currentIndex = normalizedIndex;
     }
 
     return collection;
@@ -67,15 +71,10 @@ class WesternMusicScale {
     var indexOfStartingNote = null;
 
     for (var i = 0; i < this.notes.length; i++) {
-      console.log(note);
-      console.log(this.notes[i])
       if (this.notes[i] === note || this.notesAreEnharmonic(note, this.notes[i])) {
-        console.log('set it');
         indexOfStartingNote = i;
       }
     }
-
-    console.log('after for loop, indexOfStartingNote is ' + indexOfStartingNote);
 
     if (isNaN(indexOfStartingNote)) {
       throw "Couldn't find note";
