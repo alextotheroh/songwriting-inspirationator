@@ -92,6 +92,68 @@ class WesternMusicScale {
       return this.notes[indexOfInterval];
     }
   }
+
+  // given an array of notes, and assuming that the first note is the 1,
+  // return an array of chord note functions
+  // ex: [c, e, g] -> [1, 3, 5]
+  //     [c, d#, g] -> [1, f3, 5]
+  getChordStyleNoteFunctions(chordNotes: string[]): string[] {
+    var asHalfStepsAwayFromRoot = [0]
+    var noteFunctions = ['1'];
+
+    for (var i = 1; i < chordNotes.length; i++) {
+      asHalfStepsAwayFromRoot.push(this.getNumberOfHalfStepsBetweenNotes(chordNotes[0], chordNotes[i]));
+    }
+
+    const halfStepsToChordFunction: {[key: number]: string}  = {
+      0: '1',
+      1: 'f2',
+      2: '2',
+      3: 'f3',
+      4: '3',
+      5: 's3',
+      6: 'f5',
+      7: '5',
+      8: 's5',
+      9: '6',
+      10: 'f7',
+      11: '7'
+    }
+
+    for (let intervalInHalfSteps of asHalfStepsAwayFromRoot) {
+      noteFunctions.push(halfStepsToChordFunction[intervalInHalfSteps])
+    }
+
+    return noteFunctions;
+  }
+
+  private getNumberOfHalfStepsBetweenNotes(n1: string, n2: string): number {
+    var indexOfN1;
+    var indexOfN2;
+
+    for (var i = 0; i < this.notes.length) {
+      if (this.notesAreEnharmonic(this.notes[i], n1)) {
+        indexOfN1 = i;
+      }
+
+      if (this.notesAreEnharmonic(this.notes[i], n2)) {
+        indexOfN2 = indexOfN2
+      }
+    }
+
+    if (indexOfN1 == null || indexOfN2 == null) {
+      throw `couldn't find one of the notes passed to getIntervalBetweenNotes().  Notes passed were: ${n1} and ${n2}`;
+    }
+
+    var halfStepsAway = indexOfN2 - indexOfN1;
+
+    if (halfStepsAway < 0) {
+      halfStepsAway += this.notes.length;
+    }
+
+    return halfStepsAway;
+    
+  }
 }
 
 export default WesternMusicScale;
