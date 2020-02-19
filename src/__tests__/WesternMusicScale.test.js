@@ -59,4 +59,8 @@ test('getInterval() works', () => {
   expect(westernMusicScale.getInterval('g', -12)).toEqual('g');
 });
 
+test('getNumberOfHalfStepsBetweenNotes() works', () => {
+  expect(westernMusicScale.getNumberOfHalfStepsBetweenNotes('f#', 'g')).toEqual(1);
+});
+
 

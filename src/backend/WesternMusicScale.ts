@@ -98,7 +98,7 @@ class WesternMusicScale {
   // ex: [c, e, g] -> [1, 3, 5]
   //     [c, d#, g] -> [1, f3, 5]
   getChordStyleNoteFunctions(chordNotes: string[]): string[] {
-    var asHalfStepsAwayFromRoot = [0]
+    var asHalfStepsAwayFromRoot = []
     var noteFunctions = ['1'];
 
     for (var i = 1; i < chordNotes.length; i++) {
@@ -131,13 +131,13 @@ class WesternMusicScale {
     var indexOfN1;
     var indexOfN2;
 
-    for (var i = 0; i < this.notes.length) {
+    for (var i = 0; i < this.notes.length; i++) {
       if (this.notesAreEnharmonic(this.notes[i], n1)) {
         indexOfN1 = i;
       }
 
       if (this.notesAreEnharmonic(this.notes[i], n2)) {
-        indexOfN2 = indexOfN2
+        indexOfN2 = i;
       }
     }
 
