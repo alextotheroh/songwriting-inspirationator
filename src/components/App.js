@@ -9,7 +9,7 @@ import {
   Redirect,
   Route
 } from "react-router-dom";
-import * as services from '../backend/Services';
+import * as services from '../backend/services/Services';
 import StartASongRoot from '../components/StartASongRoot';
 import FindAnInstrumentRoot from '../components/FindAnInstrumentRoot';
 import GenerateABasslineRoot from '../components/GenerateABasslineRoot';

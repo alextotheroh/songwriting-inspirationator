@@ -1,4 +1,4 @@
-import { modePatterns } from './defaultData';
+import { modePatterns } from '../defaultData';
 import WesternMusicScale from './WesternMusicScale';
 import Chord from './Chord';
 

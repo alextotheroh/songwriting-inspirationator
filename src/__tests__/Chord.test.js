@@ -1,4 +1,4 @@
-import Chord from "../backend/Chord";
+import Chord from "../backend/models/Chord";
 
 test('constructor generates expected notes for chord', () => {
   var cmajChord = new Chord(['c', 'd', 'e', 'f', 'g', 'a', 'b'], ['1', '3', '5']);

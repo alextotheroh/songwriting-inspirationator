@@ -1,4 +1,4 @@
-import Scale from "../backend/Scale";
+import Scale from "../backend/models/Scale";
 
 test('constructor generates expected notes for chord', () => {
   var cmajScale = new Scale('c', 'Ionian');

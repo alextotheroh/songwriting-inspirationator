@@ -1,4 +1,4 @@
-import * as defaults from './defaultData';
+import * as defaults from '../defaultData';
 
 const CUSTOM_STATE_KEY = "SONGWRITING_INSPIRATIONATOR_CUSTOM_STATE";
 var currentInstruments;

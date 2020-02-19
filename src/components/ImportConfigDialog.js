@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dropzone from 'react-dropzone';
-import * as services from '../backend/Services';
+import * as services from '../backend/services/Services';
 
 class ImportConfigDialog extends Component {
 

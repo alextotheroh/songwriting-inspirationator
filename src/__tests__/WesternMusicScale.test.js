@@ -1,4 +1,4 @@
-import WesternMusicScale from "../backend/WesternMusicScale.ts";
+import WesternMusicScale from "../backend/models/WesternMusicScale.ts";
 
 const westernMusicScale = new WesternMusicScale();
 

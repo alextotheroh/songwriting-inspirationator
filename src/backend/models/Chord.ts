@@ -1,5 +1,5 @@
 import WesternMusicScale from "./WesternMusicScale";
-import { chordTypes } from './defaultData';
+import { chordTypes } from '../defaultData';
 
 class Chord {
   private name: string;
