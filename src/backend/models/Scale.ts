@@ -4,7 +4,7 @@ import Chord from './Chord';
 
 class Scale {
 
-  private feel: string;
+  private feel: string[];
   private alternateNames: string[];
   private notes: string[];
 

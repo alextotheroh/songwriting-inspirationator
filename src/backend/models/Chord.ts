@@ -16,7 +16,7 @@ class Chord {
 
     this.westernMusicScale = new WesternMusicScale();
     this.scale = scale; // the notes the chord draws from
-    this.degrees = degrees; // str array: the degrees of the notes in the scale to voice (ex: [1, 3, 5], [1, f3, 5], [1, s3, 5])
+    this.degrees = degrees; // str array: the degrees of the notes in the scale to voice (ex: [1, 3, 5], [1, f3, 5], [1, 4, 5])
     this.notes = []; // the notes the chord is currently voicing
     this.name = 'unknown';
 
@@ -37,7 +37,7 @@ class Chord {
         } else if (degree[0] === 's') {
           this.notes.push( this.westernMusicScale.getInterval(this.getNoteAtIndex(parseInt(degree.substring(1))), 1) );
         }
-      } else if (typeof(parseInt(degree) === 'number')) {
+      } else if (typeof(parseInt(degree)) === 'number') {
         this.notes.push(this.getNoteAtIndex(parseInt(degree)));
       } else {
         throw `Unexpected argument passed in degrees array: ${degree}`;
@@ -45,6 +45,22 @@ class Chord {
     }
 
     this.updateChordName();
+  }
+
+  getNotes(): string[] {
+    return this.notes;
+  }
+
+  getName(): string {
+    return this.name;
+  }
+
+  getScale(): string[] {
+    return this.scale;
+  }
+
+  getDegrees(): string[] {
+    return this.degrees;
   }
 
   // wraps around the this.scale array like music notes do
@@ -57,14 +73,6 @@ class Chord {
       return this.scale[normalizedIndex];
     }
     return this.scale[index];
-  }
-
-  getNotes(): string[] {
-    return this.notes;
-  }
-
-  getName(): string {
-    return this.name;
   }
 
   // current data model and logic assumes that chords are built starting at the root.
@@ -91,6 +99,18 @@ class Chord {
 
   playAudio() {
     // play the audio for this chord
+  }
+
+  numberOfNotesInCommon(chord: Chord) {
+    var count = 0;
+
+    for (let note of chord.getNotes()) {
+      if (this.notes.includes(note)) {
+        count++;
+      }
+    }
+
+    return count;
   }
 
 }

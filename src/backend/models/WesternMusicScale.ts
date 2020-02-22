@@ -1,9 +1,13 @@
-class WesternMusicScale {
+export default class WesternMusicScale {
 
   private notes: string[];
 
   constructor() {
     this.notes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
+  }
+
+  getNotes(): string[] {
+    return this.notes;
   }
 
   // can get chords or scales
@@ -45,7 +49,7 @@ class WesternMusicScale {
   }
 
   notesAreEnharmonic(n1: string, n2: string) {
-    const notesToEnharmonics = {
+    const notesToEnharmonics: {[key: string]: Set<string>} = {
       'c': new Set(['b#']), 
       'c#': new Set(['df']), 
       'd': new Set([]), 
@@ -68,7 +72,7 @@ class WesternMusicScale {
   // given a note and a number of half-steps, returns the note that many half steps away
   // accepts negative numbers
   getInterval(note: string, interval: number): string {
-    var indexOfStartingNote = null;
+    var indexOfStartingNote: number = -1;
 
     for (var i = 0; i < this.notes.length; i++) {
       if (this.notes[i] === note || this.notesAreEnharmonic(note, this.notes[i])) {
@@ -76,7 +80,7 @@ class WesternMusicScale {
       }
     }
 
-    if (isNaN(indexOfStartingNote)) {
+    if (indexOfStartingNote < 0) {
       throw "Couldn't find note";
     }
 
@@ -111,7 +115,7 @@ class WesternMusicScale {
       2: '2',
       3: 'f3',
       4: '3',
-      5: 's3',
+      5: '4',
       6: 'f5',
       7: '5',
       8: 's5',
@@ -155,5 +159,3 @@ class WesternMusicScale {
     
   }
 }
-
-export default WesternMusicScale;

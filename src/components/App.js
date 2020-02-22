@@ -13,6 +13,7 @@ import * as services from '../backend/services/Services';
 import StartASongRoot from '../components/StartASongRoot';
 import FindAnInstrumentRoot from '../components/FindAnInstrumentRoot';
 import GenerateABasslineRoot from '../components/GenerateABasslineRoot';
+import ProgressionatorRoot from '../components/progressionator/ProgressionatorRoot';
 
 const theme = createMuiTheme({
   palette: {
@@ -49,6 +50,9 @@ class App extends Component {
           <Header />
 
           <Switch>
+            <Route path="/progressionator">
+              <ProgressionatorRoot />
+            </Route>
             <Route path="/start-a-song">
               <StartASongRoot />
             </Route>

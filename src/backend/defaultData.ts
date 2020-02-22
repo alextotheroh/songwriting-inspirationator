@@ -1,3 +1,5 @@
+import {ModeObject} from './interfaces/ModeObject';
+
 export var instruments = [
   {name: "Acoustic Guitar", type: "guitar", enabled: true},
   {name: "Electric Guitar (Clean)", type: "guitar", enabled: true},
@@ -220,40 +222,45 @@ export var basslineConfig = {
   notes: ["E5", "E7", "E8", "A5", "A7", "A8", "D5", "D7", "D9", "G5", "G7"]
 }
 
-export var modePatterns = {
+export var modePatterns: {[key: string]: ModeObject}  = {
   'Ionian': {
-    'intervals': [2, 2, 1, 2, 2, 2, 1], // 2 is whole step, 1 is half step
-    'feel': ['happy', 'normal', 'cliche'],
-    'alternateNames': ['major']
+    intervals: [2, 2, 1, 2, 2, 2, 1], // 2 is whole step, 1 is half step
+    feel: ['happy', 'normal', 'cliche'],
+    alternateNames: ['major']
   },
   'Dorian': {
-    'intervals': [2, 1, 2, 2, 2, 1, 2],
-    'feel': ['excited', 'giddy', 'anxious']
+    intervals: [2, 1, 2, 2, 2, 1, 2],
+    feel: ['excited', 'giddy', 'anxious'],
+    alternateNames: []
   },
   'Phrygian': {
-    'intervals': [1, 2, 2, 2, 1, 2, 2],
-    'feel': ['alert', 'pessimistic', 'slightly dark']
+    intervals: [1, 2, 2, 2, 1, 2, 2],
+    feel: ['alert', 'pessimistic', 'slightly dark'],
+    alternateNames: []
   },
   'Lydian': {
-    'intervals': [2, 2, 2, 1, 2, 2, 1],
-    'feel': ['triumphant', 'eager', 'playful']
+    intervals: [2, 2, 2, 1, 2, 2, 1],
+    feel: ['triumphant', 'eager', 'playful'],
+    alternateNames: []
   },
   'Mixolydian': {
-    'intervals': [2, 2, 1, 2, 2, 1, 2],
-    'feel': ['lydian++']
+    intervals: [2, 2, 1, 2, 2, 1, 2],
+    feel: ['lydian++'],
+    alternateNames: []
   },
   'Aeolian': {
-    'intervals': [2, 2, 1, 2, 2, 1, 2],
-    'feel': ['sad', 'humble', 'emotional'],
-    'alternateNames': ['natural minor']
+    intervals: [2, 2, 1, 2, 2, 1, 2],
+    feel: ['sad', 'humble', 'emotional'],
+    alternateNames: ['natural minor']
   },
   'Locrian': {
-    'intervals': [2, 1, 2, 2, 1, 2, 2],
-    'feel': ['extremely unsettled']
+    intervals: [2, 1, 2, 2, 1, 2, 2],
+    feel: ['extremely unsettled'],
+    alternateNames: []
   }
 };
 
-export var chordTypes = {
+export var chordTypes: {[key: string]: string[]} = {
   'major': ['1', '3', '5'], 
   'minor': ['1', 'f3', '5'], 
   '7': ['1', '3', '5', 'f7'], 

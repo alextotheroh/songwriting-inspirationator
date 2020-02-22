@@ -19,6 +19,8 @@ class Nav extends Component {
 
       <div className="Nav-container">
           <Grid container justify="center">
+            <Grid item xs={1.5} className={this.getClassForNavTab("progressionator")}><Button size="large" className="theme-button-1">
+              <Link to="/progressionator">progressionator</Link></Button></Grid>
             <Grid item xs={1.5} className={this.getClassForNavTab("generate-a-song-template")}><Button size="large" className="theme-button-1">
               <Link to="/generate-a-song-template">generate a song template</Link></Button></Grid>
             <Grid item xs={1.5} className={this.getClassForNavTab("start-a-song")}><Button size="large" className="theme-button-1">

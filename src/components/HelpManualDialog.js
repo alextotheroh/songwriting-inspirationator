@@ -19,7 +19,7 @@ class HelpManualDialog extends Component {
     } else if (currentUrl.includes('generate-a-bassline')) {
       return this.generateABasslineHelp;
     } else {
-      return <p>You should never see this. This is a error. Neat!</p>;
+      return <p>You should never see this. This is an error. Neat!</p>;
     }
   }
 
