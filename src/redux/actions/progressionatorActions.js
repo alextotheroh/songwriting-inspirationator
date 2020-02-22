@@ -2,6 +2,6 @@ export function changeRootNote(rootNote) {
   return {type: 'changeRoot', rootNote};
 }
 
-export function changeRootNote(modeName) {
+export function changeMode(modeName) {
   return {type: 'changeMode', modeName};
 }

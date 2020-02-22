@@ -10,6 +10,7 @@ import WesternMusicScale from '../../backend/models/WesternMusicScale';
 import ProgressionatorService from '../../backend/services/ProgressionatorService';
 import { connect } from 'react-redux';
 import progressionatorReducer from '../../redux/reducers/progressionatorReducer';
+import { changeMode, changeRootNote } from '../../redux/actions/progressionatorActions';
 import PropTypes from 'prop-types';
 
 class ProgressionatorRoot extends Component {
@@ -49,22 +50,18 @@ class ProgressionatorRoot extends Component {
   }
 
   handleRootNoteChange = (e) => {
-    this.setState({
-      rootNote: e.target.value
-    });
+    this.props.dispatch(changeRootNote(e.target.value));
   }
 
   handleModeChange = (e) => {
-    this.setState({
-      mode: e.target.value
-    });
+    this.props.dispatch(changeMode(e.target.value));
   }
 }
 
 function mapStateToProps(state) {
   return {
-      rootNote: progressionatorReducer.rootNote,
-      modeName: progressionatorReducer.modeName
+      rootNote: state.progressionatorReducer.rootNote,
+      modeName: state.progressionatorReducer.modeName
   };
 }
 
