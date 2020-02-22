@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import progressionatorReducer from '../../redux/reducers/progressionatorReducer';
 import { changeMode, changeRootNote } from '../../redux/actions/progressionatorActions';
 import PropTypes from 'prop-types';
+import Scale from '../../backend/models/Scale';
 
 class ProgressionatorRoot extends Component {
 
@@ -45,6 +46,12 @@ class ProgressionatorRoot extends Component {
               <MenuItem value={modeName}>{modeName}</MenuItem>
             )}
           </Select>
+
+          <div>
+            {this.getDiatonicChordsForSelectedMode().map((chord) => {
+              return <span>{chord.getName()}&nbsp;&nbsp;&nbsp;</span>
+            })}
+          </div>
         </div>
     );
   }
@@ -56,6 +63,12 @@ class ProgressionatorRoot extends Component {
   handleModeChange = (e) => {
     this.props.dispatch(changeMode(e.target.value));
   }
+
+  getDiatonicChordsForSelectedMode = () => {
+    var scale = new Scale(this.props.rootNote, this.props.modeName);
+
+    return scale.getDiatonicChords();
+  } 
 }
 
 function mapStateToProps(state) {
