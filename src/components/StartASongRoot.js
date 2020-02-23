@@ -114,7 +114,7 @@ class StartASongRoot extends Component {
 
     return (
         <div className="theme-content-container">
-          <Grid container spacing={24}>
+          <Grid container spacing={3}>
             {services.getWaysToStartASong().map(wayToStartASongString => {
               return <Grid item>
                 <div className="StartASongRoot-itemContainer" onContextMenu={this.handleItemRightClick}>

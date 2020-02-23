@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
-import GenerateASongTemplateRoot from './GenerateASongTemplateRoot';
+import GenerateASongTemplateRoot from './generateASongTemplate/GenerateASongTemplateRoot';
 import Footer from './Footer';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {

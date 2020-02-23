@@ -14,6 +14,7 @@ import { changeMode, changeRootNote } from '../../redux/actions/progressionatorA
 import PropTypes from 'prop-types';
 import Scale from '../../backend/models/Scale';
 import { Typography } from '@material-ui/core';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 class ProgressionatorRoot extends Component {
 
@@ -30,8 +31,10 @@ class ProgressionatorRoot extends Component {
         <div className="theme-content-container">
           <span>Root Note: &nbsp;&nbsp;&nbsp;</span>
           <Select
+            className="ProgressionatorRoot-select theme-color-1"
             value={this.props.rootNote}
             onChange={this.handleRootNoteChange}
+            variant='outlined'
           >
             {this.westernMusicScale.getNotes().map((note) =>
               <MenuItem value={note}>{note}</MenuItem>
@@ -40,8 +43,14 @@ class ProgressionatorRoot extends Component {
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span>Mode: &nbsp;&nbsp;&nbsp;</span>
           <Select
+            className="ProgressionatorRoot-select"
             value={this.props.modeName}
             onChange={this.handleModeChange}
+            input={
+              <OutlinedInput
+                name="mode"
+              />
+            }
           >
             {this.progressionatorService.getModeNames().map((modeName) =>
               <MenuItem value={modeName}>{modeName}</MenuItem>

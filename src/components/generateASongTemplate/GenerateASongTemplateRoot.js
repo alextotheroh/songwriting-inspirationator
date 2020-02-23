@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import InstrumentsList from './InstrumentsList';
+import InstrumentsList from '../InstrumentsList';
 import SongAttribute from './SongAttribute';
 import GeneratedTemplate from './GeneratedTemplate';
 import AddAttributeDialog from './AddAttributeDialog';
@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import * as services from '../backend/services/Services';
+import * as services from '../../backend/services/Services';
 
 class GenerateASongTemplateRoot extends Component {
 
@@ -43,7 +43,7 @@ class GenerateASongTemplateRoot extends Component {
           <div className="Body-SongAttributesSectionTitle" onContextMenu={this.handleSongAttributesRightClick}>
             Song Attributes
           </div>
-          <Grid container spacing={8}>
+          <Grid container spacing={1}>
             <Grid item xs={4}>
               {chunkedAttributes[0].map((attribute) => 
                 <SongAttribute attribute={attribute} key={attribute.name} 
