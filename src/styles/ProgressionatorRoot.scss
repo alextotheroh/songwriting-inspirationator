@@ -1,3 +1,34 @@
+@import './colors';
+
 .ProgressionatorRoot-select {
-  
+  color: $electric-blue !important;
+  border-bottom: 1px solid $electric-blue;
+}
+
+.ProgressionatorRoot-select:hover:before {
+  border-bottom: 2px solid $electric-blue !important;
+}
+
+.ProgressionatorRoot-select svg {
+  color: $electric-blue;
+}
+
+.ProgressionatorRoot-scaleNotes {
+  margin-top: 30px !important;
+  text-align: center;
+}
+
+.ProgressionatorRoot-chordNames {
+  margin-top: 10px !important;
+  text-align: center;
+}
+
+.ProgressionatorRoot-scaleNotes span {
+  color: $electric-blue;
+  font-size: 30px;
+}
+
+.ProgressionatorRoot-chordNames span {
+  color: $electric-blue;
+  font-size: 30px;
 }
