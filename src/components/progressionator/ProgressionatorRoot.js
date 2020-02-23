@@ -13,6 +13,7 @@ import progressionatorReducer from '../../redux/reducers/progressionatorReducer'
 import { changeMode, changeRootNote } from '../../redux/actions/progressionatorActions';
 import PropTypes from 'prop-types';
 import Scale from '../../backend/models/Scale';
+import { Typography } from '@material-ui/core';
 
 class ProgressionatorRoot extends Component {
 
@@ -47,11 +48,17 @@ class ProgressionatorRoot extends Component {
             )}
           </Select>
 
-          <div>
+          <Typography>
+            {this.getNotesForMode().map((note) => {
+            return <span>{note}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            })}
+          </Typography>
+
+          <Typography>
             {this.getDiatonicChordsForSelectedMode().map((chord) => {
               return <span>{chord.getName()}&nbsp;&nbsp;&nbsp;</span>
             })}
-          </div>
+          </Typography>
         </div>
     );
   }
@@ -68,7 +75,13 @@ class ProgressionatorRoot extends Component {
     var scale = new Scale(this.props.rootNote, this.props.modeName);
 
     return scale.getDiatonicChords();
-  } 
+  }
+
+  getNotesForMode = () => {
+    var scale = new Scale(this.props.rootNote, this.props.modeName);
+
+    return scale.getNotes();
+  }
 }
 
 function mapStateToProps(state) {
