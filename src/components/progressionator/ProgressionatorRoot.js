@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
+import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
 import WesternMusicScale from '../../backend/models/WesternMusicScale';
 import ProgressionatorService from '../../backend/services/ProgressionatorService';
@@ -34,7 +36,7 @@ class ProgressionatorRoot extends Component {
           )}
         </Select><br/>
 
-        <div style={{marginTop: "10px"}}>  
+        <div style={{marginTop: "10px", marginBottom: "20px"}}>  
           <span className="theme-color-1 theme-font-2" style={{fontSize: "30px"}}>Mode:</span>
           <Select
             className="ProgressionatorRoot-select"
@@ -47,22 +49,30 @@ class ProgressionatorRoot extends Component {
             )}
           </Select>
         </div>
-        
-        <div className="ProgressionatorRoot-scaleNotes">
-          <Typography component="span" className="theme-font-2">
-            {this.getNotesForMode().map((note) => {
-            return <span style={{marginRight: "50px"}}>{note}</span>
-            })}
-          </Typography>
-        </div>
 
-        <div className="ProgressionatorRoot-chordNames">   
-          <Typography component="span" className="theme-font-2">
+        <Paper style={{padding: '40px 20px'}}>     
+          <div className="ProgressionatorRoot-scaleNotes">
+            <Typography component="span" className="theme-font-mono">
+              {this.getNotesForMode().map((note) => {
+              return <span style={{marginRight: "50px"}}>{note}</span>
+              })}
+            </Typography>
+          </div>
+
+          {/* must incorporate a grid here to display chord functions */}  
+          <Grid container spacing={1} className="ProgressionatorRoot-chordNames">
             {this.getDiatonicChordsForSelectedMode().map((chord) => {
-              return <span style={{marginRight: "50px"}}>{chord.getName()}</span>
+              return (
+                <Grid item xs className="theme-font-mono">
+                  <div className="ProgressioantorRoot-chordContainer">
+                    <div>{chord.getFunction()}</div>
+                    <div>{chord.getName()}</div>
+                  </div>
+                </Grid>
+              )
             })}
-          </Typography>
-        </div> 
+          </Grid> 
+        </Paper>
       </div>
     );
   }

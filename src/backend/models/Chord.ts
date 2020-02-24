@@ -3,6 +3,7 @@ import { chordTypes } from '../defaultData';
 
 class Chord {
   private name: string;
+  private chordFunction: string = 'error';
   private scale: string[];
   private degrees: string[];
   private notes: string[];
@@ -45,6 +46,7 @@ class Chord {
     }
 
     this.updateChordName();
+    this.updateChordFunction();
   }
 
   getNotes(): string[] {
@@ -61,6 +63,10 @@ class Chord {
 
   getDegrees(): string[] {
     return this.degrees;
+  }
+
+  getFunction(): string {
+    return this.chordFunction;
   }
 
   // wraps around the this.scale array like music notes do
@@ -89,12 +95,55 @@ class Chord {
         return;
       }
     }
+  }
 
-    console.log(`root: ${root}`)
-    console.log(`this.notes: ${this.notes}`)
-    console.log(`chordNoteIntervals: ${chordNoteIntervals}`)
-    console.error(`No chord name found for notes: ${this.notes}`);
+  updateChordFunction(): void {
+    // this.degress[0] tells us the roman numeral
+    var numeral: string;
+    switch (this.degrees[0]) {
+      case "1":
+        numeral = "I";
+        break;
+      case "2":
+        numeral = "II";
+        break;
+      case "3":
+        numeral = "III";
+        break;
+      case "4":
+        numeral = "IV";
+        break;
+      case "5":
+        numeral = "V";
+        break;
+      case "6":
+        numeral = "VI";
+        break;
+      case "7":
+        numeral = "VII";
+        break;
+      default:
+        numeral = "error"
+    }
 
+    var modifier: string = '';
+    var lowerCase: boolean = false;
+    if (this.name.split(" ")[1].includes("min")) {
+      lowerCase = true;
+    }
+    if (this.name.split(" ")[1].includes("dim")) {
+      modifier = "dim";
+    }
+    if (this.name.split(" ")[1].includes("aug")) {
+      modifier = "aug";
+    }
+
+    var chordFunction: string = numeral + modifier;
+    if (lowerCase) {
+      this.chordFunction = chordFunction.toLowerCase();
+    } else {
+      this.chordFunction = chordFunction;
+    }
   }
 
   playAudio() {

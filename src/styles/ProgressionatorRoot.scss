@@ -14,21 +14,24 @@
 }
 
 .ProgressionatorRoot-scaleNotes {
-  margin-top: 30px !important;
   text-align: center;
 }
 
 .ProgressionatorRoot-chordNames {
-  margin-top: 10px !important;
+  margin-top: 20px !important;
   text-align: center;
 }
 
 .ProgressionatorRoot-scaleNotes span {
-  color: $electric-blue;
-  font-size: 30px;
+  color: $black;
+  font-size: 20px;
+  font-weight: bold;
 }
 
-.ProgressionatorRoot-chordNames span {
-  color: $electric-blue;
-  font-size: 30px;
+.ProgressioantorRoot-chordContainer {
+  color: $black;
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid $black;
+  border-radius: 4px;
 }
