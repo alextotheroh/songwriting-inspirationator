@@ -10,6 +10,7 @@ import { changeMode, changeRootNote } from '../../redux/actions/progressionatorA
 import PropTypes from 'prop-types';
 import Scale from '../../backend/models/Scale';
 import { Typography } from '@material-ui/core';
+import * as Tone from "tone";
 
 class ProgressionatorRoot extends Component {
 
@@ -17,11 +18,11 @@ class ProgressionatorRoot extends Component {
     super(props);
 
     this.westernMusicScale = new WesternMusicScale();
-    this.progressionatorService = new ProgressionatorService(this.westernMusicScale);
+    this.progressionatorService = new ProgressionatorService(this.westernMusicScale)
+    this.pattern = null;
   }
 
   render() {
-
     return (
       <div className="theme-content-container">
         <span className="theme-color-1 theme-font-2" style={{fontSize: "30px"}}>Root Note:</span>
@@ -32,7 +33,7 @@ class ProgressionatorRoot extends Component {
           style={{marginLeft: '40px'}}
         >
           {this.westernMusicScale.getNotes().map((note) =>
-            <MenuItem value={note}>{note}</MenuItem>
+            <MenuItem value={note.split(" ")[0]}>{note.split(" ")[0]}</MenuItem>
           )}
         </Select><br/>
 
@@ -55,13 +56,12 @@ class ProgressionatorRoot extends Component {
             <Typography component="span" className="theme-font-mono">
               {this.getNotesForMode().map((note) => {
               return <span style={{marginRight: "50px"}}>{note}</span>
-              })}
+              })}<span id="tone-play-toggle-scale" onClick={this.handlePlayScaleClick}>play</span>
             </Typography>
           </div>
 
-          {/* must incorporate a grid here to display chord functions */}  
           <Grid container spacing={1} className="ProgressionatorRoot-chordNames">
-            {this.getDiatonicChordsForSelectedMode().map((chord) => {
+            {this.props.diatonicChordsForSelectedMode.map((chord) => {
               return (
                 <Grid item xs className="theme-font-mono">
                   <div className="ProgressioantorRoot-chordContainer">
@@ -85,29 +85,64 @@ class ProgressionatorRoot extends Component {
     this.props.dispatch(changeMode(e.target.value));
   }
 
-  getDiatonicChordsForSelectedMode = () => {
-    var scale = new Scale(this.props.rootNote, this.props.modeName);
-
-    return scale.getDiatonicChords();
-  }
-
   getNotesForMode = () => {
     var scale = new Scale(this.props.rootNote, this.props.modeName);
 
     return scale.getNotes();
+  }
+
+  handlePlayScaleClick = () => {
+    Tone.Transport.stop();
+    var scale = new Scale(this.props.rootNote, this.props.modeName)
+    var volume = new Tone.Volume(-11).toMaster();
+    var reverb = new Tone.JCReverb(0.4).connect(volume);
+    var vibrato = new Tone.Vibrato(6, .1).connect(reverb);
+    var dist = new Tone.Distortion(0.8).connect(vibrato);
+    var synthA = new Tone.Synth({
+      oscillator: {
+        type: 'triangle',
+      },
+      envelope: {
+        attack: 0.02,
+        decay: 0.1,
+        sustain: 0.3,
+        release: 1
+      }
+    }).connect(dist)
+
+    var noteOctaveNotationScale = scale.getNotes().map(note => note);
+    noteOctaveNotationScale.push(scale.getNotes()[0]); // add the upper octave
+    console.log(noteOctaveNotationScale);
+
+    if (this.pattern) {
+      this.pattern.stop();
+    }
+    this.pattern = new Tone.Pattern(function(time, note){
+      synthA.triggerAttackRelease(note, .25);
+    }, noteOctaveNotationScale);
+    this.pattern.interval = "8n";
+    this.pattern.iterations = 8;
+
+    this.pattern.start(0);
+
+    Tone.Transport.loopEnd = '1m';
+    Tone.Transport.loop = false;
+    Tone.Transport.start();
   }
 }
 
 function mapStateToProps(state) {
   return {
       rootNote: state.progressionatorReducer.rootNote,
-      modeName: state.progressionatorReducer.modeName
+      modeName: state.progressionatorReducer.modeName,
+      diatonicChordsForSelectedMode: state.progressionatorReducer.diatonicChordsForSelectedMode
   };
 }
 
 ProgressionatorRoot.propTypes = {
   rootNote: PropTypes.string,
-  modeName: PropTypes.string
+  modeName: PropTypes.string,
+  diatonicChordsForSelectedMode: PropTypes.array
 }
 
 export default connect(mapStateToProps)(ProgressionatorRoot);

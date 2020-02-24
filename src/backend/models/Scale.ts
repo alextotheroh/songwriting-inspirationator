@@ -23,16 +23,6 @@ class Scale {
     }
   }
 
-  /*
-  // todo will allow a scale to be constructed from any ol' notes
-  constructor(notes) {
-    
-  }*/
-
-  playaudio() {
-    // play the audio for this mode
-  }
-
   getDiatonicChords(): Chord[] {
     // return the diatonic chords (each a Chord object) for this mode
     // Chord constructor takes a name.  How do we determine the name of the chord from here?

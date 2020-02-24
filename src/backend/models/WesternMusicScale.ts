@@ -3,7 +3,7 @@ export default class WesternMusicScale {
   private notes: string[];
 
   constructor() {
-    this.notes = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'];
+    this.notes = ['c 4', 'c# 4', 'd 4', 'd# 4', 'e 4', 'f 4', 'f# 4', 'g 4', 'g# 4', 'a 4', 'a# 4', 'b 4', 'c 5', 'c# 5', 'd 5', 'd# 5', 'e 5', 'f 5', 'f# 5', 'g 5', 'g# 5', 'a 5', 'a# 5', 'b 5'];
   }
 
   getNotes(): string[] {
@@ -16,6 +16,10 @@ export default class WesternMusicScale {
   // ex: [2, 2, 1, 2, 2, 2, 1] is major scale
   // applies the intervals onto the root note
   getNoteCollection(root: string, intervals: number[]) {
+    // add octave number if doesn't exist
+    if (root.split(" ").length < 2) {
+      root += " 4";
+    }
     var indexOfRoot = -1;
 
     // set index to index of root note in above this.notes array
@@ -48,20 +52,35 @@ export default class WesternMusicScale {
     return collection;
   }
 
+  // ignores octave right now- only cares about note!
+  // That is unexpected!
+  // ex: c4 is enharmonic to b# 1, because this function discards the octave number
   notesAreEnharmonic(n1: string, n2: string) {
     const notesToEnharmonics: {[key: string]: Set<string>} = {
-      'c': new Set(['b#']), 
-      'c#': new Set(['df']), 
-      'd': new Set([]), 
-      'd#': new Set(['ef']), 
-      'e': new Set(['ff']), 
-      'f': new Set(['e#']), 
-      'f#': new Set(['gf']), 
-      'g': new Set([]), 
-      'g#': new Set(['af']), 
-      'a': new Set([]), 
-      'a#': new Set(['bf']), 
-      'b': new Set(['cf'])
+      'c 4': new Set(['b# 3']), 
+      'c# 4': new Set(['df 4']), 
+      'd 4': new Set([]), 
+      'd# 4': new Set(['ef 4']), 
+      'e 4': new Set(['ff 4']), 
+      'f 4': new Set(['e# 4']), 
+      'f# 4': new Set(['gf 4']), 
+      'g 4': new Set([]), 
+      'g# 4': new Set(['af 4']), 
+      'a 4': new Set([]), 
+      'a# 4': new Set(['bf 4']), 
+      'b 4': new Set(['cf 5']),
+      'c 5': new Set(['b# 4']), 
+      'c# 5': new Set(['df 5']), 
+      'd 5': new Set([]), 
+      'd# 5': new Set(['ef 5']), 
+      'e 5': new Set(['ff 5']), 
+      'f 5': new Set(['e# 5']), 
+      'f# 5': new Set(['gf 5']), 
+      'g 5': new Set([]), 
+      'g# 5': new Set(['af 5']), 
+      'a 5': new Set([]), 
+      'a# 5': new Set(['bf 5']), 
+      'b 5': new Set(['cf 6'])
     }
 
     return (n1 === n2) || 
@@ -105,6 +124,8 @@ export default class WesternMusicScale {
     var asHalfStepsAwayFromRoot = []
     var noteFunctions = ['1'];
 
+    console.log(`getChordStyleNoteFunctions was passed notes: ${chordNotes}`)
+
     for (var i = 1; i < chordNotes.length; i++) {
       asHalfStepsAwayFromRoot.push(this.getNumberOfHalfStepsBetweenNotes(chordNotes[0], chordNotes[i]));
     }
@@ -146,7 +167,7 @@ export default class WesternMusicScale {
     }
 
     if (indexOfN1 == null || indexOfN2 == null) {
-      throw `couldn't find one of the notes passed to getIntervalBetweenNotes().  Notes passed were: ${n1} and ${n2}`;
+      throw `couldn't find one of the notes passed to getNumberOfHalfStepsBetweenNotes().  Notes passed were: ${n1} and ${n2}`;
     }
 
     var halfStepsAway = indexOfN2 - indexOfN1;

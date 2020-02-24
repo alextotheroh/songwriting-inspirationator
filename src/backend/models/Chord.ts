@@ -16,7 +16,7 @@ class Chord {
     }
 
     this.westernMusicScale = new WesternMusicScale();
-    this.scale = scale; // the notes the chord draws from
+    this.scale = this.extendScaleByOneOctave(scale); // the notes the chord draws from
     this.degrees = degrees; // str array: the degrees of the notes in the scale to voice (ex: [1, 3, 5], [1, f3, 5], [1, 4, 5])
     this.notes = []; // the notes the chord is currently voicing
     this.name = 'unknown';
@@ -45,8 +45,26 @@ class Chord {
       }
     }
 
+    console.log(`chord constructor this.scale: ${this.scale}`);
+
     this.updateChordName();
     this.updateChordFunction();
+  }
+
+  // takes a 7 note scale of form ['c 4', 'd 4', 'e 4', ...]
+  // double array length by adding the next octave ['c 5', 'd 5', 'e 5', ...]
+  extendScaleByOneOctave(scale: string[]) {
+    var extendedScale: string[] = [];
+    for (let note of scale) {
+      extendedScale.push(note);
+    }
+    for (let note of scale) {
+      var noteNote = note.split(" ")[0];
+      var noteOctave = parseInt(note.split(" ")[1]) + 1
+      var noteOctaveUp: string = noteNote + " " + noteOctave;
+      extendedScale.push(noteOctaveUp);
+    }
+    return extendedScale;
   }
 
   getNotes(): string[] {
@@ -86,8 +104,12 @@ class Chord {
   updateChordName(): void {
     // find the intervals between each note in the chord in the root's major scale
     // (to convert to chord notation like [1, 3, 5], [1, f3, 5], etc.)
-    var root = this.notes[0]
-    var chordNoteIntervals: string[] = this.westernMusicScale.getChordStyleNoteFunctions(this.notes); 
+    var root = this.notes[0].split(" ")[0]
+    console.log(`updateChordName this.notes: ${this.notes}`);
+    var chordNoteIntervals: string[] = this.westernMusicScale.getChordStyleNoteFunctions(this.notes);
+    console.log(`updateChordName this.notes: ${this.notes}`)
+    console.log(`updateChordName root: ${root}`)
+    console.log(`updateChordName chordNoteIntervals: ${chordNoteIntervals}`)
 
     for (let key of Object.keys(chordTypes)) {
       if (sameArray(chordTypes[key], chordNoteIntervals)) {
@@ -128,6 +150,7 @@ class Chord {
 
     var modifier: string = '';
     var lowerCase: boolean = false;
+    console.log(`this.name: ${this.name}`)
     if (this.name.split(" ")[1].includes("min")) {
       lowerCase = true;
     }

@@ -75,10 +75,11 @@ class ProgressionatorService {
 
   getAllChordsThatAppKnowsNamesFor(): Chord[] {
     var chords = [];
+    var notes = this.westernMusicScale.getNotes();
 
-    for (let note of this.westernMusicScale.getNotes()) {
+    for (var i = 0; i < 12; i++) {
       for (let chordType of Object.keys(chordTypes)) {
-        var scale = new Scale(note, 'Ionian');
+        var scale = new Scale(notes[i], 'Ionian');
         var chord = new Chord(scale.getNotes(), chordTypes[chordType]);
         chords.push(chord);
       }
