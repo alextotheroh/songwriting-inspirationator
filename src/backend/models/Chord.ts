@@ -45,8 +45,6 @@ class Chord {
       }
     }
 
-    console.log(`chord constructor this.scale: ${this.scale}`);
-
     this.updateChordName();
     this.updateChordFunction();
   }
@@ -105,11 +103,7 @@ class Chord {
     // find the intervals between each note in the chord in the root's major scale
     // (to convert to chord notation like [1, 3, 5], [1, f3, 5], etc.)
     var root = this.notes[0].split(" ")[0]
-    console.log(`updateChordName this.notes: ${this.notes}`);
     var chordNoteIntervals: string[] = this.westernMusicScale.getChordStyleNoteFunctions(this.notes);
-    console.log(`updateChordName this.notes: ${this.notes}`)
-    console.log(`updateChordName root: ${root}`)
-    console.log(`updateChordName chordNoteIntervals: ${chordNoteIntervals}`)
 
     for (let key of Object.keys(chordTypes)) {
       if (sameArray(chordTypes[key], chordNoteIntervals)) {
@@ -150,7 +144,6 @@ class Chord {
 
     var modifier: string = '';
     var lowerCase: boolean = false;
-    console.log(`this.name: ${this.name}`)
     if (this.name.split(" ")[1].includes("min")) {
       lowerCase = true;
     }

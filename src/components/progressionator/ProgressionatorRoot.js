@@ -110,16 +110,19 @@ class ProgressionatorRoot extends Component {
       }
     }).connect(dist)
 
-    var noteOctaveNotationScale = scale.getNotes().map(note => note);
-    noteOctaveNotationScale.push(scale.getNotes()[0]); // add the upper octave
-    console.log(noteOctaveNotationScale);
+    var notesToPlay = [];
+    for (let note of scale.getNotes()) {
+      notesToPlay.push(note.replace(/\s/g, ''));
+    }
+    // add in upper octave
+    notesToPlay.push(scale.getNotes()[0].split(" ")[0] + '5')
 
     if (this.pattern) {
       this.pattern.stop();
     }
     this.pattern = new Tone.Pattern(function(time, note){
       synthA.triggerAttackRelease(note, .25);
-    }, noteOctaveNotationScale);
+    }, notesToPlay);
     this.pattern.interval = "8n";
     this.pattern.iterations = 8;
 

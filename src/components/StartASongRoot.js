@@ -33,7 +33,6 @@ class StartASongRoot extends Component {
     textContainers.forEach(e => {
       e.classList.remove("selected-way-to-write-a-song"); // remove previous if exists
 
-      console.log(e.textContent)
       if (e.textContent === chosenString) {
         e.classList.add("selected-way-to-write-a-song");
       }
@@ -45,7 +44,6 @@ class StartASongRoot extends Component {
   }
 
   handleDeleteItemClick = () => {
-    console.log(this.state.anchorEl.innerHTML);
     services.removeWayToStartASong(this.state.anchorEl.innerHTML);
     window.location.reload();
   }

@@ -14,7 +14,6 @@ class Nav extends Component {
   }
 
   render() {
-    console.log(this.props.currentUrl);
     return (
 
       <div className="Nav-container">

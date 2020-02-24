@@ -124,8 +124,6 @@ export default class WesternMusicScale {
     var asHalfStepsAwayFromRoot = []
     var noteFunctions = ['1'];
 
-    console.log(`getChordStyleNoteFunctions was passed notes: ${chordNotes}`)
-
     for (var i = 1; i < chordNotes.length; i++) {
       asHalfStepsAwayFromRoot.push(this.getNumberOfHalfStepsBetweenNotes(chordNotes[0], chordNotes[i]));
     }
