@@ -33,8 +33,6 @@ class FindAnInstrumentRoot extends Component {
   }
 
   handleDeleteItemClick = () => {
-    console.log(this.state.itemAnchorEl.innerHTML);
-    console.log(this.state.itemAnchorEl.parentElement.innerHTML);
     services.deleteInstrumentByFrequency(this.state.itemAnchorEl.innerHTML, this.state.itemAnchorEl.parentElement.innerHTML);
     window.location.reload();
   }

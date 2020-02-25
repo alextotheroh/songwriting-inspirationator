@@ -23,6 +23,12 @@ class ProgressionatorRoot extends Component {
   }
 
   render() {
+    var allNotes = this.westernMusicScale.getNotes();
+    var notesToChooseFrom = [];
+    for (var i = 0; i < 12; i++) {
+      notesToChooseFrom.push(allNotes[i]);
+    }
+
     return (
       <div className="theme-content-container">
         <span className="theme-color-1 theme-font-2" style={{fontSize: "30px"}}>Root Note:</span>
@@ -32,7 +38,7 @@ class ProgressionatorRoot extends Component {
           onChange={this.handleRootNoteChange}
           style={{marginLeft: '40px'}}
         >
-          {this.westernMusicScale.getNotes().map((note) =>
+          {notesToChooseFrom.map((note) =>
             <MenuItem value={note.split(" ")[0]}>{note.split(" ")[0]}</MenuItem>
           )}
         </Select><br/>
@@ -55,7 +61,7 @@ class ProgressionatorRoot extends Component {
           <div className="ProgressionatorRoot-scaleNotes">
             <Typography component="span" className="theme-font-mono">
               {this.getNotesForMode().map((note) => {
-              return <span style={{marginRight: "50px"}}>{note}</span>
+              return <span style={{marginRight: "50px"}}>{note.split(" ")[0]}</span>
               })}<span id="tone-play-toggle-scale" onClick={this.handlePlayScaleClick}>play</span>
             </Typography>
           </div>

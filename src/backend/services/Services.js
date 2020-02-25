@@ -170,8 +170,6 @@ export function addNewListOfValuesAttribute(attrName) {
       disabledValues: []
     }
   );
-  console.log("after adding list of values attribute, currentSongAttributes variable is: ");
-  console.log(currentSongAttributes);
   flushCustomizationsToLocalStorage();
 }
 
@@ -341,7 +339,6 @@ export function setStateFromFileContents(importedStateString) {
   }
 
   var obj = JSON.parse(importedStateString);
-  console.log(obj);
 
   if (!("instruments" in obj)) {
     console.log("configuration doesn't contain instruments");
@@ -511,8 +508,6 @@ export function getRandomBasslineAsArray() {
 
   for (var noteIndex = 0; noteIndex < chosenNotes.length; noteIndex++) {
     var indexOfString;
-
-    console.log(basslineConfig.notes[noteIndex][0]);
     
     switch(chosenNotes[noteIndex][0]) { // first character of note, which represents the bass string e a d or g
       case "E":

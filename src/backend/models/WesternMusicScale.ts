@@ -3,7 +3,7 @@ export default class WesternMusicScale {
   private notes: string[];
 
   constructor() {
-    this.notes = ['c 4', 'c# 4', 'd 4', 'd# 4', 'e 4', 'f 4', 'f# 4', 'g 4', 'g# 4', 'a 4', 'a# 4', 'b 4', 'c 5', 'c# 5', 'd 5', 'd# 5', 'e 5', 'f 5', 'f# 5', 'g 5', 'g# 5', 'a 5', 'a# 5', 'b 5'];
+    this.notes = ['c 4', 'c# 4', 'd 4', 'd# 4', 'e 4', 'f 4', 'f# 4', 'g 4', 'g# 4', 'a 4', 'a# 4', 'b 4', 'c 5', 'c# 5', 'd 5', 'd# 5', 'e 5', 'f 5', 'f# 5', 'g 5', 'g# 5', 'a 5', 'a# 5', 'b 5', 'c 6', 'c# 6', 'd 6', 'd# 6', 'e 6', 'f 6', 'f# 6', 'g 6', 'g# 6', 'a 6', 'a# 6', 'b 6'];
   }
 
   getNotes(): string[] {
@@ -26,6 +26,7 @@ export default class WesternMusicScale {
     for (var i = 0; i < this.notes.length; i++) {
       if (this.notesAreEnharmonic(this.notes[i], root)) {
         indexOfRoot = i;
+        break;
       }
     }
 
@@ -80,7 +81,19 @@ export default class WesternMusicScale {
       'g# 5': new Set(['af 5']), 
       'a 5': new Set([]), 
       'a# 5': new Set(['bf 5']), 
-      'b 5': new Set(['cf 6'])
+      'b 5': new Set(['cf 6']),
+      'c 6': new Set(['b# 5']), 
+      'c# 6': new Set(['df 6']), 
+      'd 6': new Set([]), 
+      'd# 6': new Set(['ef 6']), 
+      'e 6': new Set(['ff 6']), 
+      'f 6': new Set(['e# 6']), 
+      'f# 6': new Set(['gf 6']), 
+      'g 6': new Set([]), 
+      'g# 6': new Set(['af 6']), 
+      'a 6': new Set([]), 
+      'a# 6': new Set(['bf 6']), 
+      'b 6': new Set(['cf 7'])
     }
 
     return (n1 === n2) || 
