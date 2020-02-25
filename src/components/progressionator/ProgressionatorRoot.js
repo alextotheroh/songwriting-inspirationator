@@ -10,6 +10,7 @@ import { changeMode, changeRootNote } from '../../redux/actions/progressionatorA
 import PropTypes from 'prop-types';
 import Scale from '../../backend/models/Scale';
 import { Typography } from '@material-ui/core';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import * as Tone from "tone";
 
 class ProgressionatorRoot extends Component {
@@ -61,8 +62,11 @@ class ProgressionatorRoot extends Component {
           <div className="ProgressionatorRoot-scaleNotes">
             <Typography component="span" className="theme-font-mono">
               {this.getNotesForMode().map((note) => {
-              return <span style={{marginRight: "50px"}}>{note.split(" ")[0]}</span>
-              })}<span id="tone-play-toggle-scale" onClick={this.handlePlayScaleClick}>play</span>
+              return <span style={{margin: '0 25px'}}>{note.split(" ")[0]}</span>
+              })}
+              <div className="ProgressionatorRoot-scalePlayButton" id="tone-play-toggle-scale" onClick={this.handlePlayScaleClick}>
+                <PlayArrowIcon />
+              </div>
             </Typography>
           </div>
 
@@ -70,7 +74,7 @@ class ProgressionatorRoot extends Component {
             {this.props.diatonicChordsForSelectedMode.map((chord) => {
               return (
                 <Grid item xs className="theme-font-mono">
-                  <div className="ProgressioantorRoot-chordContainer">
+                  <div className="ProgressionatorRoot-chordContainer" onClick={() => this.handlePlayChordClick(chord.getNotes())}>
                     <div>{chord.getFunction()}</div>
                     <div>{chord.getName()}</div>
                   </div>
@@ -137,6 +141,31 @@ class ProgressionatorRoot extends Component {
     Tone.Transport.loopEnd = '1m';
     Tone.Transport.loop = false;
     Tone.Transport.start();
+  }
+
+  handlePlayChordClick = (notes) => {
+    // Tone.Transport.stop();
+    var scale = new Scale(this.props.rootNote, this.props.modeName)
+    var volume = new Tone.Volume(-11).toMaster();
+    var reverb = new Tone.JCReverb(0.4).connect(volume);
+    var vibrato = new Tone.Vibrato(6, .1).connect(reverb);
+    var dist = new Tone.Distortion(0.8).connect(vibrato);
+    var synthA = new Tone.Synth({
+      oscillator: {
+        type: 'triangle',
+      },
+      envelope: {
+        attack: 0.02,
+        decay: 0.1,
+        sustain: 0.3,
+        release: 1
+      }
+    });
+    var polysynth = new Tone.PolySynth(4, Tone.Synth).toMaster();
+
+
+
+    polysynth.triggerAttackRelease(notes.map(note => note.replace(/\s/g, '')), 1);
   }
 }
 

@@ -28,10 +28,15 @@
   font-weight: bold;
 }
 
-.ProgressioantorRoot-chordContainer {
+.ProgressionatorRoot-chordContainer {
   color: $black;
   font-size: 20px;
   font-weight: bold;
   border: 2px solid $black;
   border-radius: 4px;
+}
+
+.ProgressionatorRoot-scalePlayButton {
+  cursor: pointer;
+  margin-top: 2px;
 }

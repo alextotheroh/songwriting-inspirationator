@@ -66,7 +66,7 @@ class App extends Component {
               <GenerateASongTemplateRoot />
             </Route>
             <Route path="/">
-              <Redirect to="/generate-a-song-template" />
+              <Redirect to="/progressionator" />
             </Route>
           </Switch>
 
