@@ -144,28 +144,20 @@ class ProgressionatorRoot extends Component {
   }
 
   handlePlayChordClick = (notes) => {
-    // Tone.Transport.stop();
-    var scale = new Scale(this.props.rootNote, this.props.modeName)
-    var volume = new Tone.Volume(-11).toMaster();
-    var reverb = new Tone.JCReverb(0.4).connect(volume);
-    var vibrato = new Tone.Vibrato(6, .1).connect(reverb);
-    var dist = new Tone.Distortion(0.8).connect(vibrato);
-    var synthA = new Tone.Synth({
+    var volume = new Tone.Volume(-8).toMaster();
+    var synth = new Tone.PolySynth(7, Tone.Synth, {
       oscillator: {
         type: 'triangle',
       },
       envelope: {
-        attack: 0.02,
-        decay: 0.1,
-        sustain: 0.3,
+        attack: 0.16,
+        decay: 2,
+        sustain: 0.9,
         release: 1
       }
-    });
-    var polysynth = new Tone.PolySynth(4, Tone.Synth).toMaster();
+    }).connect(volume);
 
-
-
-    polysynth.triggerAttackRelease(notes.map(note => note.replace(/\s/g, '')), 1);
+    synth.triggerAttackRelease(notes.map(note => note.replace(/\s/g, '')), 1);
   }
 }
 
