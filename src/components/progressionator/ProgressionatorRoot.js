@@ -66,25 +66,25 @@ class ProgressionatorRoot extends Component {
           )}
         </Select><br/><br/>
 
-        <Paper style={{padding: '12px 20px 10px 20px'}} elevation={8}>     
+        <Paper style={{padding: '12px 20px 10px 20px', marginTop: '20px'}} elevation={8}>     
           <div className="ProgressionatorRoot-scaleNotes">
             <Typography component="span" className="theme-font-mono">
               {this.getNotesForMode().map((note) => {
               return <span style={{margin: '0 25px'}}>{note.split(" ")[0]}</span>
               })}
-              <div className="ProgressionatorRoot-scalePlayButton" id="tone-play-toggle-scale" onClick={this.handlePlayScaleClick}>
+              <div className="ProgressionatorRoot-scalePlayButton theme-pop-on-hover" id="tone-play-toggle-scale" onClick={this.handlePlayScaleClick}>
                 <PlayArrowIcon />
               </div>
             </Typography>
           </div>
         </Paper>  
 
-        <Paper style={{padding: '40px 20px', marginTop: "20px"}} elevation={8}>    
+        <Paper style={{padding: '40px 20px', marginTop: "30px"}} elevation={8}>    
           <Grid container spacing={1} className="ProgressionatorRoot-chordNames">
             {this.props.diatonicChordsForSelectedMode.map((chord) => {
               return (
                 <Grid item xs className="theme-font-mono">
-                  <div className="ProgressionatorRoot-chordContainer" onClick={() => this.handlePlayChordClick(chord.getNotes())}>
+                  <div className="ProgressionatorRoot-chordContainer theme-pop-on-hover" onClick={() => this.handlePlayChordClick(chord.getNotes())}>
                     <div>{chord.getFunction()}</div>
                     <div>{chord.getName()}</div>
                   </div>
@@ -94,52 +94,52 @@ class ProgressionatorRoot extends Component {
           </Grid> 
         </Paper>
 
-        <Paper style={{padding: "20px", marginTop: "20px"}} elevation={8}>
+        <Paper style={{padding: "20px", marginTop: "30px"}} elevation={8}>
           <Grid container>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot theme-font-mono" id="chord-slot-0" onClick={this.handleChordSlotClick}>
+              <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-0" onClick={this.handleChordSlotClick}>
                 {this.state.progressionChords[0] ? this.state.progressionChords[0].getName() : null}
               </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot theme-font-mono" id="chord-slot-1" onClick={this.handleChordSlotClick}>
+              <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-1" onClick={this.handleChordSlotClick}>
                 {this.state.progressionChords[1] ? this.state.progressionChords[1].getName() : null}  
               </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot theme-font-mono" id="chord-slot-2" onClick={this.handleChordSlotClick}>
+              <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-2" onClick={this.handleChordSlotClick}>
                 {this.state.progressionChords[2] ? this.state.progressionChords[2].getName() : null}  
               </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot theme-font-mono" id="chord-slot-3" onClick={this.handleChordSlotClick}>
+              <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-3" onClick={this.handleChordSlotClick}>
                 {this.state.progressionChords[3] ? this.state.progressionChords[3].getName() : null}  
               </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot theme-font-mono" id="chord-slot-4" onClick={this.handleChordSlotClick}>
+              <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-4" onClick={this.handleChordSlotClick}>
                 {this.state.progressionChords[4] ? this.state.progressionChords[4].getName() : null}  
               </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot theme-font-mono" id="chord-slot-5" onClick={this.handleChordSlotClick}>
+              <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-5" onClick={this.handleChordSlotClick}>
                 {this.state.progressionChords[5] ? this.state.progressionChords[5].getName() : null}  
               </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot theme-font-mono" id="chord-slot-6" onClick={this.handleChordSlotClick}>
+              <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-6" onClick={this.handleChordSlotClick}>
                 {this.state.progressionChords[6] ? this.state.progressionChords[6].getName() : null}  
               </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot theme-font-mono" id="chord-slot-7" onClick={this.handleChordSlotClick}>
+              <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-7" onClick={this.handleChordSlotClick}>
                 {this.state.progressionChords[7] ? this.state.progressionChords[7].getName() : null}  
               </div>
             </Grid>
           </Grid>
 
           <div className="ProgressionatorRoot-progressionPlayButton" id="tone-play-toggle-progression" onClick={this.handleProgressionPlayClick}>
-            {Tone.Transport.loop ? <StopIcon /> : <PlayArrowIcon />}
+            {Tone.Transport.loop ? <StopIcon className="theme-pop-on-hover" /> : <PlayArrowIcon className="theme-pop-on-hover" />}
           </div>
         </Paper>
 

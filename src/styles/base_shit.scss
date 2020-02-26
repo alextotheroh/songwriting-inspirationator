@@ -56,6 +56,12 @@
   color: $electric-blue !important;
 }
 
+.theme-pop-on-hover:hover {
+  box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
 .theme-content-container {
   max-width: 1000px;
   margin: 0 auto;
