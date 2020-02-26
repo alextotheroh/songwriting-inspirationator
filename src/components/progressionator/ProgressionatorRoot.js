@@ -23,7 +23,8 @@ class ProgressionatorRoot extends Component {
     this.pattern = null;
 
     this.state = {
-      chordSlotAnchorEl: null
+      chordSlotAnchorEl: null,
+      progressionChords: [null, null, null, null, null, null, null, null]
     };
     
   }
@@ -34,6 +35,9 @@ class ProgressionatorRoot extends Component {
     for (var i = 0; i < 12; i++) {
       notesToChooseFrom.push(allNotes[i]);
     }
+
+    console.log(`state start of render`)
+    console.log(this.state)
 
     return (
       <div className="theme-content-container">
@@ -92,28 +96,44 @@ class ProgressionatorRoot extends Component {
         <Paper style={{padding: "20px", marginTop: "20px"}}>
           <Grid container>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-1" onClick={this.handleChordSlotClick}></div>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-0" onClick={this.handleChordSlotClick}>
+                {this.state.progressionChords[0] ? this.state.progressionChords[0].getName() : null}
+              </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-2" onClick={this.handleChordSlotClick}></div>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-1" onClick={this.handleChordSlotClick}>
+                {this.state.progressionChords[1] ? this.state.progressionChords[1].getName() : null}  
+              </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-3" onClick={this.handleChordSlotClick}></div>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-2" onClick={this.handleChordSlotClick}>
+              {this.state.progressionChords[2] ? this.state.progressionChords[2].getName() : null}  
+              </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-4" onClick={this.handleChordSlotClick}></div>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-3" onClick={this.handleChordSlotClick}>
+              {this.state.progressionChords[3] ? this.state.progressionChords[3].getName() : null}  
+              </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-5" onClick={this.handleChordSlotClick}></div>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-4" onClick={this.handleChordSlotClick}>
+              {this.state.progressionChords[4] ? this.state.progressionChords[4].getName() : null}  
+              </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-6" onClick={this.handleChordSlotClick}></div>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-5" onClick={this.handleChordSlotClick}>
+              {this.state.progressionChords[5] ? this.state.progressionChords[5].getName() : null}  
+              </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-7" onClick={this.handleChordSlotClick}></div>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-6" onClick={this.handleChordSlotClick}>
+              {this.state.progressionChords[6] ? this.state.progressionChords[6].getName() : null}  
+              </div>
             </Grid>
             <Grid item xs>
-              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-8" onClick={this.handleChordSlotClick}></div>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-7" onClick={this.handleChordSlotClick}>
+              {this.state.progressionChords[7] ? this.state.progressionChords[7].getName() : null}  
+              </div>
             </Grid>
           </Grid>
         </Paper>
@@ -126,7 +146,7 @@ class ProgressionatorRoot extends Component {
         >
           {this.props.diatonicChordsForSelectedMode.map((chord) => {
           return (
-            <MenuItem className="theme-font-mono">
+            <MenuItem className="theme-font-mono" onClick={() => this.handleChordMenuItemClick(chord)}>
               <strong>{chord.getName().charAt(0).toUpperCase() + chord.getName().slice(1)}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
               <span>{chord.getFunction()}</span>
             </MenuItem>);
@@ -217,6 +237,23 @@ class ProgressionatorRoot extends Component {
 
   handleChordSlotMenuClose = (e) => {
     this.setState({
+      chordSlotAnchorEl: null
+    });
+  }
+
+  handleChordMenuItemClick = (chord) => {
+    console.log('-------------------------------------');
+    console.log(`chord:`)
+    console.log(chord)
+    
+    var chordIndexInProgression = parseInt(this.state.chordSlotAnchorEl.id.split("-")[2]);
+    console.log(`chordindexinprogression ${chordIndexInProgression}`);
+    var progressionWithNewChord = this.state.progressionChords.slice(0);
+    progressionWithNewChord[chordIndexInProgression] = chord;
+    console.log(`progressionwithnewchord:`)
+    console.log(progressionWithNewChord);
+    this.setState({
+      progressionChords: progressionWithNewChord,
       chordSlotAnchorEl: null
     });
   }
