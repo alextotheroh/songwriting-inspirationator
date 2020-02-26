@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { changeMode, changeRootNote } from '../../redux/actions/progressionatorActions';
 import PropTypes from 'prop-types';
 import Scale from '../../backend/models/Scale';
-import { Typography } from '@material-ui/core';
+import { Typography, Menu } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import * as Tone from "tone";
 
@@ -21,6 +21,11 @@ class ProgressionatorRoot extends Component {
     this.westernMusicScale = new WesternMusicScale();
     this.progressionatorService = new ProgressionatorService(this.westernMusicScale)
     this.pattern = null;
+
+    this.state = {
+      chordSlotAnchorEl: null
+    };
+    
   }
 
   render() {
@@ -83,6 +88,50 @@ class ProgressionatorRoot extends Component {
             })}
           </Grid> 
         </Paper>
+
+        <Paper style={{padding: "20px", marginTop: "20px"}}>
+          <Grid container>
+            <Grid item xs>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-1" onClick={this.handleChordSlotClick}></div>
+            </Grid>
+            <Grid item xs>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-2" onClick={this.handleChordSlotClick}></div>
+            </Grid>
+            <Grid item xs>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-3" onClick={this.handleChordSlotClick}></div>
+            </Grid>
+            <Grid item xs>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-4" onClick={this.handleChordSlotClick}></div>
+            </Grid>
+            <Grid item xs>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-5" onClick={this.handleChordSlotClick}></div>
+            </Grid>
+            <Grid item xs>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-6" onClick={this.handleChordSlotClick}></div>
+            </Grid>
+            <Grid item xs>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-7" onClick={this.handleChordSlotClick}></div>
+            </Grid>
+            <Grid item xs>
+              <div className="ProgressionatorRoot-chordSlot" id="chord-slot-8" onClick={this.handleChordSlotClick}></div>
+            </Grid>
+          </Grid>
+        </Paper>
+
+        <Menu
+          anchorEl={this.state.chordSlotAnchorEl}
+          keepMounted
+          open={Boolean(this.state.chordSlotAnchorEl)}
+          onClose={this.handleChordSlotMenuClose}
+        >
+          {this.props.diatonicChordsForSelectedMode.map((chord) => {
+          return (
+            <MenuItem className="theme-font-mono">
+              <strong>{chord.getName().charAt(0).toUpperCase() + chord.getName().slice(1)}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+              <span>{chord.getFunction()}</span>
+            </MenuItem>);
+          })}
+        </Menu>
       </div>
     );
   }
@@ -158,6 +207,18 @@ class ProgressionatorRoot extends Component {
     }).connect(volume);
 
     synth.triggerAttackRelease(notes.map(note => note.replace(/\s/g, '')), 1);
+  }
+
+  handleChordSlotClick = (e) => {
+    this.setState({
+      chordSlotAnchorEl: e.target
+    });
+  }
+
+  handleChordSlotMenuClose = (e) => {
+    this.setState({
+      chordSlotAnchorEl: null
+    });
   }
 }
 
