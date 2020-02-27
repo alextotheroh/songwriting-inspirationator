@@ -249,12 +249,12 @@ export var modePatterns: {[key: string]: ModeObject}  = {
     alternateNames: []
   },
   'Aeolian': {
-    intervals: [2, 2, 1, 2, 2, 1, 2],
+    intervals: [2, 1, 2, 2, 1, 2, 2],
     feel: ['sad', 'humble', 'emotional'],
     alternateNames: ['natural minor']
   },
   'Locrian': {
-    intervals: [2, 1, 2, 2, 1, 2, 2],
+    intervals: [ 1, 2, 2, 1, 2, 2, 2],
     feel: ['extremely unsettled'],
     alternateNames: []
   }

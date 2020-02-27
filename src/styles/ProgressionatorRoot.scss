@@ -1,5 +1,11 @@
 @import './colors';
 
+.ProgressionatorRoot-title {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+
 .ProgressionatorRoot-select {
   color: $electric-blue !important;
   border-bottom: 1px solid $electric-blue;

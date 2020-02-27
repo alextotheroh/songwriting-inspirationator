@@ -46,29 +46,10 @@ class ProgressionatorRoot extends Component {
 
     return (
       <div className="theme-content-container">
-        <span className="theme-color-1 theme-font-2" style={{fontSize: "30px"}}>Root Note:</span>
-        <Select
-          className="ProgressionatorRoot-select"
-          value={this.props.rootNote}
-          onChange={this.handleRootNoteChange}
-          style={{marginLeft: '15px', marginRight: '60px'}}
-        >
-          {notesToChooseFrom.map((note) =>
-            <MenuItem value={note.split(" ")[0]}>{note.split(" ")[0]}</MenuItem>
-          )}
-        </Select>
 
-        <span className="theme-color-1 theme-font-2" style={{fontSize: "30px"}}>Mode:</span>
-        <Select
-          className="ProgressionatorRoot-select"
-          value={this.props.modeName}
-          onChange={this.handleModeChange}
-          style={{marginLeft: '15px'}}
-        >
-          {this.progressionatorService.getModeNames().map((modeName) =>
-            <MenuItem value={modeName}>{modeName}</MenuItem>
-          )}
-        </Select><br/><br/>
+        <div className="theme-font-mono theme-color-1 ProgressionatorRoot-title">
+          <strong>{this.props.rootNote.toUpperCase() + " " + this.props.modeName}</strong>
+        </div>
 
         <Paper style={{padding: '12px 20px 10px 20px', marginTop: '20px'}} elevation={8}>     
           <div className="ProgressionatorRoot-scaleNotes">
@@ -146,6 +127,29 @@ class ProgressionatorRoot extends Component {
             {Tone.Transport.loop ? <StopIcon className="theme-pop-on-hover" /> : <PlayArrowIcon className="theme-pop-on-hover" />}
           </div>
         </Paper>
+
+        <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '15px'}}>
+          <Select
+            className="ProgressionatorRoot-select"
+            value={this.props.rootNote}
+            onChange={this.handleRootNoteChange}
+            style={{marginRight: '20px'}}
+          >
+            {notesToChooseFrom.map((note) =>
+              <MenuItem value={note.split(" ")[0]}>{note.split(" ")[0].toUpperCase()}</MenuItem>
+            )}
+          </Select>
+
+          <Select
+            className="ProgressionatorRoot-select"
+            value={this.props.modeName}
+            onChange={this.handleModeChange}
+          >
+            {this.progressionatorService.getModeNames().map((modeName) =>
+              <MenuItem value={modeName}>{modeName}</MenuItem>
+            )}
+          </Select>
+        </div>
 
         <Menu
           anchorEl={this.state.chordSlotAnchorEl}
