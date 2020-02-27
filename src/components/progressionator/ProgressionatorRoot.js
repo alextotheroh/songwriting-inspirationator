@@ -13,6 +13,7 @@ import { Typography, Menu } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
 import * as Tone from "tone";
+import Chord from '../../backend/models/Chord';
 
 class ProgressionatorRoot extends Component {
 
@@ -26,8 +27,14 @@ class ProgressionatorRoot extends Component {
     this.state = {
       chordSlotAnchorEl: null,
       progressionChords: [null, null, null, null, null, null, null, null]
-    };
-    
+    }; 
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.rootNote !== prevProps.rootNote || 
+      this.props.modeName !== prevProps.modeName) {
+        this.updateProgressionChordsForNewKey();
+    }
   }
 
   render() {
@@ -36,9 +43,6 @@ class ProgressionatorRoot extends Component {
     for (var i = 0; i < 12; i++) {
       notesToChooseFrom.push(allNotes[i]);
     }
-
-    console.log(`state start of render`)
-    console.log(this.state)
 
     return (
       <div className="theme-content-container">
@@ -282,19 +286,28 @@ class ProgressionatorRoot extends Component {
   }
 
   handleChordMenuItemClick = (chord) => {
-    console.log('-------------------------------------');
-    console.log(`chord:`)
-    console.log(chord)
-    
     var chordIndexInProgression = parseInt(this.state.chordSlotAnchorEl.id.split("-")[2]);
-    console.log(`chordindexinprogression ${chordIndexInProgression}`);
     var progressionWithNewChord = this.state.progressionChords.slice(0);
     progressionWithNewChord[chordIndexInProgression] = chord;
-    console.log(`progressionwithnewchord:`)
-    console.log(progressionWithNewChord);
     this.setState({
       progressionChords: progressionWithNewChord,
       chordSlotAnchorEl: null
+    });
+  }
+
+  updateProgressionChordsForNewKey = () => {
+    var newScale = new Scale(this.props.rootNote, this.props.modeName);
+    var transposedProgressionChords = [null, null, null, null, null, null, null, null];
+
+    for (var i = 0; i < this.state.progressionChords.length; i++) {
+      if (this.state.progressionChords[i] !== null) {
+        var transposedChord = new Chord(newScale.getNotes(), this.state.progressionChords[i].getDegrees());
+        transposedProgressionChords[i] = transposedChord;
+      }
+    }
+
+    this.setState({
+      progressionChords: transposedProgressionChords
     });
   }
 }
