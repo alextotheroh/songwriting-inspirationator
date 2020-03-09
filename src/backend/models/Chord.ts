@@ -144,7 +144,7 @@ class Chord {
 
     var modifier: string = '';
     var lowerCase: boolean = false;
-    if (this.name.split(" ")[1].includes("min")) {
+    if (this.name.split(" ")[1].includes("min")) { // where shes going awry
       lowerCase = true;
     }
     if (this.name.split(" ")[1].includes("dim")) {
@@ -160,10 +160,6 @@ class Chord {
     } else {
       this.chordFunction = chordFunction;
     }
-  }
-
-  playAudio() {
-    // play the audio for this chord
   }
 
   numberOfNotesInCommon(chord: Chord) {

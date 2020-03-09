@@ -14,7 +14,7 @@ import './styles/StartASongRoot.scss';
 import './styles/FindAnInstrumentRoot.scss';
 import './styles/GenerateABasslineRoot.scss';
 import './styles/ProgressionatorRoot.scss';
-import './styles/base_shit.scss';
+import './styles/theme.scss';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';

@@ -3,7 +3,10 @@ export default class WesternMusicScale {
   private notes: string[];
 
   constructor() {
-    this.notes = ['c 4', 'c# 4', 'd 4', 'd# 4', 'e 4', 'f 4', 'f# 4', 'g 4', 'g# 4', 'a 4', 'a# 4', 'b 4', 'c 5', 'c# 5', 'd 5', 'd# 5', 'e 5', 'f 5', 'f# 5', 'g 5', 'g# 5', 'a 5', 'a# 5', 'b 5', 'c 6', 'c# 6', 'd 6', 'd# 6', 'e 6', 'f 6', 'f# 6', 'g 6', 'g# 6', 'a 6', 'a# 6', 'b 6'];
+    this.notes = ['c 4', 'c# 4', 'd 4', 'd# 4', 'e 4', 'f 4', 'f# 4', 'g 4', 'g# 4', 'a 4', 'a# 4', 'b 4', 
+                  'c 5', 'c# 5', 'd 5', 'd# 5', 'e 5', 'f 5', 'f# 5', 'g 5', 'g# 5', 'a 5', 'a# 5', 'b 5', 
+                  'c 6', 'c# 6', 'd 6', 'd# 6', 'e 6', 'f 6', 'f# 6', 'g 6', 'g# 6', 'a 6', 'a# 6', 'b 6', 
+                  'c 7', 'c# 7', 'd 7', 'd# 7', 'e 7', 'f 7', 'f# 7', 'g 7', 'g# 7', 'a 7', 'a# 7', 'b 7'];
   }
 
   getNotes(): string[] {
@@ -93,7 +96,19 @@ export default class WesternMusicScale {
       'g# 6': new Set(['af 6']), 
       'a 6': new Set([]), 
       'a# 6': new Set(['bf 6']), 
-      'b 6': new Set(['cf 7'])
+      'b 6': new Set(['cf 7']),
+      'c 7': new Set(['b# 6']), 
+      'c# 7': new Set(['df 7']), 
+      'd 7': new Set([]), 
+      'd# 7': new Set(['ef 7']), 
+      'e 7': new Set(['ff 7']), 
+      'f 7': new Set(['e# 7']), 
+      'f# 7': new Set(['gf 7']), 
+      'g 7': new Set([]), 
+      'g# 7': new Set(['af 7']), 
+      'a 7': new Set([]), 
+      'a# 7': new Set(['bf 7']), 
+      'b 7': new Set(['cf 8'])
     }
 
     return (n1 === n2) || 

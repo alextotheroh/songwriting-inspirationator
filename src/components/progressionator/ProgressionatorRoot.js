@@ -6,9 +6,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import WesternMusicScale from '../../backend/models/WesternMusicScale';
 import ProgressionatorService from '../../backend/services/ProgressionatorService';
 import { connect } from 'react-redux';
-import { changeMode, changeRootNote } from '../../redux/actions/progressionatorActions';
+import { changeMode, changeRootNote, changeExtendChords } from '../../redux/actions/progressionatorActions';
 import PropTypes from 'prop-types';
 import Scale from '../../backend/models/Scale';
+import Switch from '@material-ui/core/Switch';
 import { Typography, Menu } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
@@ -64,19 +65,27 @@ class ProgressionatorRoot extends Component {
           </div>
         </Paper>  
 
-        <Paper style={{padding: '40px 20px', marginTop: "30px"}} elevation={8}>    
+        <Paper style={{padding: '40px 20px 20px 20px', marginTop: "30px"}} elevation={8}>    
           <Grid container spacing={1} className="ProgressionatorRoot-chordNames">
             {this.props.diatonicChordsForSelectedMode.map((chord) => {
               return (
+                // change font if chord name containd min7flat5
                 <Grid item xs className="theme-font-mono">
-                  <div className="ProgressionatorRoot-chordContainer theme-pop-on-hover" onClick={() => this.handlePlayChordClick(chord.getNotes())}>
+                  <div className="ProgressionatorRoot-chordContainer theme-pop-on-hover" 
+                    onClick={() => this.handlePlayChordClick(chord.getNotes())}>
                     <div>{chord.getFunction()}</div>
                     <div>{chord.getName()}</div>
                   </div>
                 </Grid>
               )
             })}
-          </Grid> 
+          </Grid>
+          <div className="ProgressionatorRoot-extendChordLabel theme-font-mono">
+            <Switch
+              checked={this.props.extendChords}
+              onChange={this.handleExtendChordsClick}
+            /><span>extend chords</span>
+          </div>
         </Paper>
 
         <Paper style={{padding: "20px", marginTop: "30px"}} elevation={8}>
@@ -178,13 +187,13 @@ class ProgressionatorRoot extends Component {
   }
 
   getNotesForMode = () => {
-    var scale = new Scale(this.props.rootNote, this.props.modeName);
+    var scale = new Scale(this.props.rootNote, this.props.modeName, this.props.extendChords);
 
     return scale.getNotes();
   }
 
   handlePlayScaleClick = () => {
-    var scale = new Scale(this.props.rootNote, this.props.modeName)
+    var scale = new Scale(this.props.rootNote, this.props.modeName, this.props.extendChords)
     var volume = new Tone.Volume(-11).toMaster();
     var reverb = new Tone.JCReverb(0.4).connect(volume);
     var vibrato = new Tone.Vibrato(6, .1).connect(reverb);
@@ -299,8 +308,17 @@ class ProgressionatorRoot extends Component {
     });
   }
 
+  handleExtendChordsClick = () => {
+    if (this.props.extendChords) {
+      this.props.dispatch(changeExtendChords(false));
+    } else {
+      this.props.dispatch(changeExtendChords(true));
+    }
+  }
+
   updateProgressionChordsForNewKey = () => {
-    var newScale = new Scale(this.props.rootNote, this.props.modeName);
+    console.log(this.props.extendChords)
+    var newScale = new Scale(this.props.rootNote, this.props.modeName, this.props.extendChords);
     var transposedProgressionChords = [null, null, null, null, null, null, null, null];
 
     for (var i = 0; i < this.state.progressionChords.length; i++) {
@@ -320,14 +338,16 @@ function mapStateToProps(state) {
   return {
       rootNote: state.progressionatorReducer.rootNote,
       modeName: state.progressionatorReducer.modeName,
-      diatonicChordsForSelectedMode: state.progressionatorReducer.diatonicChordsForSelectedMode
+      diatonicChordsForSelectedMode: state.progressionatorReducer.diatonicChordsForSelectedMode,
+      extendChords: state.progressionatorReducer.extendChords
   };
 }
 
 ProgressionatorRoot.propTypes = {
   rootNote: PropTypes.string,
   modeName: PropTypes.string,
-  diatonicChordsForSelectedMode: PropTypes.array
+  diatonicChordsForSelectedMode: PropTypes.array,
+  extendsChords: PropTypes.bool
 }
 
 export default connect(mapStateToProps)(ProgressionatorRoot);

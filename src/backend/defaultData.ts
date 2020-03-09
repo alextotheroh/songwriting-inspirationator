@@ -263,10 +263,11 @@ export var modePatterns: {[key: string]: ModeObject}  = {
 export var chordTypes: {[key: string]: string[]} = {
   'major': ['1', '3', '5'], 
   'minor': ['1', 'f3', '5'], 
-  '7': ['1', '3', '5', 'f7'], 
+  'dom7': ['1', '3', '5', 'f7'], 
   'maj7': ['1', '3', '5', '7'], 
   'min7': ['1', 'f3', '5', 'f7'], 
   'dim7': ['1', 'f3', 'f5', '6'],
+  'min7f5': ['1', 'f3', 'f5', 'f7'],
   'aug': ['1', '3', 's5'], 
   'dim': ['1', 'f3', 'f5'],
   'maj6': ['1', '3', '5', '6'],

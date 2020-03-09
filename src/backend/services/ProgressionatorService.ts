@@ -17,7 +17,7 @@ class ProgressionatorService {
     // assumes name is passed 'root space chordType'
     var root: string = name.split(" ")[0];
     var chordType: string = name.split(" ")[1];
-    var scale: Scale = new Scale(root, "Ionian");
+    var scale: Scale = new Scale(root, "Ionian", false);
     var degrees: string[] = chordTypes[chordType];
     return new Chord(scale.getNotes(), degrees);
   }
@@ -79,7 +79,7 @@ class ProgressionatorService {
 
     for (var i = 0; i < 12; i++) {
       for (let chordType of Object.keys(chordTypes)) {
-        var scale = new Scale(notes[i], 'Ionian');
+        var scale = new Scale(notes[i], 'Ionian', false);
         var chord = new Chord(scale.getNotes(), chordTypes[chordType]);
         chords.push(chord);
       }

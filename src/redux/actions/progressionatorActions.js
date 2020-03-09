@@ -5,3 +5,7 @@ export function changeRootNote(rootNote) {
 export function changeMode(modeName) {
   return {type: 'changeMode', modeName};
 }
+
+export function changeExtendChords(newVal) {
+  return {type: 'changeExtendChords', newVal}
+}
