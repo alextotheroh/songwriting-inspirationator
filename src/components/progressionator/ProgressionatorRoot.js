@@ -226,10 +226,14 @@ class ProgressionatorRoot extends Component {
   }
 
   handlePlayChordClick = (notes) => {
-    var volume = new Tone.Volume(-8).toMaster();
+    var volume = new Tone.Volume(-30).toMaster();
+    var reverb = new Tone.JCReverb(0.4).connect(volume);
+    var chorus = new Tone.Chorus().connect(reverb);
+    chorus.wet.value = 0.5;
+    var delay = new Tone.FeedbackDelay(0.25, 0.35).connect(chorus);
     var synth = new Tone.PolySynth(7, Tone.Synth, {
       oscillator: {
-        type: 'triangle',
+        type: 'sawtooth',
       },
       envelope: {
         attack: 0.16,
@@ -237,7 +241,7 @@ class ProgressionatorRoot extends Component {
         sustain: 0.9,
         release: 1
       }
-    }).connect(volume);
+    }).connect(delay);
 
     synth.triggerAttackRelease(notes.map(note => note.replace(/\s/g, '')), 1);
   }
@@ -249,10 +253,13 @@ class ProgressionatorRoot extends Component {
       Tone.Transport.loop = false;
       this.forceUpdate();
     } else {
-      var volume = new Tone.Volume(-8).toMaster();
+      var volume = new Tone.Volume(-30).toMaster();
+      var reverb = new Tone.JCReverb(0.4).connect(volume);
+      var chorus = new Tone.Chorus().connect(reverb);
+      chorus.wet.value = 0.5;
       var synth = new Tone.PolySynth(7, Tone.Synth, {
         oscillator: {
-          type: 'triangle',
+          type: 'sawtooth',
         },
         envelope: {
           attack: 0.16,
@@ -260,7 +267,7 @@ class ProgressionatorRoot extends Component {
           sustain: 0.9,
           release: 1
         }
-      }).connect(volume);
+      }).connect(chorus);
 
       function triggerSynth(chord){
         //the time is the sample-accurate time of the event
