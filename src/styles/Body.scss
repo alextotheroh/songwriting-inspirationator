@@ -11,6 +11,11 @@
   text-align: right;
 }
 
+.MuiTooltip-tooltip {
+  font-size: 14px !important;
+  background-color: $japanese-violet !important;
+}
+
 .Body-possibilitiesContainer {
   margin-top: 5px;
 }

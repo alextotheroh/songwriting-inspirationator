@@ -8,6 +8,7 @@ import ProgressionatorService from '../../backend/services/ProgressionatorServic
 import { connect } from 'react-redux';
 import { changeMode, changeRootNote, changeExtendChords } from '../../redux/actions/progressionatorActions';
 import PropTypes from 'prop-types';
+import Tooltip from '@material-ui/core/Tooltip';
 import Scale from '../../backend/models/Scale';
 import Switch from '@material-ui/core/Switch';
 import { Typography, Menu } from '@material-ui/core';
@@ -28,13 +29,13 @@ class ProgressionatorRoot extends Component {
     this.state = {
       chordSlotAnchorEl: null,
       progressionChords: [null, null, null, null, null, null, null, null]
-    }; 
+    };
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.rootNote !== prevProps.rootNote || 
+    if (this.props.rootNote !== prevProps.rootNote ||
       this.props.modeName !== prevProps.modeName) {
-        this.updateProgressionChordsForNewKey();
+      this.updateProgressionChordsForNewKey();
     }
   }
 
@@ -52,30 +53,37 @@ class ProgressionatorRoot extends Component {
           <strong>{this.props.rootNote.toUpperCase() + " " + this.props.modeName}</strong>
         </div>
 
-        <Paper style={{padding: '12px 20px 10px 20px', marginTop: '20px'}} elevation={8}>     
+        <Paper style={{ padding: '12px 20px 10px 20px', marginTop: '20px' }} elevation={8}>
           <div className="ProgressionatorRoot-scaleNotes">
             <Typography component="span" className="theme-font-mono">
               {this.getNotesForMode().map((note) => {
-              return <span style={{margin: '0 25px'}}>{note.split(" ")[0]}</span>
+                return <span style={{ margin: '0 25px' }}>{note.split(" ")[0]}</span>
               })}
               <div className="ProgressionatorRoot-scalePlayButton theme-pop-on-hover" id="tone-play-toggle-scale" onClick={this.handlePlayScaleClick}>
                 <PlayArrowIcon />
               </div>
             </Typography>
           </div>
-        </Paper>  
+        </Paper>
 
-        <Paper style={{padding: '40px 20px 20px 20px', marginTop: "30px"}} elevation={8}>    
+        <Paper style={{ padding: '40px 20px 20px 20px', marginTop: "30px" }} elevation={8}>
           <Grid container spacing={1} className="ProgressionatorRoot-chordNames">
             {this.props.diatonicChordsForSelectedMode.map((chord) => {
+              const notes = chord.getNotes()
+              const toolNotes = notes.map((note, i) => {
+                return note.split(' ')[0] + ' '
+              })
               return (
                 // change font if chord name containd min7flat5
                 <Grid item xs className="theme-font-mono">
-                  <div className="ProgressionatorRoot-chordContainer theme-pop-on-hover" 
-                    onClick={() => this.handlePlayChordClick(chord.getNotes())}>
-                    <div>{chord.getFunction()}</div>
-                    <div>{chord.getName()}</div>
-                  </div>
+                  <Tooltip title={toolNotes} placement="top">
+                    <div className="ProgressionatorRoot-chordContainer theme-pop-on-hover"
+                      // onMouseEnter={() => this.handleChordEnter(chord)}
+                      onClick={() => this.handlePlayChordClick(chord.getNotes())}>
+                      <div>{chord.getFunction()}</div>
+                      <div>{chord.getName()}</div>
+                    </div>
+                  </Tooltip>
                 </Grid>
               )
             })}
@@ -88,7 +96,7 @@ class ProgressionatorRoot extends Component {
           </div>
         </Paper>
 
-        <Paper style={{padding: "20px", marginTop: "30px"}} elevation={8}>
+        <Paper style={{ padding: "20px", marginTop: "30px" }} elevation={8}>
           <Grid container>
             <Grid item xs>
               <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-0" onClick={this.handleChordSlotClick}>
@@ -97,37 +105,37 @@ class ProgressionatorRoot extends Component {
             </Grid>
             <Grid item xs>
               <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-1" onClick={this.handleChordSlotClick}>
-                {this.state.progressionChords[1] ? this.state.progressionChords[1].getName() : null}  
+                {this.state.progressionChords[1] ? this.state.progressionChords[1].getName() : null}
               </div>
             </Grid>
             <Grid item xs>
               <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-2" onClick={this.handleChordSlotClick}>
-                {this.state.progressionChords[2] ? this.state.progressionChords[2].getName() : null}  
+                {this.state.progressionChords[2] ? this.state.progressionChords[2].getName() : null}
               </div>
             </Grid>
             <Grid item xs>
               <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-3" onClick={this.handleChordSlotClick}>
-                {this.state.progressionChords[3] ? this.state.progressionChords[3].getName() : null}  
+                {this.state.progressionChords[3] ? this.state.progressionChords[3].getName() : null}
               </div>
             </Grid>
             <Grid item xs>
               <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-4" onClick={this.handleChordSlotClick}>
-                {this.state.progressionChords[4] ? this.state.progressionChords[4].getName() : null}  
+                {this.state.progressionChords[4] ? this.state.progressionChords[4].getName() : null}
               </div>
             </Grid>
             <Grid item xs>
               <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-5" onClick={this.handleChordSlotClick}>
-                {this.state.progressionChords[5] ? this.state.progressionChords[5].getName() : null}  
+                {this.state.progressionChords[5] ? this.state.progressionChords[5].getName() : null}
               </div>
             </Grid>
             <Grid item xs>
               <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-6" onClick={this.handleChordSlotClick}>
-                {this.state.progressionChords[6] ? this.state.progressionChords[6].getName() : null}  
+                {this.state.progressionChords[6] ? this.state.progressionChords[6].getName() : null}
               </div>
             </Grid>
             <Grid item xs>
               <div className="ProgressionatorRoot-chordSlot theme-font-mono theme-pop-on-hover" id="chord-slot-7" onClick={this.handleChordSlotClick}>
-                {this.state.progressionChords[7] ? this.state.progressionChords[7].getName() : null}  
+                {this.state.progressionChords[7] ? this.state.progressionChords[7].getName() : null}
               </div>
             </Grid>
           </Grid>
@@ -137,12 +145,12 @@ class ProgressionatorRoot extends Component {
           </div>
         </Paper>
 
-        <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '15px'}}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '15px' }}>
           <Select
             className="ProgressionatorRoot-select"
             value={this.props.rootNote}
             onChange={this.handleRootNoteChange}
-            style={{marginRight: '20px'}}
+            style={{ marginRight: '20px' }}
           >
             {notesToChooseFrom.map((note) =>
               <MenuItem value={note.split(" ")[0]}>{note.split(" ")[0].toUpperCase()}</MenuItem>
@@ -167,11 +175,11 @@ class ProgressionatorRoot extends Component {
           onClose={this.handleChordSlotMenuClose}
         >
           {this.props.diatonicChordsForSelectedMode.map((chord) => {
-          return (
-            <MenuItem className="theme-font-mono" onClick={() => this.handleChordMenuItemClick(chord)}>
-              <strong>{chord.getName().charAt(0).toUpperCase() + chord.getName().slice(1)}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-              <span>{chord.getFunction()}</span>
-            </MenuItem>);
+            return (
+              <MenuItem className="theme-font-mono" onClick={() => this.handleChordMenuItemClick(chord)}>
+                <strong>{chord.getName().charAt(0).toUpperCase() + chord.getName().slice(1)}</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>{chord.getFunction()}</span>
+              </MenuItem>);
           })}
         </Menu>
       </div>
@@ -269,7 +277,7 @@ class ProgressionatorRoot extends Component {
         }
       }).connect(chorus);
 
-      function triggerSynth(chord){
+      function triggerSynth(chord) {
         //the time is the sample-accurate time of the event
         return (time) => synth.triggerAttackRelease(chord, 1, time)
       }
@@ -278,12 +286,12 @@ class ProgressionatorRoot extends Component {
       for (var i = 0; i < this.state.progressionChords.length; i++) {
         if (this.state.progressionChords[i] != null) {
           Tone.Transport.schedule(
-            triggerSynth(this.state.progressionChords[i].getNotes().map(note => note.replace(/\s/g, ''))), 
+            triggerSynth(this.state.progressionChords[i].getNotes().map(note => note.replace(/\s/g, ''))),
             populatedChordSlotsCount
           );
           populatedChordSlotsCount++;
         }
-        
+
       }
 
       Tone.Transport.loopEnd = populatedChordSlotsCount;
@@ -343,10 +351,10 @@ class ProgressionatorRoot extends Component {
 
 function mapStateToProps(state) {
   return {
-      rootNote: state.progressionatorReducer.rootNote,
-      modeName: state.progressionatorReducer.modeName,
-      diatonicChordsForSelectedMode: state.progressionatorReducer.diatonicChordsForSelectedMode,
-      extendChords: state.progressionatorReducer.extendChords
+    rootNote: state.progressionatorReducer.rootNote,
+    modeName: state.progressionatorReducer.modeName,
+    diatonicChordsForSelectedMode: state.progressionatorReducer.diatonicChordsForSelectedMode,
+    extendChords: state.progressionatorReducer.extendChords
   };
 }
 
