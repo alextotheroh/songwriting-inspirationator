@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import WesternMusicScale from '../../backend/models/WesternMusicScale';
 import ProgressionatorService from '../../backend/services/ProgressionatorService';
 import { connect } from 'react-redux';
-import { changeMode, changeRootNote, changeExtendChords } from '../../redux/actions/progressionatorActions';
+import { changeMode, changeRootNote, changeAdd7th, changeAdd9th } from '../../redux/actions/progressionatorActions';
 import PropTypes from 'prop-types';
 import Tooltip from '@material-ui/core/Tooltip';
 import Scale from '../../backend/models/Scale';
@@ -90,9 +90,13 @@ class ProgressionatorRoot extends Component {
           </Grid>
           <div className="ProgressionatorRoot-extendChordLabel theme-font-mono">
             <Switch
-              checked={this.props.extendChords}
-              onChange={this.handleExtendChordsClick}
-            /><span>extend chords</span>
+              checked={this.props.add7th}
+              onChange={this.handleAdd7thClick}
+            /><span>Add 7th</span>
+            <Switch
+              checked={this.props.add9th}
+              onChange={this.handleAdd9thClick}
+            /><span>Add 9th</span>
           </div>
         </Paper>
 
@@ -195,13 +199,13 @@ class ProgressionatorRoot extends Component {
   }
 
   getNotesForMode = () => {
-    var scale = new Scale(this.props.rootNote, this.props.modeName, this.props.extendChords);
+    var scale = new Scale(this.props.rootNote, this.props.modeName, this.props.add7th);
 
     return scale.getNotes();
   }
 
   handlePlayScaleClick = () => {
-    var scale = new Scale(this.props.rootNote, this.props.modeName, this.props.extendChords)
+    var scale = new Scale(this.props.rootNote, this.props.modeName, this.props.add7th)
     var volume = new Tone.Volume(-11).toMaster();
     var reverb = new Tone.JCReverb(0.4).connect(volume);
     var vibrato = new Tone.Vibrato(6, .1).connect(reverb);
@@ -323,17 +327,35 @@ class ProgressionatorRoot extends Component {
     });
   }
 
-  handleExtendChordsClick = () => {
-    if (this.props.extendChords) {
-      this.props.dispatch(changeExtendChords(false));
+  handleAdd7thClick = () => {
+    if (this.props.add7th) {
+      this.props.dispatch(changeAdd7th(false));
     } else {
-      this.props.dispatch(changeExtendChords(true));
+      this.props.dispatch(changeAdd7th(true));
     }
   }
 
+  handleAdd9thClick = () => {
+    if (this.props.add7th) {
+      this.props.dispatch(changeAdd9th(false));
+    } else {
+      this.props.dispatch(changeAdd9th(true));
+    }
+  }
+
+  // Add more chord extensions...
+
+  // handleAdd11thClick = () => {
+  //   if (this.props.add7th) {
+  //     this.props.dispatch(changeAdd7th(false));
+  //   } else {
+  //     this.props.dispatch(changeAdd7th(true));
+  //   }
+  // }
+
   updateProgressionChordsForNewKey = () => {
-    console.log(this.props.extendChords)
-    var newScale = new Scale(this.props.rootNote, this.props.modeName, this.props.extendChords);
+    console.log(this.props.add7th)
+    var newScale = new Scale(this.props.rootNote, this.props.modeName, this.props.add7th);
     var transposedProgressionChords = [null, null, null, null, null, null, null, null];
 
     for (var i = 0; i < this.state.progressionChords.length; i++) {
@@ -354,7 +376,7 @@ function mapStateToProps(state) {
     rootNote: state.progressionatorReducer.rootNote,
     modeName: state.progressionatorReducer.modeName,
     diatonicChordsForSelectedMode: state.progressionatorReducer.diatonicChordsForSelectedMode,
-    extendChords: state.progressionatorReducer.extendChords
+    add7th: state.progressionatorReducer.add7th
   };
 }
 

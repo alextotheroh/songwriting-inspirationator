@@ -7,9 +7,10 @@ class Scale {
   private feel: string[];
   private alternateNames: string[];
   private notes: string[];
-  private extendChords: boolean;
+  private add7th: boolean;
+  private add9th: boolean;
 
-  constructor(root: string, modeName: string, extendChords: boolean) {
+  constructor(root: string, modeName: string, add7th: boolean, add9th: boolean) {
     var westernMusicScale = new WesternMusicScale();
 
     if (!(modeName in modePatterns)) {
@@ -19,7 +20,8 @@ class Scale {
     this.feel = modePatterns[modeName].feel;
     this.alternateNames = modePatterns[modeName].alternateNames ? modePatterns[modeName].alternateNames : [];
     this.notes = westernMusicScale.getNoteCollection(root, modePatterns[modeName].intervals);
-    this.extendChords = extendChords;
+    this.add7th = add7th;
+    this.add9th = add9th;
     if (this.notes.length == 8) {
       this.notes.pop();
     }
@@ -38,9 +40,15 @@ class Scale {
       ['7', '9', '11']
     ];
 
-    if (this.extendChords) {
+    if (this.add7th) {
       for (var i = 0; i < chordNotesCollection.length; i++) {
-        chordNotesCollection[i].push('' + (i+7));
+        chordNotesCollection[i].push('' + (i + 7));
+      }
+    }
+
+    if (this.add9th) {
+      for (var i = 0; i < chordNotesCollection.length; i++) {
+        chordNotesCollection[i].push('' + (i + 9));
       }
     }
 

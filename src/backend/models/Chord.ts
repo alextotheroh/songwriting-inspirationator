@@ -32,13 +32,13 @@ class Chord {
         throw `Unexpected degree string ${oneIndexedDegree}`;
       }
 
-      if ( degree[0].indexOf('f') == 0 || degree[0].indexOf('s') == 0 ) { // if first character is a letter, then we're seeking a modified scale degree
+      if (degree[0].indexOf('f') == 0 || degree[0].indexOf('s') == 0) { // if first character is a letter, then we're seeking a modified scale degree
         if (degree[0] === 'f') {
-          this.notes.push( this.westernMusicScale.getInterval(this.getNoteAtIndex(parseInt(degree.substring(1))), -1) );
+          this.notes.push(this.westernMusicScale.getInterval(this.getNoteAtIndex(parseInt(degree.substring(1))), -1));
         } else if (degree[0] === 's') {
-          this.notes.push( this.westernMusicScale.getInterval(this.getNoteAtIndex(parseInt(degree.substring(1))), 1) );
+          this.notes.push(this.westernMusicScale.getInterval(this.getNoteAtIndex(parseInt(degree.substring(1))), 1));
         }
-      } else if (typeof(parseInt(degree)) === 'number') {
+      } else if (typeof (parseInt(degree)) === 'number') {
         this.notes.push(this.getNoteAtIndex(parseInt(degree)));
       } else {
         throw `Unexpected argument passed in degrees array: ${degree}`;
@@ -86,7 +86,7 @@ class Chord {
   }
 
   // wraps around the this.scale array like music notes do
-  getNoteAtIndex(index: number): string { 
+  getNoteAtIndex(index: number): string {
     if (index >= this.scale.length) {
       var normalizedIndex = index;
       while (normalizedIndex >= this.scale.length) {
@@ -144,6 +144,7 @@ class Chord {
 
     var modifier: string = '';
     var lowerCase: boolean = false;
+    console.log(this.name)
     if (this.name.split(" ")[1].includes("min")) { // where shes going awry
       lowerCase = true;
     }

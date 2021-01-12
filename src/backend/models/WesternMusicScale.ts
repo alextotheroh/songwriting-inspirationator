@@ -3,10 +3,10 @@ export default class WesternMusicScale {
   private notes: string[];
 
   constructor() {
-    this.notes = ['c 4', 'c# 4', 'd 4', 'd# 4', 'e 4', 'f 4', 'f# 4', 'g 4', 'g# 4', 'a 4', 'a# 4', 'b 4', 
-                  'c 5', 'c# 5', 'd 5', 'd# 5', 'e 5', 'f 5', 'f# 5', 'g 5', 'g# 5', 'a 5', 'a# 5', 'b 5', 
-                  'c 6', 'c# 6', 'd 6', 'd# 6', 'e 6', 'f 6', 'f# 6', 'g 6', 'g# 6', 'a 6', 'a# 6', 'b 6', 
-                  'c 7', 'c# 7', 'd 7', 'd# 7', 'e 7', 'f 7', 'f# 7', 'g 7', 'g# 7', 'a 7', 'a# 7', 'b 7'];
+    this.notes = ['c 4', 'c# 4', 'd 4', 'd# 4', 'e 4', 'f 4', 'f# 4', 'g 4', 'g# 4', 'a 4', 'a# 4', 'b 4',
+      'c 5', 'c# 5', 'd 5', 'd# 5', 'e 5', 'f 5', 'f# 5', 'g 5', 'g# 5', 'a 5', 'a# 5', 'b 5',
+      'c 6', 'c# 6', 'd 6', 'd# 6', 'e 6', 'f 6', 'f# 6', 'g 6', 'g# 6', 'a 6', 'a# 6', 'b 6',
+      'c 7', 'c# 7', 'd 7', 'd# 7', 'e 7', 'f 7', 'f# 7', 'g 7', 'g# 7', 'a 7', 'a# 7', 'b 7'];
   }
 
   getNotes(): string[] {
@@ -60,60 +60,60 @@ export default class WesternMusicScale {
   // That is unexpected!
   // ex: c4 is enharmonic to b# 1, because this function discards the octave number
   notesAreEnharmonic(n1: string, n2: string) {
-    const notesToEnharmonics: {[key: string]: Set<string>} = {
-      'c 4': new Set(['b# 3']), 
-      'c# 4': new Set(['df 4']), 
-      'd 4': new Set([]), 
-      'd# 4': new Set(['ef 4']), 
-      'e 4': new Set(['ff 4']), 
-      'f 4': new Set(['e# 4']), 
-      'f# 4': new Set(['gf 4']), 
-      'g 4': new Set([]), 
-      'g# 4': new Set(['af 4']), 
-      'a 4': new Set([]), 
-      'a# 4': new Set(['bf 4']), 
+    const notesToEnharmonics: { [key: string]: Set<string> } = {
+      'c 4': new Set(['b# 3']),
+      'c# 4': new Set(['df 4']),
+      'd 4': new Set([]),
+      'd# 4': new Set(['ef 4']),
+      'e 4': new Set(['ff 4']),
+      'f 4': new Set(['e# 4']),
+      'f# 4': new Set(['gf 4']),
+      'g 4': new Set([]),
+      'g# 4': new Set(['af 4']),
+      'a 4': new Set([]),
+      'a# 4': new Set(['bf 4']),
       'b 4': new Set(['cf 5']),
-      'c 5': new Set(['b# 4']), 
-      'c# 5': new Set(['df 5']), 
-      'd 5': new Set([]), 
-      'd# 5': new Set(['ef 5']), 
-      'e 5': new Set(['ff 5']), 
-      'f 5': new Set(['e# 5']), 
-      'f# 5': new Set(['gf 5']), 
-      'g 5': new Set([]), 
-      'g# 5': new Set(['af 5']), 
-      'a 5': new Set([]), 
-      'a# 5': new Set(['bf 5']), 
+      'c 5': new Set(['b# 4']),
+      'c# 5': new Set(['df 5']),
+      'd 5': new Set([]),
+      'd# 5': new Set(['ef 5']),
+      'e 5': new Set(['ff 5']),
+      'f 5': new Set(['e# 5']),
+      'f# 5': new Set(['gf 5']),
+      'g 5': new Set([]),
+      'g# 5': new Set(['af 5']),
+      'a 5': new Set([]),
+      'a# 5': new Set(['bf 5']),
       'b 5': new Set(['cf 6']),
-      'c 6': new Set(['b# 5']), 
-      'c# 6': new Set(['df 6']), 
-      'd 6': new Set([]), 
-      'd# 6': new Set(['ef 6']), 
-      'e 6': new Set(['ff 6']), 
-      'f 6': new Set(['e# 6']), 
-      'f# 6': new Set(['gf 6']), 
-      'g 6': new Set([]), 
-      'g# 6': new Set(['af 6']), 
-      'a 6': new Set([]), 
-      'a# 6': new Set(['bf 6']), 
+      'c 6': new Set(['b# 5']),
+      'c# 6': new Set(['df 6']),
+      'd 6': new Set([]),
+      'd# 6': new Set(['ef 6']),
+      'e 6': new Set(['ff 6']),
+      'f 6': new Set(['e# 6']),
+      'f# 6': new Set(['gf 6']),
+      'g 6': new Set([]),
+      'g# 6': new Set(['af 6']),
+      'a 6': new Set([]),
+      'a# 6': new Set(['bf 6']),
       'b 6': new Set(['cf 7']),
-      'c 7': new Set(['b# 6']), 
-      'c# 7': new Set(['df 7']), 
-      'd 7': new Set([]), 
-      'd# 7': new Set(['ef 7']), 
-      'e 7': new Set(['ff 7']), 
-      'f 7': new Set(['e# 7']), 
-      'f# 7': new Set(['gf 7']), 
-      'g 7': new Set([]), 
-      'g# 7': new Set(['af 7']), 
-      'a 7': new Set([]), 
-      'a# 7': new Set(['bf 7']), 
+      'c 7': new Set(['b# 6']),
+      'c# 7': new Set(['df 7']),
+      'd 7': new Set([]),
+      'd# 7': new Set(['ef 7']),
+      'e 7': new Set(['ff 7']),
+      'f 7': new Set(['e# 7']),
+      'f# 7': new Set(['gf 7']),
+      'g 7': new Set([]),
+      'g# 7': new Set(['af 7']),
+      'a 7': new Set([]),
+      'a# 7': new Set(['bf 7']),
       'b 7': new Set(['cf 8'])
     }
 
-    return (n1 === n2) || 
-      ( (n1 in notesToEnharmonics && notesToEnharmonics[n1].has(n2)) ) ||
-      ( (n2 in notesToEnharmonics && notesToEnharmonics[n2].has(n1)) );
+    return (n1 === n2) ||
+      ((n1 in notesToEnharmonics && notesToEnharmonics[n1].has(n2))) ||
+      ((n2 in notesToEnharmonics && notesToEnharmonics[n2].has(n1)));
   }
 
   // given a note and a number of half-steps, returns the note that many half steps away
@@ -149,6 +149,7 @@ export default class WesternMusicScale {
   // ex: [c, e, g] -> [1, 3, 5]
   //     [c, d#, g] -> [1, f3, 5]
   getChordStyleNoteFunctions(chordNotes: string[]): string[] {
+    console.log(chordNotes)
     var asHalfStepsAwayFromRoot = []
     var noteFunctions = ['1'];
 
@@ -156,7 +157,7 @@ export default class WesternMusicScale {
       asHalfStepsAwayFromRoot.push(this.getNumberOfHalfStepsBetweenNotes(chordNotes[0], chordNotes[i]));
     }
 
-    const halfStepsToChordFunction: {[key: number]: string}  = {
+    const halfStepsToChordFunction: { [key: number]: string } = {
       0: '1',
       1: 'f2',
       2: '2',
@@ -168,7 +169,10 @@ export default class WesternMusicScale {
       8: 's5',
       9: '6',
       10: 'f7',
-      11: '7'
+      11: '7',
+      12: '8',
+      13: 'f9',
+      14: '9',
     }
 
     for (let intervalInHalfSteps of asHalfStepsAwayFromRoot) {
@@ -203,6 +207,6 @@ export default class WesternMusicScale {
     }
 
     return halfStepsAway;
-    
+
   }
 }

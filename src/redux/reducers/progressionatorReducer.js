@@ -9,32 +9,38 @@ var defaultState = {
   modeName: 'Ionian',
   knownChordNames: progressionatorService.getAllChordsThatAppKnowsNamesFor().map(chord => chord.getName()),
   diatonicChordsForSelectedMode: getDiatonicChords('c', 'Ionian'),
-  extendChords: false
+  add7th: false,
+  add9th: false
 }
 
-export default(state=defaultState, action) => {
+export default (state = defaultState, action) => {
   switch (action.type) {
-      case 'changeRoot':
-        return Object.assign({}, state, {
-          rootNote: action.rootNote,
-          diatonicChordsForSelectedMode: getDiatonicChords(action.rootNote, state.modeName, state.extendChords)
-        });
-      case 'changeMode':
-        return Object.assign({}, state, {
-          modeName: action.modeName,
-          diatonicChordsForSelectedMode: getDiatonicChords(state.rootNote, action.modeName, state.extendChords)
-        });
-      case 'changeExtendChords':
-        return Object.assign({}, state, {
-          extendChords: action.newVal,
-          diatonicChordsForSelectedMode: getDiatonicChords(state.rootNote, state.modeName, action.newVal)
-        });
-      default:
-        return state;
+    case 'changeRoot':
+      return Object.assign({}, state, {
+        rootNote: action.rootNote,
+        diatonicChordsForSelectedMode: getDiatonicChords(action.rootNote, state.modeName, state.add7th, state.add9th)
+      });
+    case 'changeMode':
+      return Object.assign({}, state, {
+        modeName: action.modeName,
+        diatonicChordsForSelectedMode: getDiatonicChords(state.rootNote, action.modeName, state.add7th, state.add9th)
+      });
+    case 'changeAdd7th':
+      return Object.assign({}, state, {
+        add7th: action.newVal,
+        diatonicChordsForSelectedMode: getDiatonicChords(state.rootNote, state.modeName, action.newVal, state.add9th)
+      });
+    case 'changeAdd9th':
+      return Object.assign({}, state, {
+        add9th: action.newVal,
+        diatonicChordsForSelectedMode: getDiatonicChords(state.rootNote, state.modeName, state.add7th, action.newVal)
+      });
+    default:
+      return state;
   }
 };
 
-function getDiatonicChords(rootNote, modeName, extendChords) {
-  var scale = new Scale(rootNote, modeName, extendChords);
+function getDiatonicChords(rootNote, modeName, add7th, add9th) {
+  var scale = new Scale(rootNote, modeName, add7th, add9th);
   return scale.getDiatonicChords();
 }

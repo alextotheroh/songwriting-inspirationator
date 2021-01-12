@@ -1,7 +1,7 @@
 import Chord from '../models/Chord';
 import Scale from '../models/Scale';
 import WesternMusicScale from '../models/WesternMusicScale';
-import {chordTypes, modePatterns} from '../defaultData';
+import { chordTypes, modePatterns } from '../defaultData';
 
 // this class holds the functions that frontend components will call, so it tries to minimize the number of calls the frontend will have to make. 
 class ProgressionatorService {
@@ -17,7 +17,7 @@ class ProgressionatorService {
     // assumes name is passed 'root space chordType'
     var root: string = name.split(" ")[0];
     var chordType: string = name.split(" ")[1];
-    var scale: Scale = new Scale(root, "Ionian", false);
+    var scale: Scale = new Scale(root, "Ionian", false, false);
     var degrees: string[] = chordTypes[chordType];
     return new Chord(scale.getNotes(), degrees);
   }
@@ -28,7 +28,7 @@ class ProgressionatorService {
       var objectToPutInLocalStorage = [];
 
       for (let chord of allChords) {
-        objectToPutInLocalStorage.push({'scale': chord.getScale(), 'degrees': chord.getDegrees()});
+        objectToPutInLocalStorage.push({ 'scale': chord.getScale(), 'degrees': chord.getDegrees() });
       }
 
       localStorage.setItem(this.ALL_CHORDS_LIST_KEY, JSON.stringify(objectToPutInLocalStorage));
@@ -36,14 +36,14 @@ class ProgressionatorService {
 
     var chordSimilarityScores = []
     var chordsFromLocalStorageJSON: string | null = localStorage.getItem(this.ALL_CHORDS_LIST_KEY);
-    var chordsFromLocalStorage: {[key: string]: string[]}[] = chordsFromLocalStorageJSON ? JSON.parse(chordsFromLocalStorageJSON) : '';
+    var chordsFromLocalStorage: { [key: string]: string[] }[] = chordsFromLocalStorageJSON ? JSON.parse(chordsFromLocalStorageJSON) : '';
 
     for (let chordJSONObj of chordsFromLocalStorage) {
       var currentChord = new Chord(chordJSONObj.scale, chordJSONObj.degrees);
-      chordSimilarityScores.push( {'chordName': currentChord.getName(), 'notesInCommon': chord.numberOfNotesInCommon(currentChord)} );
+      chordSimilarityScores.push({ 'chordName': currentChord.getName(), 'notesInCommon': chord.numberOfNotesInCommon(currentChord) });
     }
 
-    chordSimilarityScores.sort(function(a, b) {
+    chordSimilarityScores.sort(function (a, b) {
       if (a['notesInCommon'] > b['notesInCommon']) {
         return -1;
       }
@@ -66,11 +66,11 @@ class ProgressionatorService {
     }
 
     return topXSimilarChords;
-    
+
   }
 
   //getTopXSimilarScales(scale: Scale, numberToGet: number): Scale[] {
-    
+
   //}
 
   getAllChordsThatAppKnowsNamesFor(): Chord[] {
@@ -79,7 +79,7 @@ class ProgressionatorService {
 
     for (var i = 0; i < 12; i++) {
       for (let chordType of Object.keys(chordTypes)) {
-        var scale = new Scale(notes[i], 'Ionian', false);
+        var scale = new Scale(notes[i], 'Ionian', false, false);
         var chord = new Chord(scale.getNotes(), chordTypes[chordType]);
         chords.push(chord);
       }
