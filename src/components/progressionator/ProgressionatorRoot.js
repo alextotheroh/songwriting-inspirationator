@@ -226,22 +226,21 @@ class ProgressionatorRoot extends Component {
   }
 
   handlePlayChordClick = (notes) => {
-    var volume = new Tone.Volume(-30).toMaster();
-    var reverb = new Tone.JCReverb(0.4).connect(volume);
-    var chorus = new Tone.Chorus().connect(reverb);
-    chorus.wet.value = 0.5;
-    var delay = new Tone.FeedbackDelay(0.25, 0.35).connect(chorus);
-    var synth = new Tone.PolySynth(7, Tone.Synth, {
+    var volume = new Tone.Volume(-40).toMaster();
+    var chorus = new Tone.Chorus().connect(volume);
+    chorus.wet.value = 0.1;
+    var reverb = new Tone.JCReverb(0.1).connect(chorus);
+    var synth = new Tone.PolySynth(4, Tone.Synth, {
       oscillator: {
         type: 'sawtooth',
       },
       envelope: {
-        attack: 0.16,
+        attack: 0.15,
         decay: 2,
-        sustain: 0.9,
-        release: 1
+        sustain: 1,
+        release: 0.2
       }
-    }).connect(delay);
+    }).connect(reverb);
 
     synth.triggerAttackRelease(notes.map(note => note.replace(/\s/g, '')), 1);
   }
@@ -253,19 +252,19 @@ class ProgressionatorRoot extends Component {
       Tone.Transport.loop = false;
       this.forceUpdate();
     } else {
-      var volume = new Tone.Volume(-30).toMaster();
+      var volume = new Tone.Volume(-40).toMaster();
       var reverb = new Tone.JCReverb(0.4).connect(volume);
       var chorus = new Tone.Chorus().connect(reverb);
-      chorus.wet.value = 0.5;
+      chorus.wet.value = 0.1;
       var synth = new Tone.PolySynth(7, Tone.Synth, {
         oscillator: {
           type: 'sawtooth',
         },
         envelope: {
           attack: 0.16,
-          decay: 2,
+          decay: 0.25,
           sustain: 0.9,
-          release: 1
+          release: 0.25
         }
       }).connect(chorus);
 

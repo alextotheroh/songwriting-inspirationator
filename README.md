@@ -26,5 +26,3 @@ have to invalidate cloudfront caches to see changes immediately
 
 ### favicon
 GIMP project file exists in `/resources`, which can be used to make alterations to favicon
-
-I'm testing a change!  lol!
